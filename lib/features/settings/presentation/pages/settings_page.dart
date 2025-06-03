@@ -4,7 +4,10 @@ import 'package:zoozi_wallet/core/theme/app_theme.dart';
 import 'package:zoozi_wallet/di/di.dart';
 import 'package:zoozi_wallet/features/settings/presentation/bloc/theme_bloc.dart';
 import 'package:zoozi_wallet/features/settings/presentation/bloc/theme_state.dart';
+import 'package:zoozi_wallet/features/settings/presentation/bloc/language_bloc.dart';
+import 'package:zoozi_wallet/features/settings/presentation/bloc/language_state.dart';
 import '../widgets/theme_switch_dialog.dart';
+import '../widgets/language_switch_dialog.dart';
 import 'package:zoozi_wallet/core/utils/extensions/context_extension.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -15,6 +18,7 @@ class SettingsPage extends StatelessWidget {
     final l = context.l10n;
     final theme = Theme.of(context);
     final themeBloc = getIt<ThemeBloc>();
+    final languageBloc = getIt<LanguageBloc>();
 
     return Scaffold(
       appBar: AppBar(title: Text(l.settings)),
@@ -68,12 +72,39 @@ class SettingsPage extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: 16),
-                _buildSettingItem(
-                  context: context,
-                  icon: Icons.language_outlined,
-                  title: l.language,
-                  onTap: () {
-                    // TODO: Navigate to language settings
+                BlocBuilder<LanguageBloc, LanguageState>(
+                  bloc: languageBloc,
+                  builder: (context, state) {
+                    if (state is LanguageLoaded) {
+                      return _buildSettingItem(
+                        context: context,
+                        icon: Icons.language_outlined,
+                        title: l.language,
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              state.locale.languageCode.toUpperCase(),
+                              style: TextStyle(
+                                color: theme.colorScheme.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (_) => LanguageSwitchDialog(
+                              languageBloc: languageBloc,
+                            ),
+                            backgroundColor: Colors.transparent,
+                            isScrollControlled: true,
+                          );
+                        },
+                      );
+                    }
+                    return const SizedBox.shrink();
                   },
                 ),
                 const SizedBox(height: 16),

@@ -26,8 +26,12 @@ import 'package:zoozi_wallet/features/auth/domain/repositories/auth_repository.d
     as _i173;
 import 'package:zoozi_wallet/features/auth/presentation/bloc/auth_bloc.dart'
     as _i138;
+import 'package:zoozi_wallet/features/settings/domain/repositories/language_repository.dart'
+    as _i712;
 import 'package:zoozi_wallet/features/settings/domain/repositories/theme_repository.dart'
     as _i897;
+import 'package:zoozi_wallet/features/settings/presentation/bloc/language_bloc.dart'
+    as _i664;
 import 'package:zoozi_wallet/features/settings/presentation/bloc/theme_bloc.dart'
     as _i786;
 import 'package:zoozi_wallet/features/wallet/data/datasources/wallet_remote_data_source.dart'
@@ -62,6 +66,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i897.ThemeRepository(gh<_i937.ILocalStorage>()));
     gh.singleton<_i786.ThemeBloc>(
         () => _i786.ThemeBloc(gh<_i897.IThemeRepository>()));
+    gh.factory<_i712.ILanguageRepository>(
+        () => _i712.LanguageRepository(gh<_i937.ILocalStorage>()));
     gh.factory<_i74.HttpClient>(() => _i74.HttpClient(
           gh<_i519.Client>(),
           gh<_i755.IAppLogger>(),
@@ -74,6 +80,8 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i937.ILocalStorage>(),
           gh<_i755.IAppLogger>(),
         ));
+    gh.singleton<_i664.LanguageBloc>(
+        () => _i664.LanguageBloc(gh<_i712.ILanguageRepository>()));
     gh.factory<_i173.IAuthRepository>(() => _i173.AuthRepository(
           gh<_i103.IAuthRemoteDataSource>(),
           gh<_i54.IAuthLocalDataSource>(),

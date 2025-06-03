@@ -380,23 +380,41 @@ abstract class AppLocalizations {
   /// **'Failed to clear storage data.'**
   String get cacheClearError;
 
-  /// No description provided for @light.
+  /// Light theme option
   ///
   /// In en, this message translates to:
   /// **'Light'**
   String get light;
 
-  /// No description provided for @dark.
+  /// Dark theme option
   ///
   /// In en, this message translates to:
   /// **'Dark'**
   String get dark;
 
-  /// No description provided for @chooseTheme.
+  /// Theme selection dialog title
   ///
   /// In en, this message translates to:
   /// **'Choose Theme'**
   String get chooseTheme;
+
+  /// Language selection dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Language'**
+  String get chooseLanguage;
+
+  /// English language option
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// Indonesian language option
+  ///
+  /// In en, this message translates to:
+  /// **'Indonesian'**
+  String get indonesian;
 }
 
 class _AppLocalizationsDelegate

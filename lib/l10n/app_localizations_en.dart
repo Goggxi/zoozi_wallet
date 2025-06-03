@@ -170,4 +170,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chooseTheme => 'Choose Theme';
+
+  @override
+  String get chooseLanguage => 'Choose Language';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get indonesian => 'Indonesian';
 }

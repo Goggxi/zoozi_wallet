@@ -207,6 +207,27 @@
     "description": "Error message for cache clear operation"
   },
   "light": "Terang",
+  "@light": {
+    "description": "Light theme option"
+  },
   "dark": "Gelap",
-  "chooseTheme": "Pilih Tema"
+  "@dark": {
+    "description": "Dark theme option"
+  },
+  "chooseTheme": "Pilih Tema",
+  "@chooseTheme": {
+    "description": "Theme selection dialog title"
+  },
+  "chooseLanguage": "Pilih Bahasa",
+  "@chooseLanguage": {
+    "description": "Language selection dialog title"
+  },
+  "english": "Bahasa Inggris",
+  "@english": {
+    "description": "English language option"
+  },
+  "indonesian": "Bahasa Indonesia",
+  "@indonesian": {
+    "description": "Indonesian language option"
+  }
 }
