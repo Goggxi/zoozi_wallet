@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:zoozi_wallet/core/router/app_router.dart';
 import 'package:zoozi_wallet/core/utils/extensions/context_extension.dart';
 import 'package:zoozi_wallet/di/di.dart';
 
@@ -64,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           );
         } else if (state is AuthAuthenticated) {
-          context.go('/home');
+          context.go(AppRouter.home);
         }
       },
       child: Scaffold(
@@ -79,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 40),
                   Text(
                     l.welcomeBack,
-                    style: GoogleFonts.quicksand(
+                    style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w600,
                     ),
@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 24),
                   Text(
                     l.login,
-                    style: GoogleFonts.quicksand(
+                    style: const TextStyle(
                       color: Colors.grey,
                     ),
                   ),
@@ -134,10 +134,10 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       Text(
                         l.dontHaveAccount,
-                        style: GoogleFonts.quicksand(),
+                        style: const TextStyle(),
                       ),
                       TextButton(
-                        onPressed: () => context.push('/register'),
+                        onPressed: () => context.push(AppRouter.register),
                         child: Text(l.register),
                       ),
                     ],

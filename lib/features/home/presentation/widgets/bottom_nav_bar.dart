@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:zoozi_wallet/core/router/app_router.dart';
 
 class BottomNavBar extends StatelessWidget {
   const BottomNavBar({
@@ -16,16 +17,16 @@ class BottomNavBar extends StatelessWidget {
       onDestinationSelected: (index) {
         switch (index) {
           case 0:
-            context.go('/home');
+            context.go(AppRouter.home);
             break;
           case 1:
-            context.go('/wallet');
+            context.go(AppRouter.wallet);
             break;
           case 2:
-            context.go('/transactions');
+            context.go(AppRouter.transactions);
             break;
           case 3:
-            context.go('/settings');
+            context.go(AppRouter.settings);
             break;
         }
       },

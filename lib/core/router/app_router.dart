@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
+import 'package:zoozi_wallet/di/di.dart';
+import 'package:zoozi_wallet/features/auth/domain/repositories/auth_repository.dart';
 import 'package:zoozi_wallet/features/auth/presentation/pages/login_page.dart';
 import 'package:zoozi_wallet/features/auth/presentation/pages/register_page.dart';
 import 'package:zoozi_wallet/features/home/presentation/pages/home_page.dart';
@@ -20,26 +22,22 @@ class AppRouter {
   static const String transactions = '/transactions';
   static const String settings = '/settings';
 
-  // TODO: Replace with actual auth check
-  bool get isAuthenticated => false;
+  final IAuthRepository _authRepository = getIt<IAuthRepository>();
+
+  bool get isAuthenticated => _authRepository.isAuthenticated;
 
   String? _handleRedirect(BuildContext context, GoRouterState state) {
     final isLoggingIn = state.matchedLocation == login;
     final isRegistering = state.matchedLocation == register;
     final isSplash = state.matchedLocation == splash;
 
-    // If not authenticated and not on auth pages, go to login
+    // If not authenticated and not on auth pages or splash, go to login
     if (!isAuthenticated && !isLoggingIn && !isRegistering && !isSplash) {
       return login;
     }
 
     // If authenticated and on auth pages, go to home
     if (isAuthenticated && (isLoggingIn || isRegistering)) {
-      return home;
-    }
-
-    // If authenticated and on splash, go to home
-    if (isAuthenticated && isSplash) {
       return home;
     }
 

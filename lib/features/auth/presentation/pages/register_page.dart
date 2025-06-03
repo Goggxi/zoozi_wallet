@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:zoozi_wallet/core/router/app_router.dart';
 import 'package:zoozi_wallet/core/utils/extensions/context_extension.dart';
 import 'package:zoozi_wallet/di/di.dart';
 
@@ -76,7 +76,7 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
           );
         } else if (state is AuthAuthenticated) {
-          context.go('/home');
+          context.go(AppRouter.home);
         }
       },
       child: Scaffold(
@@ -91,7 +91,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   const SizedBox(height: 40),
                   Text(
                     l.createAccount,
-                    style: GoogleFonts.quicksand(
+                    style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w600,
                     ),
@@ -99,7 +99,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   const SizedBox(height: 24),
                   Text(
                     l.signUp,
-                    style: GoogleFonts.quicksand(
+                    style: const TextStyle(
                       color: Colors.grey,
                     ),
                   ),
@@ -175,7 +175,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     children: [
                       Text(
                         l.haveAccount,
-                        style: GoogleFonts.quicksand(),
+                        style: const TextStyle(),
                       ),
                       TextButton(
                         onPressed: () => context.pop(),

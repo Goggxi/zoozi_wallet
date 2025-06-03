@@ -11,15 +11,15 @@ class AppTheme {
           surface: AppColors.white,
         ),
         textTheme: GoogleFonts.quicksandTextTheme(),
-        appBarTheme: AppBarTheme(
-          backgroundColor: AppColors.purple,
-          foregroundColor: AppColors.white,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: AppColors.white,
+          foregroundColor: AppColors.black,
           elevation: 0,
           centerTitle: true,
-          titleTextStyle: GoogleFonts.quicksand(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            color: AppColors.white,
+          titleTextStyle: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w400,
+            color: AppColors.black,
           ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
@@ -30,7 +30,7 @@ class AppTheme {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
-            textStyle: GoogleFonts.quicksand(
+            textStyle: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
             ),
@@ -47,7 +47,7 @@ class AppTheme {
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide.none,
           ),
-          hintStyle: GoogleFonts.quicksand(
+          hintStyle: TextStyle(
             color: Colors.grey[400],
           ),
         ),
