@@ -11,6 +11,10 @@ import 'package:zoozi_wallet/l10n/app_localizations.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
+
+  // Initialize theme bloc
+  getIt<ThemeBloc>().add(LoadTheme());
+
   runApp(const MainApp());
 }
 
@@ -19,37 +23,31 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => getIt<ThemeBloc>()..add(LoadTheme()),
-        ),
-      ],
-      child: BlocBuilder<ThemeBloc, ThemeState>(
-        builder: (context, state) {
-          final themeData = state is ThemeLoaded
-              ? (state.themeType == ThemeType.light
-                  ? AppTheme.light
-                  : AppTheme.dark)
-              : AppTheme.light;
+    return BlocBuilder<ThemeBloc, ThemeState>(
+      bloc: getIt<ThemeBloc>(),
+      builder: (context, state) {
+        final themeData = state is ThemeLoaded
+            ? (state.themeType == ThemeType.light
+                ? AppTheme.light
+                : AppTheme.dark)
+            : AppTheme.light;
 
-          return MaterialApp.router(
-            title: 'Zoozi Wallet',
-            theme: themeData,
-            routerConfig: getIt<AppRouter>().router,
-            debugShowCheckedModeBanner: false,
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            supportedLocales: AppLocalizations.supportedLocales,
-            builder: (context, child) {
-              return GestureDetector(
-                onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-                behavior: HitTestBehavior.translucent,
-                child: child!,
-              );
-            },
-          );
-        },
-      ),
+        return MaterialApp.router(
+          title: 'Zoozi Wallet',
+          theme: themeData,
+          routerConfig: getIt<AppRouter>().router,
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          builder: (context, child) {
+            return GestureDetector(
+              onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+              behavior: HitTestBehavior.translucent,
+              child: child!,
+            );
+          },
+        );
+      },
     );
   }
 }

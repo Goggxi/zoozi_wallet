@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zoozi_wallet/core/theme/app_theme.dart';
+import 'package:zoozi_wallet/di/di.dart';
 import 'package:zoozi_wallet/features/settings/presentation/bloc/theme_bloc.dart';
 import 'package:zoozi_wallet/features/settings/presentation/bloc/theme_state.dart';
 import '../widgets/theme_switch_dialog.dart';
@@ -13,7 +14,7 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final theme = Theme.of(context);
-    final themeBloc = context.read<ThemeBloc>();
+    final themeBloc = getIt<ThemeBloc>();
 
     return Scaffold(
       appBar: AppBar(title: Text(l.settings)),
@@ -24,6 +25,7 @@ class SettingsPage extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               children: [
                 BlocBuilder<ThemeBloc, ThemeState>(
+                  bloc: themeBloc,
                   builder: (context, state) {
                     if (state is ThemeLoaded) {
                       return _buildSettingItem(
@@ -108,7 +110,7 @@ class SettingsPage extends StatelessWidget {
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor:
-                      theme.colorScheme.errorContainer.withOpacity(0.1),
+                      theme.colorScheme.errorContainer.withAlpha(25),
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -146,7 +148,7 @@ class SettingsPage extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: theme.shadowColor.withOpacity(0.1),
+              color: theme.shadowColor.withAlpha(50),
               blurRadius: 10,
               offset: const Offset(0, 2),
             ),
@@ -157,7 +159,7 @@ class SettingsPage extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: theme.colorScheme.primaryContainer.withOpacity(0.2),
+                color: theme.colorScheme.primaryContainer.withAlpha(50),
                 shape: BoxShape.circle,
               ),
               child: Icon(icon, color: theme.colorScheme.primary),
@@ -175,7 +177,7 @@ class SettingsPage extends StatelessWidget {
               Icon(
                 Icons.arrow_forward_ios,
                 size: 16,
-                color: theme.colorScheme.onSurface.withOpacity(0.5),
+                color: theme.colorScheme.onSurface.withAlpha(128),
               ),
           ],
         ),

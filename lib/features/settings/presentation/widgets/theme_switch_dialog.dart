@@ -110,7 +110,7 @@ class _ThemeOption extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: isSelected ? theme.colorScheme.primary.withOpacity(0.1) : null,
+          color: isSelected ? theme.colorScheme.primary.withAlpha(25) : null,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: isSelected

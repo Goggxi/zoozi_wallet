@@ -5,7 +5,7 @@ import '../../domain/repositories/theme_repository.dart';
 import 'theme_event.dart';
 import 'theme_state.dart';
 
-@injectable
+@singleton
 class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
   final IThemeRepository _themeRepository;
 

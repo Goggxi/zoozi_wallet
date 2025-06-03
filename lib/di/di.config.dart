@@ -60,7 +60,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i755.IAppLogger>(() => _i755.AppLogger());
     gh.factory<_i897.IThemeRepository>(
         () => _i897.ThemeRepository(gh<_i937.ILocalStorage>()));
-    gh.factory<_i786.ThemeBloc>(
+    gh.singleton<_i786.ThemeBloc>(
         () => _i786.ThemeBloc(gh<_i897.IThemeRepository>()));
     gh.factory<_i74.HttpClient>(() => _i74.HttpClient(
           gh<_i519.Client>(),
