@@ -7,5 +7,109 @@
   "welcome": "Welcome to Zoozi Wallet",
   "@welcome": {
     "description": "Welcome message shown on the home screen"
+  },
+  "welcomeBack": "Welcome back\nto Zoozi wallet",
+  "@welcomeBack": {
+    "description": "Welcome back message on login screen"
+  },
+  "createAccount": "Create an account\nit's free and easy",
+  "@createAccount": {
+    "description": "Create account message on register screen"
+  },
+  "login": "Login",
+  "@login": {
+    "description": "Login text"
+  },
+  "register": "Register",
+  "@register": {
+    "description": "Register text"
+  },
+  "signUp": "Sign up",
+  "@signUp": {
+    "description": "Sign up text"
+  },
+  "email": "Email",
+  "@email": {
+    "description": "Email field label"
+  },
+  "password": "Password",
+  "@password": {
+    "description": "Password field label"
+  },
+  "confirmPassword": "Confirm Password",
+  "@confirmPassword": {
+    "description": "Confirm password field label"
+  },
+  "fullName": "Full Name",
+  "@fullName": {
+    "description": "Full name field label"
+  },
+  "haveAccount": "You have account? ",
+  "@haveAccount": {
+    "description": "Text asking if user has account"
+  },
+  "dontHaveAccount": "Don't have an account yet? ",
+  "@dontHaveAccount": {
+    "description": "Text asking if user doesn't have account"
+  },
+  "emailRequired": "Email is required",
+  "@emailRequired": {
+    "description": "Error message when email is empty"
+  },
+  "invalidEmail": "Please enter a valid email",
+  "@invalidEmail": {
+    "description": "Error message when email is invalid"
+  },
+  "passwordRequired": "Password is required",
+  "@passwordRequired": {
+    "description": "Error message when password is empty"
+  },
+  "passwordLength": "Password must be at least 8 characters",
+  "@passwordLength": {
+    "description": "Error message when password is too short"
+  },
+  "nameRequired": "Name is required",
+  "@nameRequired": {
+    "description": "Error message when name is empty"
+  },
+  "nameLength": "Name must be at least 3 characters",
+  "@nameLength": {
+    "description": "Error message when name is too short"
+  },
+  "confirmPasswordRequired": "Confirm password is required",
+  "@confirmPasswordRequired": {
+    "description": "Error message when confirm password is empty"
+  },
+  "passwordsDoNotMatch": "Passwords do not match",
+  "@passwordsDoNotMatch": {
+    "description": "Error message when passwords don't match"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings screen title"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Language setting label"
+  },
+  "theme": "Theme",
+  "@theme": {
+    "description": "Theme setting label"
+  },
+  "notifications": "Notifications",
+  "@notifications": {
+    "description": "Notifications setting label"
+  },
+  "security": "Security",
+  "@security": {
+    "description": "Security setting label"
+  },
+  "about": "About",
+  "@about": {
+    "description": "About setting label"
+  },
+  "logout": "Logout",
+  "@logout": {
+    "description": "Logout button text"
   }
 }

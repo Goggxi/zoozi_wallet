@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zoozi_wallet/core/router/app_router.dart';
 import 'package:zoozi_wallet/di/di.dart';
+import 'package:zoozi_wallet/l10n/app_localizations.dart';
 import 'core/theme/app_theme.dart';
 
 Future<void> main() async {
@@ -22,6 +23,9 @@ class MainApp extends StatelessWidget {
         theme: AppTheme.light,
         routerConfig: getIt<AppRouter>().router,
         debugShowCheckedModeBanner: false,
+        // locale: const Locale('en'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:zoozi_wallet/core/utils/extensions/context_extension.dart';
 import 'package:zoozi_wallet/di/di.dart';
 
 import '../bloc/auth_bloc.dart';
@@ -49,6 +50,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
+
     return BlocListener<AuthBloc, AuthState>(
       bloc: _authBloc,
       listener: (context, state) {
@@ -74,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   const SizedBox(height: 40),
                   Text(
-                    'Welcome back\nto Zoozi wallet',
+                    l.welcomeBack,
                     style: GoogleFonts.quicksand(
                       fontSize: 24,
                       fontWeight: FontWeight.w600,
@@ -82,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    'Login',
+                    l.login,
                     style: GoogleFonts.quicksand(
                       color: Colors.grey,
                     ),
@@ -90,18 +93,20 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 24),
                   CustomTextField(
                     controller: _emailController,
-                    hintText: 'Email',
+                    hintText: l.email,
                     prefixIcon: Icons.email_outlined,
                     keyboardType: TextInputType.emailAddress,
-                    validator: FormValidators.validateEmail,
+                    validator: (value) =>
+                        FormValidators.validateEmail(value, context),
                   ),
                   const SizedBox(height: 16),
                   CustomTextField(
                     controller: _passwordController,
-                    hintText: 'Password',
+                    hintText: l.password,
                     prefixIcon: Icons.lock_outline,
                     obscureText: _obscurePassword,
-                    validator: FormValidators.validatePassword,
+                    validator: (value) =>
+                        FormValidators.validatePassword(value, context),
                     suffixIcon: IconButton(
                       onPressed: _togglePasswordVisibility,
                       icon: Icon(
@@ -116,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                     bloc: _authBloc,
                     builder: (context, state) {
                       return CustomButton(
-                        text: 'Login',
+                        text: l.login,
                         onPressed: _handleLogin,
                         isLoading: state is AuthLoading,
                       );
@@ -127,12 +132,12 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Don\'t have an account yet? ',
+                        l.dontHaveAccount,
                         style: GoogleFonts.quicksand(),
                       ),
                       TextButton(
                         onPressed: () => context.push('/register'),
-                        child: const Text('Register'),
+                        child: Text(l.register),
                       ),
                     ],
                   ),

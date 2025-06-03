@@ -7,5 +7,109 @@
   "welcome": "Selamat datang di Zoozi Wallet",
   "@welcome": {
     "description": "Welcome message shown on the home screen"
+  },
+  "welcomeBack": "Selamat datang kembali\ndi Zoozi wallet",
+  "@welcomeBack": {
+    "description": "Welcome back message on login screen"
+  },
+  "createAccount": "Buat akun\ngratis dan mudah",
+  "@createAccount": {
+    "description": "Create account message on register screen"
+  },
+  "login": "Masuk",
+  "@login": {
+    "description": "Login text"
+  },
+  "register": "Daftar",
+  "@register": {
+    "description": "Register text"
+  },
+  "signUp": "Daftar",
+  "@signUp": {
+    "description": "Sign up text"
+  },
+  "email": "Email",
+  "@email": {
+    "description": "Email field label"
+  },
+  "password": "Kata Sandi",
+  "@password": {
+    "description": "Password field label"
+  },
+  "confirmPassword": "Konfirmasi Kata Sandi",
+  "@confirmPassword": {
+    "description": "Confirm password field label"
+  },
+  "fullName": "Nama Lengkap",
+  "@fullName": {
+    "description": "Full name field label"
+  },
+  "haveAccount": "Sudah punya akun? ",
+  "@haveAccount": {
+    "description": "Text asking if user has account"
+  },
+  "dontHaveAccount": "Belum punya akun? ",
+  "@dontHaveAccount": {
+    "description": "Text asking if user doesn't have account"
+  },
+  "emailRequired": "Email wajib diisi",
+  "@emailRequired": {
+    "description": "Error message when email is empty"
+  },
+  "invalidEmail": "Masukkan email yang valid",
+  "@invalidEmail": {
+    "description": "Error message when email is invalid"
+  },
+  "passwordRequired": "Kata sandi wajib diisi",
+  "@passwordRequired": {
+    "description": "Error message when password is empty"
+  },
+  "passwordLength": "Kata sandi minimal 8 karakter",
+  "@passwordLength": {
+    "description": "Error message when password is too short"
+  },
+  "nameRequired": "Nama wajib diisi",
+  "@nameRequired": {
+    "description": "Error message when name is empty"
+  },
+  "nameLength": "Nama minimal 3 karakter",
+  "@nameLength": {
+    "description": "Error message when name is too short"
+  },
+  "confirmPasswordRequired": "Konfirmasi kata sandi wajib diisi",
+  "@confirmPasswordRequired": {
+    "description": "Error message when confirm password is empty"
+  },
+  "passwordsDoNotMatch": "Kata sandi tidak cocok",
+  "@passwordsDoNotMatch": {
+    "description": "Error message when passwords don't match"
+  },
+  "settings": "Pengaturan",
+  "@settings": {
+    "description": "Settings screen title"
+  },
+  "language": "Bahasa",
+  "@language": {
+    "description": "Language setting label"
+  },
+  "theme": "Tema",
+  "@theme": {
+    "description": "Theme setting label"
+  },
+  "notifications": "Notifikasi",
+  "@notifications": {
+    "description": "Notifications setting label"
+  },
+  "security": "Keamanan",
+  "@security": {
+    "description": "Security setting label"
+  },
+  "about": "Tentang",
+  "@about": {
+    "description": "About setting label"
+  },
+  "logout": "Keluar",
+  "@logout": {
+    "description": "Logout button text"
   }
 }

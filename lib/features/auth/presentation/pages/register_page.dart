@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:zoozi_wallet/core/utils/extensions/context_extension.dart';
 import 'package:zoozi_wallet/di/di.dart';
 
 import '../bloc/auth_bloc.dart';
@@ -61,6 +62,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
+
     return BlocListener<AuthBloc, AuthState>(
       bloc: _authBloc,
       listener: (context, state) {
@@ -86,7 +89,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 children: [
                   const SizedBox(height: 40),
                   Text(
-                    'Create an account\nit\'s free and easy',
+                    l.createAccount,
                     style: GoogleFonts.quicksand(
                       fontSize: 24,
                       fontWeight: FontWeight.w600,
@@ -94,7 +97,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    'Sign up',
+                    l.signUp,
                     style: GoogleFonts.quicksand(
                       color: Colors.grey,
                     ),
@@ -102,25 +105,28 @@ class _RegisterPageState extends State<RegisterPage> {
                   const SizedBox(height: 24),
                   CustomTextField(
                     controller: _nameController,
-                    hintText: 'Full Name',
+                    hintText: l.fullName,
                     prefixIcon: Icons.person_outline,
-                    validator: FormValidators.validateName,
+                    validator: (value) =>
+                        FormValidators.validateName(value, context),
                   ),
                   const SizedBox(height: 16),
                   CustomTextField(
                     controller: _emailController,
-                    hintText: 'Email',
+                    hintText: l.email,
                     prefixIcon: Icons.email_outlined,
                     keyboardType: TextInputType.emailAddress,
-                    validator: FormValidators.validateEmail,
+                    validator: (value) =>
+                        FormValidators.validateEmail(value, context),
                   ),
                   const SizedBox(height: 16),
                   CustomTextField(
                     controller: _passwordController,
-                    hintText: 'Password',
+                    hintText: l.password,
                     prefixIcon: Icons.lock_outline,
                     obscureText: _obscurePassword,
-                    validator: FormValidators.validatePassword,
+                    validator: (value) =>
+                        FormValidators.validatePassword(value, context),
                     suffixIcon: IconButton(
                       onPressed: _togglePasswordVisibility,
                       icon: Icon(
@@ -133,13 +139,14 @@ class _RegisterPageState extends State<RegisterPage> {
                   const SizedBox(height: 16),
                   CustomTextField(
                     controller: _confirmPasswordController,
-                    hintText: 'Confirm Password',
+                    hintText: l.confirmPassword,
                     prefixIcon: Icons.lock_outline,
                     obscureText: _obscureConfirmPassword,
                     validator: (value) =>
                         FormValidators.validateConfirmPassword(
                       value,
                       _passwordController.text,
+                      context,
                     ),
                     suffixIcon: IconButton(
                       onPressed: _toggleConfirmPasswordVisibility,
@@ -155,7 +162,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     bloc: _authBloc,
                     builder: (context, state) {
                       return CustomButton(
-                        text: 'Register',
+                        text: l.register,
                         onPressed: _handleRegister,
                         isLoading: state is AuthLoading,
                       );
@@ -166,12 +173,12 @@ class _RegisterPageState extends State<RegisterPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'You have account? ',
+                        l.haveAccount,
                         style: GoogleFonts.quicksand(),
                       ),
                       TextButton(
                         onPressed: () => context.pop(),
-                        child: const Text('Login'),
+                        child: Text(l.login),
                       ),
                     ],
                   ),

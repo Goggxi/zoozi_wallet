@@ -109,6 +109,162 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Welcome to Zoozi Wallet'**
   String get welcome;
+
+  /// Welcome back message on login screen
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back\nto Zoozi wallet'**
+  String get welcomeBack;
+
+  /// Create account message on register screen
+  ///
+  /// In en, this message translates to:
+  /// **'Create an account\nit\'s free and easy'**
+  String get createAccount;
+
+  /// Login text
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get login;
+
+  /// Register text
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get register;
+
+  /// Sign up text
+  ///
+  /// In en, this message translates to:
+  /// **'Sign up'**
+  String get signUp;
+
+  /// Email field label
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// Password field label
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// Confirm password field label
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirmPassword;
+
+  /// Full name field label
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name'**
+  String get fullName;
+
+  /// Text asking if user has account
+  ///
+  /// In en, this message translates to:
+  /// **'You have account? '**
+  String get haveAccount;
+
+  /// Text asking if user doesn't have account
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account yet? '**
+  String get dontHaveAccount;
+
+  /// Error message when email is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Email is required'**
+  String get emailRequired;
+
+  /// Error message when email is invalid
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email'**
+  String get invalidEmail;
+
+  /// Error message when password is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Password is required'**
+  String get passwordRequired;
+
+  /// Error message when password is too short
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters'**
+  String get passwordLength;
+
+  /// Error message when name is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Name is required'**
+  String get nameRequired;
+
+  /// Error message when name is too short
+  ///
+  /// In en, this message translates to:
+  /// **'Name must be at least 3 characters'**
+  String get nameLength;
+
+  /// Error message when confirm password is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm password is required'**
+  String get confirmPasswordRequired;
+
+  /// Error message when passwords don't match
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordsDoNotMatch;
+
+  /// Settings screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// Language setting label
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// Theme setting label
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get theme;
+
+  /// Notifications setting label
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifications;
+
+  /// Security setting label
+  ///
+  /// In en, this message translates to:
+  /// **'Security'**
+  String get security;
+
+  /// About setting label
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get about;
+
+  /// Logout button text
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logout;
 }
 
 class _AppLocalizationsDelegate

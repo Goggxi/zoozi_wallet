@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:zoozi_wallet/core/utils/extensions/context_extension.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -21,11 +22,12 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    final l = context.l10n;
+    return Scaffold(
       body: Center(
         child: Text(
-          'Zoozi Wallet',
-          style: TextStyle(
+          l.appName,
+          style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
           ),

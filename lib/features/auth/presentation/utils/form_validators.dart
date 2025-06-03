@@ -1,7 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:zoozi_wallet/l10n/app_localizations.dart';
+
 class FormValidators {
-  static String? validateEmail(String? value) {
+  static String? validateEmail(String? value, BuildContext context) {
     if (value == null || value.isEmpty) {
-      return 'Email is required';
+      return AppLocalizations.of(context).emailRequired;
     }
 
     final emailRegex = RegExp(
@@ -9,43 +12,44 @@ class FormValidators {
     );
 
     if (!emailRegex.hasMatch(value)) {
-      return 'Please enter a valid email';
+      return AppLocalizations.of(context).invalidEmail;
     }
 
     return null;
   }
 
-  static String? validatePassword(String? value) {
+  static String? validatePassword(String? value, BuildContext context) {
     if (value == null || value.isEmpty) {
-      return 'Password is required';
+      return AppLocalizations.of(context).passwordRequired;
     }
 
     if (value.length < 8) {
-      return 'Password must be at least 8 characters';
+      return AppLocalizations.of(context).passwordLength;
     }
 
     return null;
   }
 
-  static String? validateName(String? value) {
+  static String? validateName(String? value, BuildContext context) {
     if (value == null || value.isEmpty) {
-      return 'Name is required';
+      return AppLocalizations.of(context).nameRequired;
     }
 
     if (value.length < 3) {
-      return 'Name must be at least 3 characters';
+      return AppLocalizations.of(context).nameLength;
     }
 
     return null;
   }
 
-  static String? validateConfirmPassword(String? value, String password) {
+  static String? validateConfirmPassword(
+      String? value, String password, BuildContext context) {
     if (value == null || value.isEmpty) {
-      return 'Confirm password is required';
+      return AppLocalizations.of(context).confirmPasswordRequired;
     }
 
     if (value != password) {
-      return 'Passwords do not match';
+      return AppLocalizations.of(context).passwordsDoNotMatch;
     }
 
     return null;
