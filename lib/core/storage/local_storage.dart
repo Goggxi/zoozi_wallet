@@ -156,7 +156,11 @@ class LocalStorage implements ILocalStorage {
     try {
       return _prefs.clear();
     } catch (e) {
-      throw CacheException(message: 'Failed to clear storage', error: e);
+      throw CacheException(
+        message: 'cache_clear_error',
+        error: e,
+        key: 'all',
+      );
     }
   }
 

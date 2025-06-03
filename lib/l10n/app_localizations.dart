@@ -325,6 +325,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invalid JSON format. Please check your input.'**
   String get invalidJsonError;
+
+  /// Error message for network errors
+  ///
+  /// In en, this message translates to:
+  /// **'Network error occurred. Please check your connection.'**
+  String get networkError;
+
+  /// Error message for request timeout
+  ///
+  /// In en, this message translates to:
+  /// **'Request timed out. Please try again.'**
+  String get requestTimeout;
+
+  /// Error message for forbidden access
+  ///
+  /// In en, this message translates to:
+  /// **'You don\'t have permission to access this resource.'**
+  String get forbiddenError;
+
+  /// Error message for bad request
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid request. Please check your input.'**
+  String get badRequestError;
+
+  /// Error message for validation errors
+  ///
+  /// In en, this message translates to:
+  /// **'Validation failed. Please check your input.'**
+  String get validationError;
+
+  /// Error message for cache read errors
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to read {key} from cache.'**
+  String cacheReadError(String key);
+
+  /// Error message for cache write errors
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to write {key} to cache.'**
+  String cacheWriteError(String key);
+
+  /// Error message for cache delete errors
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to delete {key} from cache.'**
+  String cacheDeleteError(String key);
+
+  /// Error message for cache clear operation
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to clear storage data.'**
+  String get cacheClearError;
 }
 
 class _AppLocalizationsDelegate

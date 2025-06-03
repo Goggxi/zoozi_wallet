@@ -1,18 +1,19 @@
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/utils/exceptions/api_exception.dart';
+import '../../../../core/utils/types/api_result.dart';
 import '../../data/datasources/auth_local_data_source.dart';
 import '../../data/datasources/auth_remote_data_source.dart';
 import '../../data/models/auth_model.dart';
 
 abstract class IAuthRepository {
-  Future<(ApiException?, AuthModel?)> login(String email, String password);
-  Future<(ApiException?, AuthModel?)> register({
+  Future<ApiResult<AuthModel>> login(String email, String password);
+  Future<ApiResult<AuthModel>> register({
     required String email,
     required String password,
     String? name,
   });
-  Future<(ApiException?, void)> logout();
+  Future<ApiResult<void>> logout();
   AuthModel? getCurrentUser();
   bool get isAuthenticated;
 }
@@ -25,7 +26,7 @@ class AuthRepository implements IAuthRepository {
   AuthRepository(this._remoteDataSource, this._localDataSource);
 
   @override
-  Future<(ApiException?, AuthModel?)> login(
+  Future<ApiResult<AuthModel>> login(
     String email,
     String password,
   ) async {
@@ -35,14 +36,14 @@ class AuthRepository implements IAuthRepository {
         await _localDataSource.saveToken(user.token!);
       }
       await _localDataSource.saveUser(user);
-      return (null, user);
+      return Success(user);
     } on ApiException catch (e) {
-      return (e, null);
+      return Error(e);
     }
   }
 
   @override
-  Future<(ApiException?, AuthModel?)> register({
+  Future<ApiResult<AuthModel>> register({
     required String email,
     required String password,
     String? name,
@@ -57,19 +58,19 @@ class AuthRepository implements IAuthRepository {
         await _localDataSource.saveToken(user.token!);
       }
       await _localDataSource.saveUser(user);
-      return (null, user);
+      return Success(user);
     } on ApiException catch (e) {
-      return (e, null);
+      return Error(e);
     }
   }
 
   @override
-  Future<(ApiException?, void)> logout() async {
+  Future<ApiResult<void>> logout() async {
     try {
       await _localDataSource.clearAuth();
-      return (null, null);
+      return Success(null);
     } on ApiException catch (e) {
-      return (e, null);
+      return Error(e);
     }
   }
 

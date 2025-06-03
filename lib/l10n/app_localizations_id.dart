@@ -127,4 +127,40 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get invalidJsonError =>
       'Format JSON tidak valid. Silakan periksa input Anda.';
+
+  @override
+  String get networkError =>
+      'Terjadi kesalahan jaringan. Silakan periksa koneksi Anda.';
+
+  @override
+  String get requestTimeout => 'Permintaan waktu habis. Silakan coba lagi.';
+
+  @override
+  String get forbiddenError =>
+      'Anda tidak memiliki izin untuk mengakses sumber daya ini.';
+
+  @override
+  String get badRequestError =>
+      'Permintaan tidak valid. Silakan periksa input Anda.';
+
+  @override
+  String get validationError => 'Validasi gagal. Silakan periksa input Anda.';
+
+  @override
+  String cacheReadError(String key) {
+    return 'Gagal membaca $key dari cache.';
+  }
+
+  @override
+  String cacheWriteError(String key) {
+    return 'Gagal menulis $key ke cache.';
+  }
+
+  @override
+  String cacheDeleteError(String key) {
+    return 'Gagal menghapus $key dari cache.';
+  }
+
+  @override
+  String get cacheClearError => 'Gagal menghapus data penyimpanan.';
 }

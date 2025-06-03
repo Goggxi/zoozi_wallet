@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/utils/types/api_result.dart';
 import '../../data/models/auth_model.dart';
 import '../../domain/repositories/auth_repository.dart';
 
@@ -16,26 +18,33 @@ abstract class AuthEvent extends Equatable {
 class LoginEvent extends AuthEvent {
   final String email;
   final String password;
+  final BuildContext context;
 
-  const LoginEvent({required this.email, required this.password});
+  const LoginEvent({
+    required this.email,
+    required this.password,
+    required this.context,
+  });
 
   @override
-  List<Object?> get props => [email, password];
+  List<Object?> get props => [email, password, context];
 }
 
 class RegisterEvent extends AuthEvent {
   final String email;
   final String password;
   final String? name;
+  final BuildContext context;
 
   const RegisterEvent({
     required this.email,
     required this.password,
     this.name,
+    required this.context,
   });
 
   @override
-  List<Object?> get props => [email, password, name];
+  List<Object?> get props => [email, password, name, context];
 }
 
 class LogoutEvent extends AuthEvent {}
@@ -89,42 +98,44 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onLogin(LoginEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
 
-    final (error, user) =
-        await _authRepository.login(event.email, event.password);
+    final result = await _authRepository.login(event.email, event.password);
 
-    if (error != null) {
-      emit(AuthError(error.message));
-    } else {
-      emit(AuthAuthenticated(user!));
-    }
+    result.fold(
+      onSuccess: (user) => emit(AuthAuthenticated(user)),
+      onError: (error) {
+        error = error.copyWith(context: event.context);
+        emit(AuthError(error.getLocalizedMessage()));
+      },
+    );
   }
 
   Future<void> _onRegister(RegisterEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
 
-    final (error, user) = await _authRepository.register(
+    final result = await _authRepository.register(
       email: event.email,
       password: event.password,
       name: event.name,
     );
 
-    if (error != null) {
-      emit(AuthError(error.message));
-    } else {
-      emit(AuthAuthenticated(user!));
-    }
+    result.fold(
+      onSuccess: (user) => emit(AuthAuthenticated(user)),
+      onError: (error) {
+        error = error.copyWith(context: event.context);
+        emit(AuthError(error.getLocalizedMessage()));
+      },
+    );
   }
 
   Future<void> _onLogout(LogoutEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
 
-    final (error, _) = await _authRepository.logout();
+    final result = await _authRepository.logout();
 
-    if (error != null) {
-      emit(AuthError(error.message));
-    } else {
-      emit(AuthUnauthenticated());
-    }
+    result.fold(
+      onSuccess: (_) => emit(AuthUnauthenticated()),
+      onError: (error) => emit(AuthError(error.message)),
+    );
   }
 
   Future<void> _onCheckAuthStatus(

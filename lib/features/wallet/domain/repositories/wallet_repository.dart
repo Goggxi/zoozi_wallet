@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/utils/exceptions/api_exception.dart';
+import '../../../../core/utils/types/api_result.dart';
 import '../../data/datasources/wallet_remote_data_source.dart';
 import '../../data/models/transaction_model.dart' as model;
 import '../../data/models/wallet_model.dart';
@@ -8,54 +9,54 @@ import '../entities/transaction.dart' as entity;
 
 abstract class IWalletRepository {
   // Wallet operations
-  Future<(ApiException?, WalletModel?)> createWallet({
+  Future<ApiResult<WalletModel>> createWallet({
     String? currency,
     double? initialBalance,
   });
-  Future<(ApiException?, List<WalletModel>?)> getWallets();
-  Future<(ApiException?, WalletModel?)> getWalletById(String id);
-  Future<(ApiException?, WalletModel?)> updateWallet(WalletModel wallet);
-  Future<(ApiException?, void)> deleteWallet(String id);
+  Future<ApiResult<List<WalletModel>>> getWallets();
+  Future<ApiResult<WalletModel>> getWalletById(String id);
+  Future<ApiResult<WalletModel>> updateWallet(WalletModel wallet);
+  Future<ApiResult<void>> deleteWallet(String id);
 
   // Transaction operations
-  Future<(ApiException?, model.TransactionModel?)> createDeposit({
+  Future<ApiResult<model.TransactionModel>> createDeposit({
     required String walletId,
     required double amount,
     String? description,
     String? referenceId,
   });
 
-  Future<(ApiException?, model.TransactionModel?)> createWithdrawal({
+  Future<ApiResult<model.TransactionModel>> createWithdrawal({
     required String walletId,
     required double amount,
     String? description,
     String? referenceId,
   });
 
-  Future<(ApiException?, model.TransactionModel?)> createTransaction({
+  Future<ApiResult<model.TransactionModel>> createTransaction({
     required String walletId,
     required double amount,
     required entity.TransactionType type,
     String? description,
     String? toWalletId,
   });
-  Future<(ApiException?, List<model.TransactionModel>?)> getTransactions({
+  Future<ApiResult<List<model.TransactionModel>>> getTransactions({
     required String walletId,
     int? page,
     int? limit,
   });
-  Future<(ApiException?, model.TransactionModel?)> getTransactionById(
+  Future<ApiResult<model.TransactionModel>> getTransactionById(
     String walletId,
     String id,
   );
-  Future<(ApiException?, void)> deleteTransaction(
+  Future<ApiResult<void>> deleteTransaction(
     String walletId,
     String id,
   );
 
   // Balance operations
-  Future<(ApiException?, double?)> getWalletBalance(String walletId);
-  Future<(ApiException?, model.TransactionModel?)> transferBetweenWallets({
+  Future<ApiResult<double>> getWalletBalance(String walletId);
+  Future<ApiResult<model.TransactionModel>> transferBetweenWallets({
     required String fromWalletId,
     required String toWalletId,
     required double amount,
@@ -70,7 +71,7 @@ class WalletRepository implements IWalletRepository {
   WalletRepository(this._remoteDataSource);
 
   @override
-  Future<(ApiException?, WalletModel?)> createWallet({
+  Future<ApiResult<WalletModel>> createWallet({
     String? currency,
     double? initialBalance,
   }) async {
@@ -79,54 +80,54 @@ class WalletRepository implements IWalletRepository {
         currency: currency,
         initialBalance: initialBalance,
       );
-      return (null, wallet);
+      return Success(wallet);
     } on ApiException catch (e) {
-      return (e, null);
+      return Error(e);
     }
   }
 
   @override
-  Future<(ApiException?, List<WalletModel>?)> getWallets() async {
+  Future<ApiResult<List<WalletModel>>> getWallets() async {
     try {
       final wallets = await _remoteDataSource.getWallets();
-      return (null, wallets);
+      return Success(wallets);
     } on ApiException catch (e) {
-      return (e, null);
+      return Error(e);
     }
   }
 
   @override
-  Future<(ApiException?, WalletModel?)> getWalletById(String id) async {
+  Future<ApiResult<WalletModel>> getWalletById(String id) async {
     try {
       final wallet = await _remoteDataSource.getWalletById(id);
-      return (null, wallet);
+      return Success(wallet);
     } on ApiException catch (e) {
-      return (e, null);
+      return Error(e);
     }
   }
 
   @override
-  Future<(ApiException?, WalletModel?)> updateWallet(WalletModel wallet) async {
+  Future<ApiResult<WalletModel>> updateWallet(WalletModel wallet) async {
     try {
       final updatedWallet = await _remoteDataSource.updateWallet(wallet);
-      return (null, updatedWallet);
+      return Success(updatedWallet);
     } on ApiException catch (e) {
-      return (e, null);
+      return Error(e);
     }
   }
 
   @override
-  Future<(ApiException?, void)> deleteWallet(String id) async {
+  Future<ApiResult<void>> deleteWallet(String id) async {
     try {
       await _remoteDataSource.deleteWallet(id);
-      return (null, null);
+      return Success(null);
     } on ApiException catch (e) {
-      return (e, null);
+      return Error(e);
     }
   }
 
   @override
-  Future<(ApiException?, model.TransactionModel?)> createDeposit({
+  Future<ApiResult<model.TransactionModel>> createDeposit({
     required String walletId,
     required double amount,
     String? description,
@@ -137,15 +138,16 @@ class WalletRepository implements IWalletRepository {
         walletId: walletId,
         amount: amount,
         description: description,
+        referenceId: referenceId,
       );
-      return (null, transaction);
+      return Success(transaction);
     } on ApiException catch (e) {
-      return (e, null);
+      return Error(e);
     }
   }
 
   @override
-  Future<(ApiException?, model.TransactionModel?)> createWithdrawal({
+  Future<ApiResult<model.TransactionModel>> createWithdrawal({
     required String walletId,
     required double amount,
     String? description,
@@ -156,15 +158,16 @@ class WalletRepository implements IWalletRepository {
         walletId: walletId,
         amount: amount,
         description: description,
+        referenceId: referenceId,
       );
-      return (null, transaction);
+      return Success(transaction);
     } on ApiException catch (e) {
-      return (e, null);
+      return Error(e);
     }
   }
 
   @override
-  Future<(ApiException?, model.TransactionModel?)> createTransaction({
+  Future<ApiResult<model.TransactionModel>> createTransaction({
     required String walletId,
     required double amount,
     required entity.TransactionType type,
@@ -179,23 +182,23 @@ class WalletRepository implements IWalletRepository {
             amount: amount,
             description: description,
           );
-          return (null, transaction);
+          return Success(transaction);
         case entity.TransactionType.expense:
           final transaction = await _remoteDataSource.createWithdrawal(
             walletId: walletId,
             amount: amount,
             description: description,
           );
-          return (null, transaction);
+          return Success(transaction);
         case entity.TransactionType.transfer:
           if (toWalletId == null) {
-            throw const ApiException(
+            return Error(const ApiException(
               message: 'Target wallet is required for transfer',
               statusCode: 400,
               errorType: 'validation_error',
-            );
+            ));
           }
-          return await transferBetweenWallets(
+          return transferBetweenWallets(
             fromWalletId: walletId,
             toWalletId: toWalletId,
             amount: amount,
@@ -203,12 +206,12 @@ class WalletRepository implements IWalletRepository {
           );
       }
     } on ApiException catch (e) {
-      return (e, null);
+      return Error(e);
     }
   }
 
   @override
-  Future<(ApiException?, List<model.TransactionModel>?)> getTransactions({
+  Future<ApiResult<List<model.TransactionModel>>> getTransactions({
     required String walletId,
     int? page,
     int? limit,
@@ -219,14 +222,14 @@ class WalletRepository implements IWalletRepository {
         page: page,
         limit: limit,
       );
-      return (null, response.transactions);
+      return Success(response.transactions);
     } on ApiException catch (e) {
-      return (e, null);
+      return Error(e);
     }
   }
 
   @override
-  Future<(ApiException?, model.TransactionModel?)> getTransactionById(
+  Future<ApiResult<model.TransactionModel>> getTransactionById(
     String walletId,
     String id,
   ) async {
@@ -235,37 +238,37 @@ class WalletRepository implements IWalletRepository {
         walletId,
         id,
       );
-      return (null, transaction);
+      return Success(transaction);
     } on ApiException catch (e) {
-      return (e, null);
+      return Error(e);
     }
   }
 
   @override
-  Future<(ApiException?, void)> deleteTransaction(
+  Future<ApiResult<void>> deleteTransaction(
     String walletId,
     String id,
   ) async {
     try {
       await _remoteDataSource.deleteTransaction(walletId, id);
-      return (null, null);
+      return Success(null);
     } on ApiException catch (e) {
-      return (e, null);
+      return Error(e);
     }
   }
 
   @override
-  Future<(ApiException?, double?)> getWalletBalance(String walletId) async {
+  Future<ApiResult<double>> getWalletBalance(String walletId) async {
     try {
       final wallet = await _remoteDataSource.getWalletById(walletId);
-      return (null, wallet.balance);
+      return Success(wallet.balance);
     } on ApiException catch (e) {
-      return (e, null);
+      return Error(e);
     }
   }
 
   @override
-  Future<(ApiException?, model.TransactionModel?)> transferBetweenWallets({
+  Future<ApiResult<model.TransactionModel>> transferBetweenWallets({
     required String fromWalletId,
     required String toWalletId,
     required double amount,
@@ -278,9 +281,9 @@ class WalletRepository implements IWalletRepository {
         amount: amount,
         description: description,
       );
-      return (null, transaction);
+      return Success(transaction);
     } on ApiException catch (e) {
-      return (e, null);
+      return Error(e);
     }
   }
 }

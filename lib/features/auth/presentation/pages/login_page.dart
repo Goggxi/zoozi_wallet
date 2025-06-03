@@ -43,6 +43,7 @@ class _LoginPageState extends State<LoginPage> {
         LoginEvent(
           email: _emailController.text,
           password: _passwordController.text,
+          context: context,
         ),
       );
     }

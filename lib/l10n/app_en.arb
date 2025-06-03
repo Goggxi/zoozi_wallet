@@ -151,5 +151,59 @@
   "invalidJsonError": "Invalid JSON format. Please check your input.",
   "@invalidJsonError": {
     "description": "Error message for invalid JSON format"
+  },
+  "networkError": "Network error occurred. Please check your connection.",
+  "@networkError": {
+    "description": "Error message for network errors"
+  },
+  "requestTimeout": "Request timed out. Please try again.",
+  "@requestTimeout": {
+    "description": "Error message for request timeout"
+  },
+  "forbiddenError": "You don't have permission to access this resource.",
+  "@forbiddenError": {
+    "description": "Error message for forbidden access"
+  },
+  "badRequestError": "Invalid request. Please check your input.",
+  "@badRequestError": {
+    "description": "Error message for bad request"
+  },
+  "validationError": "Validation failed. Please check your input.",
+  "@validationError": {
+    "description": "Error message for validation errors"
+  },
+  "cacheReadError": "Failed to read {key} from cache.",
+  "@cacheReadError": {
+    "description": "Error message for cache read errors",
+    "placeholders": {
+      "key": {
+        "type": "String",
+        "example": "user_data"
+      }
+    }
+  },
+  "cacheWriteError": "Failed to write {key} to cache.",
+  "@cacheWriteError": {
+    "description": "Error message for cache write errors",
+    "placeholders": {
+      "key": {
+        "type": "String",
+        "example": "user_data"
+      }
+    }
+  },
+  "cacheDeleteError": "Failed to delete {key} from cache.",
+  "@cacheDeleteError": {
+    "description": "Error message for cache delete errors",
+    "placeholders": {
+      "key": {
+        "type": "String",
+        "example": "user_data"
+      }
+    }
+  },
+  "cacheClearError": "Failed to clear storage data.",
+  "@cacheClearError": {
+    "description": "Error message for cache clear operation"
   }
 }

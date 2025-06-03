@@ -126,4 +126,39 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get invalidJsonError =>
       'Invalid JSON format. Please check your input.';
+
+  @override
+  String get networkError =>
+      'Network error occurred. Please check your connection.';
+
+  @override
+  String get requestTimeout => 'Request timed out. Please try again.';
+
+  @override
+  String get forbiddenError =>
+      'You don\'t have permission to access this resource.';
+
+  @override
+  String get badRequestError => 'Invalid request. Please check your input.';
+
+  @override
+  String get validationError => 'Validation failed. Please check your input.';
+
+  @override
+  String cacheReadError(String key) {
+    return 'Failed to read $key from cache.';
+  }
+
+  @override
+  String cacheWriteError(String key) {
+    return 'Failed to write $key to cache.';
+  }
+
+  @override
+  String cacheDeleteError(String key) {
+    return 'Failed to delete $key from cache.';
+  }
+
+  @override
+  String get cacheClearError => 'Failed to clear storage data.';
 }

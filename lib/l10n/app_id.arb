@@ -151,5 +151,59 @@
   "invalidJsonError": "Format JSON tidak valid. Silakan periksa input Anda.",
   "@invalidJsonError": {
     "description": "Error message for invalid JSON format"
+  },
+  "networkError": "Terjadi kesalahan jaringan. Silakan periksa koneksi Anda.",
+  "@networkError": {
+    "description": "Error message for network errors"
+  },
+  "requestTimeout": "Permintaan waktu habis. Silakan coba lagi.",
+  "@requestTimeout": {
+    "description": "Error message for request timeout"
+  },
+  "forbiddenError": "Anda tidak memiliki izin untuk mengakses sumber daya ini.",
+  "@forbiddenError": {
+    "description": "Error message for forbidden access"
+  },
+  "badRequestError": "Permintaan tidak valid. Silakan periksa input Anda.",
+  "@badRequestError": {
+    "description": "Error message for bad request"
+  },
+  "validationError": "Validasi gagal. Silakan periksa input Anda.",
+  "@validationError": {
+    "description": "Error message for validation errors"
+  },
+  "cacheReadError": "Gagal membaca {key} dari cache.",
+  "@cacheReadError": {
+    "description": "Error message for cache read errors",
+    "placeholders": {
+      "key": {
+        "type": "String",
+        "example": "user_data"
+      }
+    }
+  },
+  "cacheWriteError": "Gagal menulis {key} ke cache.",
+  "@cacheWriteError": {
+    "description": "Error message for cache write errors",
+    "placeholders": {
+      "key": {
+        "type": "String",
+        "example": "user_data"
+      }
+    }
+  },
+  "cacheDeleteError": "Gagal menghapus {key} dari cache.",
+  "@cacheDeleteError": {
+    "description": "Error message for cache delete errors",
+    "placeholders": {
+      "key": {
+        "type": "String",
+        "example": "user_data"
+      }
+    }
+  },
+  "cacheClearError": "Gagal menghapus data penyimpanan.",
+  "@cacheClearError": {
+    "description": "Error message for cache clear operation"
   }
 }
