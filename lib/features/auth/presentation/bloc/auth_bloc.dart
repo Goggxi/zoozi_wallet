@@ -23,6 +23,21 @@ class LoginEvent extends AuthEvent {
   List<Object?> get props => [email, password];
 }
 
+class RegisterEvent extends AuthEvent {
+  final String email;
+  final String password;
+  final String? name;
+
+  const RegisterEvent({
+    required this.email,
+    required this.password,
+    this.name,
+  });
+
+  @override
+  List<Object?> get props => [email, password, name];
+}
+
 class LogoutEvent extends AuthEvent {}
 
 class CheckAuthStatusEvent extends AuthEvent {}
@@ -66,6 +81,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   AuthBloc(this._authRepository) : super(AuthInitial()) {
     on<LoginEvent>(_onLogin);
+    on<RegisterEvent>(_onRegister);
     on<LogoutEvent>(_onLogout);
     on<CheckAuthStatusEvent>(_onCheckAuthStatus);
   }
@@ -75,6 +91,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     final (error, user) =
         await _authRepository.login(event.email, event.password);
+
+    if (error != null) {
+      emit(AuthError(error.message));
+    } else {
+      emit(AuthAuthenticated(user!));
+    }
+  }
+
+  Future<void> _onRegister(RegisterEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+
+    final (error, user) = await _authRepository.register(
+      email: event.email,
+      password: event.password,
+      name: event.name,
+    );
 
     if (error != null) {
       emit(AuthError(error.message));
