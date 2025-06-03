@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "appName": "Zoozi Wallet",
+  "@appName": {
+    "description": "The name of the application"
+  },
+  "welcome": "Welcome to Zoozi Wallet",
+  "@welcome": {
+    "description": "Welcome message shown on the home screen"
+  }
+}
