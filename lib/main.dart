@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'di/di.dart';
-import 'core/router/app_router.dart';
+import 'package:zoozi_wallet/core/router/app_router.dart';
+import 'package:zoozi_wallet/di/di.dart';
+import 'core/theme/app_theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,16 +14,15 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final router = getIt<AppRouter>().router;
-
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      title: 'Zoozi Wallet',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      behavior: HitTestBehavior.translucent,
+      child: MaterialApp.router(
+        title: 'Zoozi Wallet',
+        theme: AppTheme.light,
+        routerConfig: getIt<AppRouter>().router,
+        debugShowCheckedModeBanner: false,
       ),
-      routerConfig: router,
     );
   }
 }
