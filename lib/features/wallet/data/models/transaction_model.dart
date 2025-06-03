@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import '../../domain/entities/transaction.dart' as entity;
 
 part 'transaction_model.g.dart';
 
@@ -12,25 +13,28 @@ enum TransactionType {
 
 @JsonSerializable()
 class TransactionModel extends Equatable {
-  final int id;
-  final int walletId;
-  final TransactionType type;
+  final String id;
+  final String title;
+  final String description;
   final double amount;
-  final String? description;
-  final String? referenceId;
-  @JsonKey(name: 'timestamp')
-  final DateTime timestamp;
-  final int? relatedTransactionId;
+  @JsonKey(name: 'type')
+  final String typeString;
+  @JsonKey(name: 'from_wallet_id')
+  final String fromWalletId;
+  @JsonKey(name: 'to_wallet_id')
+  final String? toWalletId;
+  @JsonKey(name: 'created_at')
+  final DateTime createdAt;
 
   const TransactionModel({
     required this.id,
-    required this.walletId,
-    required this.type,
+    required this.title,
+    required this.description,
     required this.amount,
-    this.description,
-    this.referenceId,
-    required this.timestamp,
-    this.relatedTransactionId,
+    required this.typeString,
+    required this.fromWalletId,
+    this.toWalletId,
+    required this.createdAt,
   });
 
   factory TransactionModel.fromJson(Map<String, dynamic> json) =>
@@ -41,14 +45,64 @@ class TransactionModel extends Equatable {
   @override
   List<Object?> get props => [
         id,
-        walletId,
-        type,
-        amount,
+        title,
         description,
-        referenceId,
-        timestamp,
-        relatedTransactionId,
+        amount,
+        typeString,
+        fromWalletId,
+        toWalletId,
+        createdAt,
       ];
+
+  entity.TransactionType get type {
+    switch (typeString.toLowerCase()) {
+      case 'income':
+        return entity.TransactionType.income;
+      case 'expense':
+        return entity.TransactionType.expense;
+      case 'transfer':
+        return entity.TransactionType.transfer;
+      default:
+        throw ArgumentError('Invalid transaction type: $typeString');
+    }
+  }
+
+  entity.Transaction toEntity() {
+    return entity.Transaction(
+      id: id,
+      title: title,
+      description: description,
+      amount: amount,
+      type: type,
+      fromWalletId: fromWalletId,
+      toWalletId: toWalletId,
+      createdAt: createdAt,
+    );
+  }
+
+  factory TransactionModel.fromEntity(entity.Transaction transaction) {
+    String getTypeString(entity.TransactionType type) {
+      switch (type) {
+        case entity.TransactionType.income:
+          return 'income';
+        case entity.TransactionType.expense:
+          return 'expense';
+        case entity.TransactionType.transfer:
+          return 'transfer';
+      }
+    }
+
+    return TransactionModel(
+      id: transaction.id,
+      title: transaction.title,
+      description: transaction.description,
+      amount: transaction.amount,
+      typeString: getTypeString(transaction.type),
+      fromWalletId: transaction.fromWalletId,
+      toWalletId: transaction.toWalletId,
+      createdAt: transaction.createdAt,
+    );
+  }
 }
 
 @JsonSerializable()

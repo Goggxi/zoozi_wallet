@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'di/di.dart';
+import 'core/router/app_router.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,8 +13,16 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(body: Center(child: Text('Hello World!'))),
+    final router = getIt<AppRouter>().router;
+
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      title: 'Zoozi Wallet',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      routerConfig: router,
     );
   }
 }

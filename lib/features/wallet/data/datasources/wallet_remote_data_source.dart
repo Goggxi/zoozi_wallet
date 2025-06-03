@@ -7,9 +7,15 @@ import '../models/wallet_model.dart';
 import '../models/transaction_model.dart';
 
 abstract class IWalletRemoteDataSource {
-  Future<WalletModel> createWallet({String? currency, double? initialBalance});
+  Future<WalletModel> createWallet({
+    String? currency,
+    double? initialBalance,
+  });
   Future<List<WalletModel>> getWallets();
   Future<WalletModel> getWalletById(String id);
+  Future<WalletModel> updateWallet(WalletModel wallet);
+  Future<void> deleteWallet(String id);
+
   Future<TransactionModel> createDeposit({
     required String walletId,
     required double amount,
@@ -22,12 +28,19 @@ abstract class IWalletRemoteDataSource {
     String? description,
     String? referenceId,
   });
+  Future<TransactionModel> createTransfer({
+    required String fromWalletId,
+    required String toWalletId,
+    required double amount,
+    String? description,
+  });
   Future<TransactionListResponse> getTransactions({
     required String walletId,
     int? page,
     int? limit,
   });
   Future<TransactionModel> getTransactionById(String walletId, String id);
+  Future<void> deleteTransaction(String walletId, String id);
 }
 
 @Injectable(as: IWalletRemoteDataSource)
@@ -80,6 +93,18 @@ class WalletRemoteDataSource implements IWalletRemoteDataSource {
   }
 
   @override
+  Future<WalletModel> updateWallet(WalletModel wallet) {
+    // TODO: Implement API call
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteWallet(String id) {
+    // TODO: Implement API call
+    throw UnimplementedError();
+  }
+
+  @override
   Future<TransactionModel> createDeposit({
     required String walletId,
     required double amount,
@@ -122,6 +147,17 @@ class WalletRemoteDataSource implements IWalletRemoteDataSource {
   }
 
   @override
+  Future<TransactionModel> createTransfer({
+    required String fromWalletId,
+    required String toWalletId,
+    required double amount,
+    String? description,
+  }) {
+    // TODO: Implement API call
+    throw UnimplementedError();
+  }
+
+  @override
   Future<TransactionListResponse> getTransactions({
     required String walletId,
     int? page,
@@ -150,5 +186,11 @@ class WalletRemoteDataSource implements IWalletRemoteDataSource {
     );
 
     return TransactionModel.fromJson(jsonDecode(response.body));
+  }
+
+  @override
+  Future<void> deleteTransaction(String walletId, String id) {
+    // TODO: Implement API call
+    throw UnimplementedError();
   }
 }

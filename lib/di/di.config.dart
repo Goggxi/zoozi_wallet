@@ -13,6 +13,7 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:http/http.dart' as _i519;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
+import 'package:zoozi_wallet/core/router/app_router.dart' as _i548;
 import 'package:zoozi_wallet/core/storage/local_storage.dart' as _i937;
 import 'package:zoozi_wallet/core/utils/logger/app_logger.dart' as _i755;
 import 'package:zoozi_wallet/core/utils/network/http_client.dart' as _i74;
@@ -49,6 +50,7 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.singleton<_i519.Client>(() => registerModule.httpClient);
+    gh.lazySingleton<_i548.AppRouter>(() => _i548.AppRouter());
     gh.singleton<_i937.ILocalStorage>(
         () => _i937.LocalStorage(gh<_i460.SharedPreferences>()));
     gh.singleton<_i755.IAppLogger>(() => _i755.AppLogger());

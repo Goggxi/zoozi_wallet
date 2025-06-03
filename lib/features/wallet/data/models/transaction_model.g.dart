@@ -8,32 +8,27 @@ part of 'transaction_model.dart';
 
 TransactionModel _$TransactionModelFromJson(Map<String, dynamic> json) =>
     TransactionModel(
-      id: (json['id'] as num).toInt(),
-      walletId: (json['walletId'] as num).toInt(),
-      type: $enumDecode(_$TransactionTypeEnumMap, json['type']),
+      id: json['id'] as String,
+      title: json['title'] as String,
+      description: json['description'] as String,
       amount: (json['amount'] as num).toDouble(),
-      description: json['description'] as String?,
-      referenceId: json['referenceId'] as String?,
-      timestamp: DateTime.parse(json['timestamp'] as String),
-      relatedTransactionId: (json['relatedTransactionId'] as num?)?.toInt(),
+      typeString: json['type'] as String,
+      fromWalletId: json['from_wallet_id'] as String,
+      toWalletId: json['to_wallet_id'] as String?,
+      createdAt: DateTime.parse(json['created_at'] as String),
     );
 
 Map<String, dynamic> _$TransactionModelToJson(TransactionModel instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'walletId': instance.walletId,
-      'type': _$TransactionTypeEnumMap[instance.type]!,
-      'amount': instance.amount,
+      'title': instance.title,
       'description': instance.description,
-      'referenceId': instance.referenceId,
-      'timestamp': instance.timestamp.toIso8601String(),
-      'relatedTransactionId': instance.relatedTransactionId,
+      'amount': instance.amount,
+      'type': instance.typeString,
+      'from_wallet_id': instance.fromWalletId,
+      'to_wallet_id': instance.toWalletId,
+      'created_at': instance.createdAt.toIso8601String(),
     };
-
-const _$TransactionTypeEnumMap = {
-  TransactionType.deposit: 'DEPOSIT',
-  TransactionType.withdrawal: 'WITHDRAWAL',
-};
 
 TransactionRequest _$TransactionRequestFromJson(Map<String, dynamic> json) =>
     TransactionRequest(

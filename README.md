@@ -1,3 +1,3 @@
 # zoozi_wallet
 
-A new Flutter project.
+ a clean architecture with repository pattern
