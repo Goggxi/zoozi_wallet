@@ -205,5 +205,8 @@
   "cacheClearError": "Gagal menghapus data penyimpanan.",
   "@cacheClearError": {
     "description": "Error message for cache clear operation"
-  }
+  },
+  "light": "Terang",
+  "dark": "Gelap",
+  "chooseTheme": "Pilih Tema"
 }

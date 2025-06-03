@@ -205,5 +205,8 @@
   "cacheClearError": "Failed to clear storage data.",
   "@cacheClearError": {
     "description": "Error message for cache clear operation"
-  }
+  },
+  "light": "Light",
+  "dark": "Dark",
+  "chooseTheme": "Choose Theme"
 }

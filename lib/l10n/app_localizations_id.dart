@@ -163,4 +163,13 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get cacheClearError => 'Gagal menghapus data penyimpanan.';
+
+  @override
+  String get light => 'Terang';
+
+  @override
+  String get dark => 'Gelap';
+
+  @override
+  String get chooseTheme => 'Pilih Tema';
 }

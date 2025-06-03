@@ -161,4 +161,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cacheClearError => 'Failed to clear storage data.';
+
+  @override
+  String get light => 'Light';
+
+  @override
+  String get dark => 'Dark';
+
+  @override
+  String get chooseTheme => 'Choose Theme';
 }
