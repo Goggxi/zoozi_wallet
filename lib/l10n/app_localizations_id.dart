@@ -91,4 +91,40 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get logout => 'Keluar';
+
+  @override
+  String get unauthorizedError => 'Akses tidak sah. Silakan login kembali.';
+
+  @override
+  String get invalidCredentialsError =>
+      'Email atau kata sandi salah. Silakan coba lagi.';
+
+  @override
+  String get notFoundError => 'Data yang diminta tidak ditemukan.';
+
+  @override
+  String get internalServerError =>
+      'Terjadi kesalahan. Silakan coba lagi nanti.';
+
+  @override
+  String get unknownError =>
+      'Terjadi kesalahan yang tidak terduga. Silakan coba lagi.';
+
+  @override
+  String get passwordLengthError => 'Kata sandi harus minimal 8 karakter.';
+
+  @override
+  String get invalidCurrencyError =>
+      'Mata uang tidak valid. Silakan pilih USD, EUR, atau GBP.';
+
+  @override
+  String get passwordTypeError => 'Kata sandi harus berupa teks.';
+
+  @override
+  String get amountValidationError =>
+      'Jumlah harus berupa angka positif yang valid.';
+
+  @override
+  String get invalidJsonError =>
+      'Format JSON tidak valid. Silakan periksa input Anda.';
 }

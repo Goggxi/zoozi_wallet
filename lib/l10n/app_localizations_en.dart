@@ -91,4 +91,39 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get logout => 'Logout';
+
+  @override
+  String get unauthorizedError => 'Unauthorized access. Please login again.';
+
+  @override
+  String get invalidCredentialsError =>
+      'Invalid email or password. Please try again.';
+
+  @override
+  String get notFoundError => 'The requested resource was not found.';
+
+  @override
+  String get internalServerError =>
+      'Something went wrong. Please try again later.';
+
+  @override
+  String get unknownError => 'An unexpected error occurred. Please try again.';
+
+  @override
+  String get passwordLengthError =>
+      'Password must be at least 8 characters long.';
+
+  @override
+  String get invalidCurrencyError =>
+      'Invalid currency. Please select USD, EUR, or GBP.';
+
+  @override
+  String get passwordTypeError => 'Password must be text.';
+
+  @override
+  String get amountValidationError => 'Amount must be a valid positive number.';
+
+  @override
+  String get invalidJsonError =>
+      'Invalid JSON format. Please check your input.';
 }

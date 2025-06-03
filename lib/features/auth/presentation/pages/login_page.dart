@@ -6,9 +6,9 @@ import 'package:zoozi_wallet/core/utils/extensions/context_extension.dart';
 import 'package:zoozi_wallet/di/di.dart';
 
 import '../bloc/auth_bloc.dart';
-import '../utils/form_validators.dart';
-import '../widgets/custom_button.dart';
-import '../widgets/custom_text_field.dart';
+import '../../../../core/utils/validators/form_validators.dart';
+import '../../../../core/widgets/custom_button.dart';
+import '../../../../core/widgets/custom_text_field.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

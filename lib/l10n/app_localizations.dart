@@ -265,6 +265,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Logout'**
   String get logout;
+
+  /// Error message for unauthorized access
+  ///
+  /// In en, this message translates to:
+  /// **'Unauthorized access. Please login again.'**
+  String get unauthorizedError;
+
+  /// Error message for invalid credentials
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email or password. Please try again.'**
+  String get invalidCredentialsError;
+
+  /// Error message for resource not found
+  ///
+  /// In en, this message translates to:
+  /// **'The requested resource was not found.'**
+  String get notFoundError;
+
+  /// Error message for internal server error
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please try again later.'**
+  String get internalServerError;
+
+  /// Error message for unknown errors
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected error occurred. Please try again.'**
+  String get unknownError;
+
+  /// Error message for password length validation
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters long.'**
+  String get passwordLengthError;
+
+  /// Error message for invalid currency
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid currency. Please select USD, EUR, or GBP.'**
+  String get invalidCurrencyError;
+
+  /// Error message for password type validation
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be text.'**
+  String get passwordTypeError;
+
+  /// Error message for amount validation
+  ///
+  /// In en, this message translates to:
+  /// **'Amount must be a valid positive number.'**
+  String get amountValidationError;
+
+  /// Error message for invalid JSON format
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid JSON format. Please check your input.'**
+  String get invalidJsonError;
 }
 
 class _AppLocalizationsDelegate

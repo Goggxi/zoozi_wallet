@@ -111,5 +111,45 @@
   "logout": "Keluar",
   "@logout": {
     "description": "Logout button text"
+  },
+  "unauthorizedError": "Akses tidak sah. Silakan login kembali.",
+  "@unauthorizedError": {
+    "description": "Error message for unauthorized access"
+  },
+  "invalidCredentialsError": "Email atau kata sandi salah. Silakan coba lagi.",
+  "@invalidCredentialsError": {
+    "description": "Error message for invalid credentials"
+  },
+  "notFoundError": "Data yang diminta tidak ditemukan.",
+  "@notFoundError": {
+    "description": "Error message for resource not found"
+  },
+  "internalServerError": "Terjadi kesalahan. Silakan coba lagi nanti.",
+  "@internalServerError": {
+    "description": "Error message for internal server error"
+  },
+  "unknownError": "Terjadi kesalahan yang tidak terduga. Silakan coba lagi.",
+  "@unknownError": {
+    "description": "Error message for unknown errors"
+  },
+  "passwordLengthError": "Kata sandi harus minimal 8 karakter.",
+  "@passwordLengthError": {
+    "description": "Error message for password length validation"
+  },
+  "invalidCurrencyError": "Mata uang tidak valid. Silakan pilih USD, EUR, atau GBP.",
+  "@invalidCurrencyError": {
+    "description": "Error message for invalid currency"
+  },
+  "passwordTypeError": "Kata sandi harus berupa teks.",
+  "@passwordTypeError": {
+    "description": "Error message for password type validation"
+  },
+  "amountValidationError": "Jumlah harus berupa angka positif yang valid.",
+  "@amountValidationError": {
+    "description": "Error message for amount validation"
+  },
+  "invalidJsonError": "Format JSON tidak valid. Silakan periksa input Anda.",
+  "@invalidJsonError": {
+    "description": "Error message for invalid JSON format"
   }
 }

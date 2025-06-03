@@ -111,5 +111,45 @@
   "logout": "Logout",
   "@logout": {
     "description": "Logout button text"
+  },
+  "unauthorizedError": "Unauthorized access. Please login again.",
+  "@unauthorizedError": {
+    "description": "Error message for unauthorized access"
+  },
+  "invalidCredentialsError": "Invalid email or password. Please try again.",
+  "@invalidCredentialsError": {
+    "description": "Error message for invalid credentials"
+  },
+  "notFoundError": "The requested resource was not found.",
+  "@notFoundError": {
+    "description": "Error message for resource not found"
+  },
+  "internalServerError": "Something went wrong. Please try again later.",
+  "@internalServerError": {
+    "description": "Error message for internal server error"
+  },
+  "unknownError": "An unexpected error occurred. Please try again.",
+  "@unknownError": {
+    "description": "Error message for unknown errors"
+  },
+  "passwordLengthError": "Password must be at least 8 characters long.",
+  "@passwordLengthError": {
+    "description": "Error message for password length validation"
+  },
+  "invalidCurrencyError": "Invalid currency. Please select USD, EUR, or GBP.",
+  "@invalidCurrencyError": {
+    "description": "Error message for invalid currency"
+  },
+  "passwordTypeError": "Password must be text.",
+  "@passwordTypeError": {
+    "description": "Error message for password type validation"
+  },
+  "amountValidationError": "Amount must be a valid positive number.",
+  "@amountValidationError": {
+    "description": "Error message for amount validation"
+  },
+  "invalidJsonError": "Invalid JSON format. Please check your input.",
+  "@invalidJsonError": {
+    "description": "Error message for invalid JSON format"
   }
 }
