@@ -13,7 +13,7 @@ Zoozi Wallet adalah aplikasi mobile wallet modern yang dibangun menggunakan Flut
 <details>
 <summary>📹 Demo Video</summary>
 
-> **Coming Soon**: Demo video akan tersedia di `assets/readme/demo.mp4`
+![Demo Video](assets/readme/demo.mp4)
 
 </details>
 
@@ -321,11 +321,10 @@ dev_dependencies:
    flutter run
 
    # Production build
-   flutter build apk --release
+   flutter build apk --release --dart-define=BASE_URL=https://wallet-testing-murex.vercel.app
 
    # Production build with custom base URL
-   flutter build apk --release \
-     --dart-define=BASE_URL=https://wallet-testing-murex.vercel.app
+   flutter build apk --release --dart-define=BASE_URL=https://wallet-testing-murex.vercel.app
    ```
 
 ## 📋 Code Quality & Standards
@@ -402,21 +401,6 @@ String _formatCurrency(double amount, String currency) {
 }
 ```
 
-## 📈 Performance Optimizations
-
-- **Lazy Loading**: Dependencies loaded on-demand dengan GetIt
-- **Widget Optimization**: Efficient widget rebuilds dengan BlocBuilder
-- **Memory Management**: Proper disposal of controllers dan streams
-- **Image Optimization**: Optimized asset loading
-- **Network Caching**: Intelligent API response caching
-
-## 🔒 Security Features
-
-- **Token Management**: Secure JWT token storage
-- **Input Validation**: Comprehensive form validation
-- **Error Boundary**: Graceful error handling
-- **Network Security**: HTTPS-only API communications
-- **Data Encryption**: Sensitive data encryption in local storage
 
 ## 🤝 Contributing
 
@@ -430,11 +414,9 @@ String _formatCurrency(double amount, String currency) {
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👥 Team
+## 👥 Owner
 
-- **Lead Developer**: [Your Name]
-- **UI/UX Designer**: [Designer Name]
-- **Backend Developer**: [Backend Developer Name]
+- **Lead Developer**: Moh Rifkan
 
 ---
 
