@@ -327,5 +327,141 @@ class AppLocalizationsId extends AppLocalizations {
   String get pullToRefresh => 'Tarik untuk menyegarkan';
 
   @override
-  String get refreshing => 'Menyegarkan...';
+  String get refreshing => 'Sedang memperbarui...';
+
+  @override
+  String get allTransactions => 'Semua Transaksi';
+
+  @override
+  String get filterTransactions => 'Filter Transaksi';
+
+  @override
+  String get newTransaction => 'Transaksi Baru';
+
+  @override
+  String get depositMoney => 'Setor Uang';
+
+  @override
+  String get withdrawMoney => 'Tarik Uang';
+
+  @override
+  String get amount => 'Jumlah';
+
+  @override
+  String get enterAmount => 'Masukkan jumlah';
+
+  @override
+  String get description => 'Deskripsi';
+
+  @override
+  String get enterDescription => 'Masukkan deskripsi (opsional)';
+
+  @override
+  String get referenceId => 'ID Referensi';
+
+  @override
+  String get enterReferenceId => 'Masukkan ID referensi (opsional)';
+
+  @override
+  String get proceed => 'Lanjutkan';
+
+  @override
+  String get processing => 'Memproses...';
+
+  @override
+  String get transactionSuccessful => 'Transaksi Berhasil!';
+
+  @override
+  String get transactionFailed => 'Transaksi Gagal';
+
+  @override
+  String get pleaseEnterAmount => 'Harap masukkan jumlah';
+
+  @override
+  String get invalidAmount => 'Harap masukkan jumlah yang valid';
+
+  @override
+  String minimumAmount(String amount) {
+    return 'Jumlah minimum adalah $amount';
+  }
+
+  @override
+  String maximumAmount(String amount) {
+    return 'Jumlah maksimum adalah $amount';
+  }
+
+  @override
+  String get insufficientBalance => 'Saldo tidak mencukupi';
+
+  @override
+  String availableBalance(String balance) {
+    return 'Saldo Tersedia: $balance';
+  }
+
+  @override
+  String get confirmTransaction => 'Konfirmasi Transaksi';
+
+  @override
+  String confirmDepositMessage(String amount) {
+    return 'Apakah Anda yakin ingin menyetor $amount?';
+  }
+
+  @override
+  String confirmWithdrawMessage(String amount) {
+    return 'Apakah Anda yakin ingin menarik $amount?';
+  }
+
+  @override
+  String get cancel => 'Batal';
+
+  @override
+  String get confirm => 'Konfirmasi';
+
+  @override
+  String get transactionDetails => 'Detail Transaksi';
+
+  @override
+  String get transactionType => 'Jenis';
+
+  @override
+  String get transactionDate => 'Tanggal';
+
+  @override
+  String get transactionReference => 'Referensi';
+
+  @override
+  String get noReference => 'Tidak Ada Referensi';
+
+  @override
+  String get income => 'Pemasukan';
+
+  @override
+  String get expense => 'Pengeluaran';
+
+  @override
+  String get filterByType => 'Filter berdasarkan Jenis';
+
+  @override
+  String get filterByDate => 'Filter berdasarkan Tanggal';
+
+  @override
+  String get allTypes => 'Semua Jenis';
+
+  @override
+  String get last7Days => '7 Hari Terakhir';
+
+  @override
+  String get last30Days => '30 Hari Terakhir';
+
+  @override
+  String get thisMonth => 'Bulan Ini';
+
+  @override
+  String get customRange => 'Rentang Kustom';
+
+  @override
+  String get applyFilter => 'Terapkan Filter';
+
+  @override
+  String get clearFilter => 'Hapus Filter';
 }

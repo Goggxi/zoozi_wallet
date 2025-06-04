@@ -449,5 +449,203 @@
   "refreshing": "Refreshing...",
   "@refreshing": {
     "description": "Refreshing status message"
+  },
+  "allTransactions": "All Transactions",
+  "@allTransactions": {
+    "description": "Title for all transactions page"
+  },
+  "filterTransactions": "Filter Transactions",
+  "@filterTransactions": {
+    "description": "Filter transactions option"
+  },
+  "newTransaction": "New Transaction",
+  "@newTransaction": {
+    "description": "Button to create new transaction"
+  },
+  "depositMoney": "Deposit Money",
+  "@depositMoney": {
+    "description": "Deposit page title"
+  },
+  "withdrawMoney": "Withdraw Money",
+  "@withdrawMoney": {
+    "description": "Withdraw page title"
+  },
+  "amount": "Amount",
+  "@amount": {
+    "description": "Amount field label"
+  },
+  "enterAmount": "Enter amount",
+  "@enterAmount": {
+    "description": "Amount field hint"
+  },
+  "description": "Description",
+  "@description": {
+    "description": "Description field label"
+  },
+  "enterDescription": "Enter description (optional)",
+  "@enterDescription": {
+    "description": "Description field hint"
+  },
+  "referenceId": "Reference ID",
+  "@referenceId": {
+    "description": "Reference ID field label"
+  },
+  "enterReferenceId": "Enter reference ID (optional)",
+  "@enterReferenceId": {
+    "description": "Reference ID field hint"
+  },
+  "proceed": "Proceed",
+  "@proceed": {
+    "description": "Proceed button text"
+  },
+  "processing": "Processing...",
+  "@processing": {
+    "description": "Processing status message"
+  },
+  "transactionSuccessful": "Transaction Successful!",
+  "@transactionSuccessful": {
+    "description": "Success message for completed transaction"
+  },
+  "transactionFailed": "Transaction Failed",
+  "@transactionFailed": {
+    "description": "Error message for failed transaction"
+  },
+  "pleaseEnterAmount": "Please enter an amount",
+  "@pleaseEnterAmount": {
+    "description": "Validation message for amount field"
+  },
+  "invalidAmount": "Please enter a valid amount",
+  "@invalidAmount": {
+    "description": "Validation message for invalid amount"
+  },
+  "minimumAmount": "Minimum amount is {amount}",
+  "@minimumAmount": {
+    "description": "Validation message for minimum amount",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "$1.00"
+      }
+    }
+  },
+  "maximumAmount": "Maximum amount is {amount}",
+  "@maximumAmount": {
+    "description": "Validation message for maximum amount",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "$10000.00"
+      }
+    }
+  },
+  "insufficientBalance": "Insufficient balance",
+  "@insufficientBalance": {
+    "description": "Error message for insufficient balance"
+  },
+  "availableBalance": "Available Balance: {balance}",
+  "@availableBalance": {
+    "description": "Shows available balance",
+    "placeholders": {
+      "balance": {
+        "type": "String",
+        "example": "$1000.00"
+      }
+    }
+  },
+  "confirmTransaction": "Confirm Transaction",
+  "@confirmTransaction": {
+    "description": "Confirm transaction dialog title"
+  },
+  "confirmDepositMessage": "Are you sure you want to deposit {amount}?",
+  "@confirmDepositMessage": {
+    "description": "Confirm deposit message",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "$100.00"
+      }
+    }
+  },
+  "confirmWithdrawMessage": "Are you sure you want to withdraw {amount}?",
+  "@confirmWithdrawMessage": {
+    "description": "Confirm withdraw message",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "$100.00"
+      }
+    }
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+  "confirm": "Confirm",
+  "@confirm": {
+    "description": "Confirm button text"
+  },
+  "transactionDetails": "Transaction Details",
+  "@transactionDetails": {
+    "description": "Transaction details title"
+  },
+  "transactionType": "Type",
+  "@transactionType": {
+    "description": "Transaction type label"
+  },
+  "transactionDate": "Date",
+  "@transactionDate": {
+    "description": "Transaction date label"
+  },
+  "transactionReference": "Reference",
+  "@transactionReference": {
+    "description": "Transaction reference label"
+  },
+  "noReference": "No Reference",
+  "@noReference": {
+    "description": "No reference available text"
+  },
+  "income": "Income",
+  "@income": {
+    "description": "Income transaction type"
+  },
+  "expense": "Expense",
+  "@expense": {
+    "description": "Expense transaction type"
+  },
+  "filterByType": "Filter by Type",
+  "@filterByType": {
+    "description": "Filter by type option"
+  },
+  "filterByDate": "Filter by Date",
+  "@filterByDate": {
+    "description": "Filter by date option"
+  },
+  "allTypes": "All Types",
+  "@allTypes": {
+    "description": "All transaction types filter option"
+  },
+  "last7Days": "Last 7 Days",
+  "@last7Days": {
+    "description": "Last 7 days filter option"
+  },
+  "last30Days": "Last 30 Days",
+  "@last30Days": {
+    "description": "Last 30 days filter option"
+  },
+  "thisMonth": "This Month",
+  "@thisMonth": {
+    "description": "This month filter option"
+  },
+  "customRange": "Custom Range",
+  "@customRange": {
+    "description": "Custom date range filter option"
+  },
+  "applyFilter": "Apply Filter",
+  "@applyFilter": {
+    "description": "Apply filter button text"
+  },
+  "clearFilter": "Clear Filter",
+  "@clearFilter": {
+    "description": "Clear filter button text"
   }
 }

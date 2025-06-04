@@ -326,4 +326,140 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get refreshing => 'Refreshing...';
+
+  @override
+  String get allTransactions => 'All Transactions';
+
+  @override
+  String get filterTransactions => 'Filter Transactions';
+
+  @override
+  String get newTransaction => 'New Transaction';
+
+  @override
+  String get depositMoney => 'Deposit Money';
+
+  @override
+  String get withdrawMoney => 'Withdraw Money';
+
+  @override
+  String get amount => 'Amount';
+
+  @override
+  String get enterAmount => 'Enter amount';
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get enterDescription => 'Enter description (optional)';
+
+  @override
+  String get referenceId => 'Reference ID';
+
+  @override
+  String get enterReferenceId => 'Enter reference ID (optional)';
+
+  @override
+  String get proceed => 'Proceed';
+
+  @override
+  String get processing => 'Processing...';
+
+  @override
+  String get transactionSuccessful => 'Transaction Successful!';
+
+  @override
+  String get transactionFailed => 'Transaction Failed';
+
+  @override
+  String get pleaseEnterAmount => 'Please enter an amount';
+
+  @override
+  String get invalidAmount => 'Please enter a valid amount';
+
+  @override
+  String minimumAmount(String amount) {
+    return 'Minimum amount is $amount';
+  }
+
+  @override
+  String maximumAmount(String amount) {
+    return 'Maximum amount is $amount';
+  }
+
+  @override
+  String get insufficientBalance => 'Insufficient balance';
+
+  @override
+  String availableBalance(String balance) {
+    return 'Available Balance: $balance';
+  }
+
+  @override
+  String get confirmTransaction => 'Confirm Transaction';
+
+  @override
+  String confirmDepositMessage(String amount) {
+    return 'Are you sure you want to deposit $amount?';
+  }
+
+  @override
+  String confirmWithdrawMessage(String amount) {
+    return 'Are you sure you want to withdraw $amount?';
+  }
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get confirm => 'Confirm';
+
+  @override
+  String get transactionDetails => 'Transaction Details';
+
+  @override
+  String get transactionType => 'Type';
+
+  @override
+  String get transactionDate => 'Date';
+
+  @override
+  String get transactionReference => 'Reference';
+
+  @override
+  String get noReference => 'No Reference';
+
+  @override
+  String get income => 'Income';
+
+  @override
+  String get expense => 'Expense';
+
+  @override
+  String get filterByType => 'Filter by Type';
+
+  @override
+  String get filterByDate => 'Filter by Date';
+
+  @override
+  String get allTypes => 'All Types';
+
+  @override
+  String get last7Days => 'Last 7 Days';
+
+  @override
+  String get last30Days => 'Last 30 Days';
+
+  @override
+  String get thisMonth => 'This Month';
+
+  @override
+  String get customRange => 'Custom Range';
+
+  @override
+  String get applyFilter => 'Apply Filter';
+
+  @override
+  String get clearFilter => 'Clear Filter';
 }

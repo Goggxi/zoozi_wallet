@@ -337,7 +337,7 @@ class _WalletCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  l.myWallet,
+                  'My ${wallet.currency} Wallet',
                   style: TextStyle(
                     color: AppColors.white.withAlpha((0.8 * 255).round()),
                     fontSize: 14,

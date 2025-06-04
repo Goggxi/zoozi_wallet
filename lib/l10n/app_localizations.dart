@@ -685,6 +685,258 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Refreshing...'**
   String get refreshing;
+
+  /// Title for all transactions page
+  ///
+  /// In en, this message translates to:
+  /// **'All Transactions'**
+  String get allTransactions;
+
+  /// Filter transactions option
+  ///
+  /// In en, this message translates to:
+  /// **'Filter Transactions'**
+  String get filterTransactions;
+
+  /// Button to create new transaction
+  ///
+  /// In en, this message translates to:
+  /// **'New Transaction'**
+  String get newTransaction;
+
+  /// Deposit page title
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit Money'**
+  String get depositMoney;
+
+  /// Withdraw page title
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw Money'**
+  String get withdrawMoney;
+
+  /// Amount field label
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get amount;
+
+  /// Amount field hint
+  ///
+  /// In en, this message translates to:
+  /// **'Enter amount'**
+  String get enterAmount;
+
+  /// Description field label
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
+
+  /// Description field hint
+  ///
+  /// In en, this message translates to:
+  /// **'Enter description (optional)'**
+  String get enterDescription;
+
+  /// Reference ID field label
+  ///
+  /// In en, this message translates to:
+  /// **'Reference ID'**
+  String get referenceId;
+
+  /// Reference ID field hint
+  ///
+  /// In en, this message translates to:
+  /// **'Enter reference ID (optional)'**
+  String get enterReferenceId;
+
+  /// Proceed button text
+  ///
+  /// In en, this message translates to:
+  /// **'Proceed'**
+  String get proceed;
+
+  /// Processing status message
+  ///
+  /// In en, this message translates to:
+  /// **'Processing...'**
+  String get processing;
+
+  /// Success message for completed transaction
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction Successful!'**
+  String get transactionSuccessful;
+
+  /// Error message for failed transaction
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction Failed'**
+  String get transactionFailed;
+
+  /// Validation message for amount field
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter an amount'**
+  String get pleaseEnterAmount;
+
+  /// Validation message for invalid amount
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid amount'**
+  String get invalidAmount;
+
+  /// Validation message for minimum amount
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum amount is {amount}'**
+  String minimumAmount(String amount);
+
+  /// Validation message for maximum amount
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum amount is {amount}'**
+  String maximumAmount(String amount);
+
+  /// Error message for insufficient balance
+  ///
+  /// In en, this message translates to:
+  /// **'Insufficient balance'**
+  String get insufficientBalance;
+
+  /// Shows available balance
+  ///
+  /// In en, this message translates to:
+  /// **'Available Balance: {balance}'**
+  String availableBalance(String balance);
+
+  /// Confirm transaction dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Transaction'**
+  String get confirmTransaction;
+
+  /// Confirm deposit message
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to deposit {amount}?'**
+  String confirmDepositMessage(String amount);
+
+  /// Confirm withdraw message
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to withdraw {amount}?'**
+  String confirmWithdrawMessage(String amount);
+
+  /// Cancel button text
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// Confirm button text
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// Transaction details title
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction Details'**
+  String get transactionDetails;
+
+  /// Transaction type label
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get transactionType;
+
+  /// Transaction date label
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get transactionDate;
+
+  /// Transaction reference label
+  ///
+  /// In en, this message translates to:
+  /// **'Reference'**
+  String get transactionReference;
+
+  /// No reference available text
+  ///
+  /// In en, this message translates to:
+  /// **'No Reference'**
+  String get noReference;
+
+  /// Income transaction type
+  ///
+  /// In en, this message translates to:
+  /// **'Income'**
+  String get income;
+
+  /// Expense transaction type
+  ///
+  /// In en, this message translates to:
+  /// **'Expense'**
+  String get expense;
+
+  /// Filter by type option
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by Type'**
+  String get filterByType;
+
+  /// Filter by date option
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by Date'**
+  String get filterByDate;
+
+  /// All transaction types filter option
+  ///
+  /// In en, this message translates to:
+  /// **'All Types'**
+  String get allTypes;
+
+  /// Last 7 days filter option
+  ///
+  /// In en, this message translates to:
+  /// **'Last 7 Days'**
+  String get last7Days;
+
+  /// Last 30 days filter option
+  ///
+  /// In en, this message translates to:
+  /// **'Last 30 Days'**
+  String get last30Days;
+
+  /// This month filter option
+  ///
+  /// In en, this message translates to:
+  /// **'This Month'**
+  String get thisMonth;
+
+  /// Custom date range filter option
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Range'**
+  String get customRange;
+
+  /// Apply filter button text
+  ///
+  /// In en, this message translates to:
+  /// **'Apply Filter'**
+  String get applyFilter;
+
+  /// Clear filter button text
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Filter'**
+  String get clearFilter;
 }
 
 class _AppLocalizationsDelegate

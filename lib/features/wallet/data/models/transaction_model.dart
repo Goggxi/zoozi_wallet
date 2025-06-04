@@ -27,30 +27,30 @@ DateTime _dateFromJson(dynamic value) {
 class TransactionModel extends Equatable {
   @JsonKey(fromJson: _stringFromJson)
   final String id;
-  @JsonKey(fromJson: _stringFromJson)
-  final String title;
-  @JsonKey(fromJson: _stringFromJson)
-  final String description;
-  @JsonKey(fromJson: _doubleFromJson)
-  final double amount;
+  @JsonKey(name: 'walletId', fromJson: _stringFromJson)
+  final String walletId;
   @JsonKey(name: 'type', fromJson: _stringFromJson)
   final String typeString;
-  @JsonKey(name: 'from_wallet_id', fromJson: _stringFromJson)
-  final String fromWalletId;
-  @JsonKey(name: 'to_wallet_id')
-  final String? toWalletId;
-  @JsonKey(name: 'created_at', fromJson: _dateFromJson)
-  final DateTime createdAt;
+  @JsonKey(fromJson: _doubleFromJson)
+  final double amount;
+  @JsonKey(fromJson: _stringFromJson)
+  final String description;
+  @JsonKey(name: 'referenceId')
+  final String? referenceId;
+  @JsonKey(name: 'timestamp', fromJson: _dateFromJson)
+  final DateTime timestamp;
+  @JsonKey(name: 'relatedTransactionId')
+  final String? relatedTransactionId;
 
   const TransactionModel({
     required this.id,
-    required this.title,
-    required this.description,
-    required this.amount,
+    required this.walletId,
     required this.typeString,
-    required this.fromWalletId,
-    this.toWalletId,
-    required this.createdAt,
+    required this.amount,
+    required this.description,
+    this.referenceId,
+    required this.timestamp,
+    this.relatedTransactionId,
   });
 
   factory TransactionModel.fromJson(Map<String, dynamic> json) =>
@@ -61,24 +61,37 @@ class TransactionModel extends Equatable {
   @override
   List<Object?> get props => [
         id,
-        title,
-        description,
-        amount,
+        walletId,
         typeString,
-        fromWalletId,
-        toWalletId,
-        createdAt,
+        amount,
+        description,
+        referenceId,
+        timestamp,
+        relatedTransactionId,
       ];
 
+  // Computed properties for UI
+  String get title {
+    switch (type) {
+      case entity.TransactionType.income:
+        return 'Deposit';
+      case entity.TransactionType.expense:
+        return 'Withdrawal';
+      case entity.TransactionType.transfer:
+        return 'Transfer';
+    }
+  }
+
+  DateTime get createdAt => timestamp;
+  String get fromWalletId => walletId;
+
   entity.TransactionType get type {
-    switch (typeString.toLowerCase()) {
-      case 'income':
-      case 'deposit':
+    switch (typeString.toUpperCase()) {
+      case 'DEPOSIT':
         return entity.TransactionType.income;
-      case 'expense':
-      case 'withdrawal':
+      case 'WITHDRAWAL':
         return entity.TransactionType.expense;
-      case 'transfer':
+      case 'TRANSFER':
         return entity.TransactionType.transfer;
       default:
         return entity.TransactionType.income; // Default fallback
@@ -92,9 +105,9 @@ class TransactionModel extends Equatable {
       description: description,
       amount: amount,
       type: type,
-      fromWalletId: fromWalletId,
-      toWalletId: toWalletId,
-      createdAt: createdAt,
+      fromWalletId: walletId,
+      toWalletId: relatedTransactionId,
+      createdAt: timestamp,
     );
   }
 
@@ -102,23 +115,23 @@ class TransactionModel extends Equatable {
     String getTypeString(entity.TransactionType type) {
       switch (type) {
         case entity.TransactionType.income:
-          return 'income';
+          return 'DEPOSIT';
         case entity.TransactionType.expense:
-          return 'expense';
+          return 'WITHDRAWAL';
         case entity.TransactionType.transfer:
-          return 'transfer';
+          return 'TRANSFER';
       }
     }
 
     return TransactionModel(
       id: transaction.id,
-      title: transaction.title,
-      description: transaction.description,
-      amount: transaction.amount,
+      walletId: transaction.fromWalletId,
       typeString: getTypeString(transaction.type),
-      fromWalletId: transaction.fromWalletId,
-      toWalletId: transaction.toWalletId,
-      createdAt: transaction.createdAt,
+      amount: transaction.amount,
+      description: transaction.description,
+      referenceId: transaction.toWalletId,
+      timestamp: transaction.createdAt,
+      relatedTransactionId: transaction.toWalletId,
     );
   }
 }

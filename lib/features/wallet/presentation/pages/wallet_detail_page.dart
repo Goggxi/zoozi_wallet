@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:zoozi_wallet/core/theme/app_colors.dart';
 import 'package:zoozi_wallet/core/utils/extensions/context_extension.dart';
 import 'package:zoozi_wallet/features/wallet/data/models/wallet_model.dart'
@@ -285,7 +286,7 @@ class _WalletDetailPageState extends State<WalletDetailPage>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      l.myWallet,
+                      'My ${wallet.currency} Wallet',
                       style: TextStyle(
                         color: AppColors.white.withAlpha((0.8 * 255).round()),
                         fontSize: 16,
@@ -501,7 +502,7 @@ class _WalletDetailPageState extends State<WalletDetailPage>
               label: l.deposit,
               color: Colors.green,
               onPressed: () {
-                // TODO: Navigate to deposit page
+                context.go('/deposit?walletId=${widget.walletId}');
               },
             ),
           ),
@@ -512,7 +513,7 @@ class _WalletDetailPageState extends State<WalletDetailPage>
               label: l.withdraw,
               color: Colors.red,
               onPressed: () {
-                // TODO: Navigate to withdraw page
+                context.go('/withdrawal?walletId=${widget.walletId}');
               },
             ),
           ),

@@ -10,9 +10,12 @@ import 'package:zoozi_wallet/features/home/presentation/widgets/scaffold_with_na
 import 'package:zoozi_wallet/features/settings/presentation/pages/settings_page.dart';
 import 'package:zoozi_wallet/features/splash/presentation/pages/splash_page.dart';
 import 'package:zoozi_wallet/features/wallet/presentation/pages/add_wallet_page.dart';
+import 'package:zoozi_wallet/features/wallet/presentation/pages/deposit_page.dart';
 import 'package:zoozi_wallet/features/wallet/presentation/pages/transaction_page.dart';
 import 'package:zoozi_wallet/features/wallet/presentation/pages/wallet_detail_page.dart';
 import 'package:zoozi_wallet/features/wallet/presentation/pages/wallet_page.dart';
+import 'package:zoozi_wallet/features/wallet/presentation/pages/wallet_selection_page.dart';
+import 'package:zoozi_wallet/features/wallet/presentation/pages/withdrawal_page.dart';
 
 @lazySingleton
 class AppRouter {
@@ -24,6 +27,8 @@ class AppRouter {
   static const String addWallet = 'add';
   static const String walletDetail = ':id';
   static const String transactions = '/transactions';
+  static const String deposit = '/deposit';
+  static const String withdrawal = '/withdrawal';
   static const String settings = '/settings';
 
   final IAuthRepository _authRepository = getIt<IAuthRepository>();
@@ -128,6 +133,31 @@ class AppRouter {
             ],
           ),
         ],
+      ),
+      // Independent routes for deposit and withdrawal
+      GoRoute(
+        path: deposit,
+        name: 'deposit',
+        builder: (context, state) {
+          final walletId = state.uri.queryParameters['walletId'];
+          if (walletId == null) {
+            // If no walletId provided, navigate to wallet selection
+            return const WalletSelectionPage(action: WalletAction.deposit);
+          }
+          return DepositPage(walletId: walletId);
+        },
+      ),
+      GoRoute(
+        path: withdrawal,
+        name: 'withdrawal',
+        builder: (context, state) {
+          final walletId = state.uri.queryParameters['walletId'];
+          if (walletId == null) {
+            // If no walletId provided, navigate to wallet selection
+            return const WalletSelectionPage(action: WalletAction.withdrawal);
+          }
+          return WithdrawalPage(walletId: walletId);
+        },
       ),
     ],
   );

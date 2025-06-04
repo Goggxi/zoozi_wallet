@@ -9,25 +9,25 @@ part of 'transaction_model.dart';
 TransactionModel _$TransactionModelFromJson(Map<String, dynamic> json) =>
     TransactionModel(
       id: _stringFromJson(json['id']),
-      title: _stringFromJson(json['title']),
-      description: _stringFromJson(json['description']),
-      amount: _doubleFromJson(json['amount']),
+      walletId: _stringFromJson(json['walletId']),
       typeString: _stringFromJson(json['type']),
-      fromWalletId: _stringFromJson(json['from_wallet_id']),
-      toWalletId: json['to_wallet_id'] as String?,
-      createdAt: _dateFromJson(json['created_at']),
+      amount: _doubleFromJson(json['amount']),
+      description: _stringFromJson(json['description']),
+      referenceId: json['referenceId'] as String?,
+      timestamp: _dateFromJson(json['timestamp']),
+      relatedTransactionId: json['relatedTransactionId'] as String?,
     );
 
 Map<String, dynamic> _$TransactionModelToJson(TransactionModel instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'title': instance.title,
-      'description': instance.description,
-      'amount': instance.amount,
+      'walletId': instance.walletId,
       'type': instance.typeString,
-      'from_wallet_id': instance.fromWalletId,
-      'to_wallet_id': instance.toWalletId,
-      'created_at': instance.createdAt.toIso8601String(),
+      'amount': instance.amount,
+      'description': instance.description,
+      'referenceId': instance.referenceId,
+      'timestamp': instance.timestamp.toIso8601String(),
+      'relatedTransactionId': instance.relatedTransactionId,
     };
 
 TransactionRequest _$TransactionRequestFromJson(Map<String, dynamic> json) =>
