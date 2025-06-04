@@ -316,4 +316,16 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get walletSettings => 'Pengaturan Dompet';
+
+  @override
+  String get loadingTransactions => 'Memuat transaksi...';
+
+  @override
+  String get loadingMoreTransactions => 'Memuat lebih banyak transaksi...';
+
+  @override
+  String get pullToRefresh => 'Tarik untuk menyegarkan';
+
+  @override
+  String get refreshing => 'Menyegarkan...';
 }

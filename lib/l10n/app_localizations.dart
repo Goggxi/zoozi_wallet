@@ -661,6 +661,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Wallet Settings'**
   String get walletSettings;
+
+  /// Loading message for transactions
+  ///
+  /// In en, this message translates to:
+  /// **'Loading transactions...'**
+  String get loadingTransactions;
+
+  /// Loading message for pagination
+  ///
+  /// In en, this message translates to:
+  /// **'Loading more transactions...'**
+  String get loadingMoreTransactions;
+
+  /// Pull to refresh instruction
+  ///
+  /// In en, this message translates to:
+  /// **'Pull to refresh'**
+  String get pullToRefresh;
+
+  /// Refreshing status message
+  ///
+  /// In en, this message translates to:
+  /// **'Refreshing...'**
+  String get refreshing;
 }
 
 class _AppLocalizationsDelegate

@@ -433,5 +433,21 @@
   "walletSettings": "Pengaturan Dompet",
   "@walletSettings": {
     "description": "Menu option for wallet settings"
+  },
+  "loadingTransactions": "Memuat transaksi...",
+  "@loadingTransactions": {
+    "description": "Loading message for transactions"
+  },
+  "loadingMoreTransactions": "Memuat lebih banyak transaksi...",
+  "@loadingMoreTransactions": {
+    "description": "Loading message for pagination"
+  },
+  "pullToRefresh": "Tarik untuk menyegarkan",
+  "@pullToRefresh": {
+    "description": "Pull to refresh instruction"
+  },
+  "refreshing": "Menyegarkan...",
+  "@refreshing": {
+    "description": "Refreshing status message"
   }
 }

@@ -36,6 +36,8 @@ class _WalletDetailPageState extends State<WalletDetailPage>
   static const int _itemsPerPage = 20;
   bool _isLoadingMore = false;
   bool _hasReachedMax = false;
+  bool _isLoadingTransactions = false;
+  bool _isRefreshing = false;
   List<TransactionModel> _transactions = [];
   WalletModel? _currentWallet;
 
@@ -70,6 +72,14 @@ class _WalletDetailPageState extends State<WalletDetailPage>
 
   void _loadTransactions() {
     if (_hasReachedMax) return;
+
+    setState(() {
+      if (_currentPage == 1) {
+        _isLoadingTransactions = true;
+      } else {
+        _isLoadingMore = true;
+      }
+    });
 
     _walletBloc.add(
       GetTransactionsEvent(
@@ -112,12 +122,26 @@ class _WalletDetailPageState extends State<WalletDetailPage>
         backgroundColor: Colors.transparent,
         foregroundColor: AppColors.darkPurple1,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () {
-              _refreshData();
-            },
-          ),
+          if (_isRefreshing)
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: const SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  valueColor:
+                      AlwaysStoppedAnimation<Color>(AppColors.darkPurple1),
+                ),
+              ),
+            )
+          else
+            IconButton(
+              icon: const Icon(Icons.refresh),
+              onPressed: () {
+                _refreshData();
+              },
+            ),
           IconButton(
             icon: const Icon(Icons.more_vert),
             onPressed: () {
@@ -135,17 +159,27 @@ class _WalletDetailPageState extends State<WalletDetailPage>
             });
           } else if (state is TransactionsLoaded) {
             setState(() {
+              // Always reset loading states first
+              _isLoadingTransactions = false;
+              _isLoadingMore = false;
+              _isRefreshing = false;
+
               if (_currentPage == 1) {
                 _transactions = state.transactions;
               } else {
                 _transactions.addAll(state.transactions);
               }
 
+              // Set hasReachedMax based on returned data length
               if (state.transactions.length < _itemsPerPage) {
                 _hasReachedMax = true;
               }
-
+            });
+          } else if (state is WalletError) {
+            setState(() {
+              _isLoadingTransactions = false;
               _isLoadingMore = false;
+              _isRefreshing = false;
             });
           }
         },
@@ -167,23 +201,36 @@ class _WalletDetailPageState extends State<WalletDetailPage>
             opacity: _fadeAnimation,
             child: SlideTransition(
               position: _slideAnimation,
-              child: CustomScrollView(
-                controller: _scrollController,
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: _buildWalletHeader(wallet, l),
-                  ),
-                  SliverToBoxAdapter(
-                    child: _buildQuickStats(wallet, l),
-                  ),
-                  SliverToBoxAdapter(
-                    child: _buildActionButtons(l),
-                  ),
-                  SliverToBoxAdapter(
-                    child: _buildTransactionHeader(context, l),
-                  ),
-                  _buildTransactionsList(l),
-                ],
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  setState(() {
+                    _isRefreshing = true;
+                  });
+                  _refreshData();
+
+                  // Wait for refresh to complete
+                  while (_isRefreshing) {
+                    await Future.delayed(const Duration(milliseconds: 100));
+                  }
+                },
+                child: CustomScrollView(
+                  controller: _scrollController,
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: _buildWalletHeader(wallet, l),
+                    ),
+                    SliverToBoxAdapter(
+                      child: _buildQuickStats(wallet, l),
+                    ),
+                    SliverToBoxAdapter(
+                      child: _buildActionButtons(l),
+                    ),
+                    SliverToBoxAdapter(
+                      child: _buildTransactionHeader(context, l),
+                    ),
+                    _buildTransactionsList(l),
+                  ],
+                ),
               ),
             ),
           );
@@ -197,6 +244,8 @@ class _WalletDetailPageState extends State<WalletDetailPage>
       _currentPage = 1;
       _hasReachedMax = false;
       _transactions.clear();
+      _isLoadingTransactions = false;
+      _isLoadingMore = false;
     });
     _walletBloc.add(GetWalletByIdEvent(widget.walletId));
     _loadTransactions();
@@ -516,7 +565,26 @@ class _WalletDetailPageState extends State<WalletDetailPage>
   }
 
   Widget _buildTransactionsList(dynamic l) {
-    if (_transactions.isEmpty) {
+    // Debug print to track states
+    print('=== Transaction List Debug ===');
+    print('_isLoadingTransactions: $_isLoadingTransactions');
+    print('_transactions.isEmpty: ${_transactions.isEmpty}');
+    print('_transactions.length: ${_transactions.length}');
+    print('_hasReachedMax: $_hasReachedMax');
+    print('===============================');
+
+    // Show skeleton loading for initial load
+    if (_isLoadingTransactions && _transactions.isEmpty) {
+      return SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (context, index) => _buildTransactionSkeleton(),
+          childCount: 3, // Show 3 skeleton items
+        ),
+      );
+    }
+
+    // Show empty state when no transactions and not loading
+    if (_transactions.isEmpty && !_isLoadingTransactions) {
       return SliverToBoxAdapter(
         child: Container(
           margin: const EdgeInsets.all(16),
@@ -599,8 +667,18 @@ class _WalletDetailPageState extends State<WalletDetailPage>
             } else if (_isLoadingMore) {
               return Container(
                 padding: const EdgeInsets.all(16),
-                child: const Center(
-                  child: CircularProgressIndicator(),
+                child: Column(
+                  children: [
+                    const CircularProgressIndicator(),
+                    const SizedBox(height: 8),
+                    Text(
+                      l.loadingMoreTransactions,
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
                 ),
               );
             }
@@ -626,6 +704,74 @@ class _WalletDetailPageState extends State<WalletDetailPage>
         childCount:
             _transactions.length + (_hasReachedMax || _isLoadingMore ? 1 : 0),
       ),
+    );
+  }
+
+  Widget _buildTransactionSkeleton() {
+    return Container(
+      margin: const EdgeInsets.only(
+        left: 16,
+        right: 16,
+        bottom: 8,
+      ),
+      child: Card(
+        elevation: 2,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 12,
+          ),
+          child: Row(
+            children: [
+              // Avatar skeleton
+              _buildShimmerContainer(40, 40, isCircular: true),
+              const SizedBox(width: 16),
+              // Content skeleton
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Title skeleton
+                    _buildShimmerContainer(16, double.infinity),
+                    const SizedBox(height: 8),
+                    // Subtitle skeleton
+                    _buildShimmerContainer(12, 150),
+                    const SizedBox(height: 4),
+                    // Date skeleton
+                    _buildShimmerContainer(10, 100),
+                  ],
+                ),
+              ),
+              // Amount skeleton
+              _buildShimmerContainer(16, 80),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildShimmerContainer(double height, double width,
+      {bool isCircular = false}) {
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0.3, end: 1.0),
+      duration: const Duration(milliseconds: 1000),
+      builder: (context, value, child) {
+        return Container(
+          height: height,
+          width: width,
+          decoration: BoxDecoration(
+            color: Colors.grey[300]
+                ?.withAlpha(((0.3 + (0.7 * value)) * 255).round()),
+            borderRadius: isCircular
+                ? BorderRadius.circular(height / 2)
+                : BorderRadius.circular(height / 2),
+          ),
+        );
+      },
     );
   }
 

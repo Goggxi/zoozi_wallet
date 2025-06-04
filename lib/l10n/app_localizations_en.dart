@@ -314,4 +314,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get walletSettings => 'Wallet Settings';
+
+  @override
+  String get loadingTransactions => 'Loading transactions...';
+
+  @override
+  String get loadingMoreTransactions => 'Loading more transactions...';
+
+  @override
+  String get pullToRefresh => 'Pull to refresh';
+
+  @override
+  String get refreshing => 'Refreshing...';
 }

@@ -433,5 +433,21 @@
   "walletSettings": "Wallet Settings",
   "@walletSettings": {
     "description": "Menu option for wallet settings"
+  },
+  "loadingTransactions": "Loading transactions...",
+  "@loadingTransactions": {
+    "description": "Loading message for transactions"
+  },
+  "loadingMoreTransactions": "Loading more transactions...",
+  "@loadingMoreTransactions": {
+    "description": "Loading message for pagination"
+  },
+  "pullToRefresh": "Pull to refresh",
+  "@pullToRefresh": {
+    "description": "Pull to refresh instruction"
+  },
+  "refreshing": "Refreshing...",
+  "@refreshing": {
+    "description": "Refreshing status message"
   }
 }
