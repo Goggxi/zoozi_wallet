@@ -129,7 +129,7 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l.welcomeBack(userName),
+              'Welcome back,\n $userName',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.darkPurple1,

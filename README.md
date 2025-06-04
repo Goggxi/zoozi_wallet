@@ -322,6 +322,10 @@ dev_dependencies:
 
    # Production build
    flutter build apk --release
+
+   # Production build with custom base URL
+   flutter build apk --release \
+     --dart-define=BASE_URL=https://wallet-testing-murex.vercel.app
    ```
 
 ## 📋 Code Quality & Standards
