@@ -95,6 +95,7 @@ class _WalletSelectionPageState extends State<WalletSelectionPage>
             return FadeTransition(
               opacity: _fadeAnimation,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildHeader(l, theme),
                   Expanded(

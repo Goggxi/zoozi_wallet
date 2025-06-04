@@ -1,3 +1,3 @@
-# zoozi_wallet
+# Zoozi Wallet
 
- a clean architecture with repository pattern
+A comprehensive Flutter wallet application with beautiful UI and real-time data integration.
