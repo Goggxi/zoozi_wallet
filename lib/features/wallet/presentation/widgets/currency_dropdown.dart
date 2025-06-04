@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/utils/constants/currency.dart';
+import '../../../../core/utils/extensions/context_extension.dart';
 
 class CurrencyDropdown extends StatelessWidget {
   final String value;
@@ -16,7 +17,7 @@ class CurrencyDropdown extends StatelessWidget {
     return DropdownButtonFormField<String>(
       value: value,
       decoration: InputDecoration(
-        labelText: 'Currency',
+        labelText: context.l10n.currency,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
         ),
@@ -31,7 +32,7 @@ class CurrencyDropdown extends StatelessWidget {
       onChanged: onChanged,
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please select a currency';
+          return context.l10n.pleaseSelectCurrency;
         }
         return null;
       },

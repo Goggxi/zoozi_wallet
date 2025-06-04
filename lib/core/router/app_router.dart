@@ -40,13 +40,24 @@ class AppRouter {
     final isRegistering = state.matchedLocation == register;
     final isSplash = state.matchedLocation == splash;
 
-    // If not authenticated and not on auth pages or splash, go to login
-    if (!isAuthenticated && !isLoggingIn && !isRegistering && !isSplash) {
+    // Debug logging
+    debugPrint(
+        'AppRouter redirect: location=${state.matchedLocation}, isAuth=$isAuthenticated');
+
+    // Allow splash page to handle its own navigation
+    if (isSplash) {
+      return null;
+    }
+
+    // If not authenticated and not on auth pages, go to login
+    if (!isAuthenticated && !isLoggingIn && !isRegistering) {
+      debugPrint('AppRouter: Redirecting to login - not authenticated');
       return login;
     }
 
     // If authenticated and on auth pages, go to home
     if (isAuthenticated && (isLoggingIn || isRegistering)) {
+      debugPrint('AppRouter: Redirecting to home - already authenticated');
       return home;
     }
 

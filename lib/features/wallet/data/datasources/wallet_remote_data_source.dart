@@ -47,19 +47,14 @@ abstract class IWalletRemoteDataSource {
 @Injectable(as: IWalletRemoteDataSource)
 class WalletRemoteDataSource implements IWalletRemoteDataSource {
   final HttpClient _client;
-  final IAuthLocalDataSource _authLocalDataSource;
   final String baseUrl;
 
-  WalletRemoteDataSource(this._client, this._authLocalDataSource)
+  WalletRemoteDataSource(this._client, IAuthLocalDataSource authLocalDataSource)
       : baseUrl = const String.fromEnvironment('BASE_URL');
 
-  Map<String, String> get _headers {
-    final token = _authLocalDataSource.getToken();
-    return {
-      'Content-Type': 'application/json',
-      if (token != null) 'Authorization': 'Bearer $token',
-    };
-  }
+  Map<String, String> get _defaultHeaders => {
+        'Content-Type': 'application/json',
+      };
 
   @override
   Future<WalletModel> createWallet({
@@ -70,7 +65,7 @@ class WalletRemoteDataSource implements IWalletRemoteDataSource {
       url: baseUrl,
       method: RequestMethod.post,
       apiPath: '/wallets',
-      headers: _headers,
+      headers: _defaultHeaders,
       body: {
         if (currency != null) 'currency': currency,
         if (initialBalance != null) 'initialBalance': initialBalance,
@@ -86,7 +81,7 @@ class WalletRemoteDataSource implements IWalletRemoteDataSource {
       url: baseUrl,
       method: RequestMethod.get,
       apiPath: '/wallets',
-      headers: _headers,
+      headers: _defaultHeaders,
     );
 
     final List<dynamic> data = jsonDecode(response.body);
@@ -99,7 +94,7 @@ class WalletRemoteDataSource implements IWalletRemoteDataSource {
       url: baseUrl,
       method: RequestMethod.get,
       apiPath: '/wallets/$id',
-      headers: _headers,
+      headers: _defaultHeaders,
     );
 
     return WalletModel.fromJson(jsonDecode(response.body));
@@ -128,7 +123,7 @@ class WalletRemoteDataSource implements IWalletRemoteDataSource {
       url: baseUrl,
       method: RequestMethod.post,
       apiPath: '/wallets/$walletId/transactions/deposit',
-      headers: _headers,
+      headers: _defaultHeaders,
       body: {
         'amount': amount,
         if (description != null) 'description': description,
@@ -150,7 +145,7 @@ class WalletRemoteDataSource implements IWalletRemoteDataSource {
       url: baseUrl,
       method: RequestMethod.post,
       apiPath: '/wallets/$walletId/transactions/withdrawal',
-      headers: _headers,
+      headers: _defaultHeaders,
       body: {
         'amount': amount,
         if (description != null) 'description': description,
@@ -183,7 +178,7 @@ class WalletRemoteDataSource implements IWalletRemoteDataSource {
         url: baseUrl,
         method: RequestMethod.get,
         apiPath: '/wallets/$walletId/transactions',
-        headers: _headers,
+        headers: _defaultHeaders,
         queryParameters: {
           if (page != null) 'page': page,
           if (limit != null) 'limit': limit,
@@ -259,7 +254,7 @@ class WalletRemoteDataSource implements IWalletRemoteDataSource {
       url: baseUrl,
       method: RequestMethod.get,
       apiPath: '/wallets/$walletId/transactions/$id',
-      headers: _headers,
+      headers: _defaultHeaders,
     );
 
     return TransactionModel.fromJson(jsonDecode(response.body));

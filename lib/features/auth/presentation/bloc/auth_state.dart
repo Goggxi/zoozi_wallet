@@ -24,6 +24,15 @@ class AuthAuthenticated extends AuthState {
 
 class AuthUnauthenticated extends AuthState {}
 
+class AuthRegisteredButNotLoggedIn extends AuthState {
+  final String email;
+
+  const AuthRegisteredButNotLoggedIn(this.email);
+
+  @override
+  List<Object?> get props => [email];
+}
+
 class AuthError extends AuthState {
   final String message;
 

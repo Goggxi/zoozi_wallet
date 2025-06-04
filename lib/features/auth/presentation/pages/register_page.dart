@@ -79,6 +79,14 @@ class _RegisterPageState extends State<RegisterPage> {
           );
         } else if (state is AuthAuthenticated) {
           context.go(AppRouter.home);
+        } else if (state is AuthRegisteredButNotLoggedIn) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(l.registrationSuccessfulPleaseLogin),
+              backgroundColor: Colors.green,
+            ),
+          );
+          context.go(AppRouter.login);
         }
       },
       child: Scaffold(

@@ -2,6 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/utils/types/api_result.dart';
+import '../../../../di/di.dart';
+import '../../../auth/domain/repositories/auth_repository.dart';
 import '../../domain/repositories/wallet_repository.dart';
 import 'wallet_event.dart';
 import 'wallet_state.dart';
@@ -41,6 +43,19 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     GetWalletsEvent event,
     Emitter<WalletState> emit,
   ) async {
+    // Check authentication before making API calls
+    try {
+      final authRepository = getIt<IAuthRepository>();
+      if (!authRepository.isAuthenticated ||
+          authRepository.getCurrentUser() == null) {
+        emit(const WalletError('User not authenticated'));
+        return;
+      }
+    } catch (e) {
+      emit(const WalletError('Authentication check failed'));
+      return;
+    }
+
     // Only emit loading if we don't have wallets data or if explicitly requested
     if (state is! WalletsLoaded || event.forceRefresh) {
       emit(WalletLoading());
