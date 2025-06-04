@@ -15,7 +15,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get welcome => 'Selamat datang di Zoozi Wallet';
 
   @override
-  String get welcomeBack => 'Selamat datang kembali\ndi Zoozi wallet';
+  String welcomeBack(String name) {
+    return 'Selamat datang kembali,\n$name!';
+  }
 
   @override
   String get createAccount => 'Buat akun\ngratis dan mudah';
@@ -231,7 +233,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get pleaseEnterValidNumber => 'Silakan masukkan angka yang valid';
 
   @override
-  String get createWallet => 'Buat Dompet';
+  String get createWallet => 'Buat Wallet';
 
   @override
   String get walletCreatedSuccessfully => 'Dompet berhasil dibuat!';
@@ -464,4 +466,40 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get clearFilter => 'Hapus Filter';
+
+  @override
+  String get totalBalance => 'Total Saldo';
+
+  @override
+  String get noWallets => 'Tidak ada wallet';
+
+  @override
+  String lastUpdated(String date) {
+    return 'Terakhir diperbarui: $date';
+  }
+
+  @override
+  String get quickActions => 'Aksi Cepat';
+
+  @override
+  String get walletDistribution => 'Distribusi Wallet';
+
+  @override
+  String get noWalletsToDisplay => 'Tidak ada wallet untuk ditampilkan';
+
+  @override
+  String get noWalletsYet => 'Belum ada wallet';
+
+  @override
+  String get createFirstWallet => 'Buat wallet pertama Anda untuk memulai';
+
+  @override
+  String get transferFeatureSoon => 'Fitur transfer segera hadir!';
+
+  @override
+  String get walletOverview => 'Ini adalah ringkasan wallet Anda';
+
+  @override
+  String get connectApiForTransactions =>
+      'Hubungkan ke API untuk melihat transaksi nyata';
 }

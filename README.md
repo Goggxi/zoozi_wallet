@@ -438,6 +438,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Made with ❤️ using Flutter**
 
-[📱 Download APK](releases) | [📖 Documentation](docs) | [🐛 Report Bug](issues) | [💡 Request Feature](issues)
+[📱 Download APK](assets/readme/app-release.apk) | [📖 Documentation](docs) | [🐛 Report Bug](issues) | [💡 Request Feature](issues)
 
 </div>

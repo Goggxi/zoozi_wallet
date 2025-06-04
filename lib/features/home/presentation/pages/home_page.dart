@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/router/app_router.dart';
+import '../../../../core/utils/extensions/context_extension.dart';
 import '../../../wallet/presentation/bloc/wallet_bloc.dart';
 import '../../../wallet/presentation/bloc/wallet_event.dart';
 import '../../../wallet/presentation/bloc/wallet_state.dart';
@@ -42,36 +43,42 @@ class _HomePageState extends State<HomePage> {
               return const Center(child: CircularProgressIndicator());
             }
             if (state is WalletError) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.error_outline,
-                      size: 64,
-                      color: Colors.red[300],
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      'Error: ${state.message}',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: () {
-                        context.read<WalletBloc>().add(const GetWalletsEvent());
-                      },
-                      child: const Text('Retry'),
-                    ),
-                  ],
+              return Container(
+                margin: const EdgeInsets.symmetric(
+                    horizontal: 16), // Added horizontal padding
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.error_outline,
+                        size: 64,
+                        color: Colors.red[300],
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'Error: ${state.message}',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: () {
+                          context
+                              .read<WalletBloc>()
+                              .add(const GetWalletsEvent());
+                        },
+                        child: Text(context.l10n.tryAgain),
+                      ),
+                    ],
+                  ),
                 ),
               );
             }
             if (state is WalletsLoaded) {
               return _buildHomeContent(context, state.wallets);
             }
-            return const Center(child: Text('Welcome to Zoozi Wallet'));
+            return Center(child: Text(context.l10n.welcome));
           },
         ),
       ),
@@ -113,6 +120,7 @@ class _HomePageState extends State<HomePage> {
     final currentUser = authRepository.getCurrentUser();
     final userName =
         currentUser?.name ?? currentUser?.email.split('@').first ?? 'User';
+    final l = context.l10n;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -121,14 +129,14 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Welcome back,\n$userName!',
+              l.welcomeBack(userName),
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.darkPurple1,
                   ),
             ),
             Text(
-              'Here\'s your wallet overview',
+              l.walletOverview,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: AppColors.grey,
                   ),
@@ -159,6 +167,7 @@ class _HomePageState extends State<HomePage> {
       currencyTotals[wallet.currency] =
           (currencyTotals[wallet.currency] ?? 0) + wallet.balance;
     }
+    final l = context.l10n;
 
     return Container(
       width: double.infinity,
@@ -175,7 +184,7 @@ class _HomePageState extends State<HomePage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.purple.withOpacity(0.3),
+            color: AppColors.purple.withAlpha(77),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -185,15 +194,15 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Total Balance',
+            l.totalBalance,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.white.withOpacity(0.8),
+                  color: AppColors.white.withAlpha(204),
                 ),
           ),
           const SizedBox(height: 8),
           if (currencyTotals.isEmpty)
             Text(
-              'No wallets',
+              l.noWallets,
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     color: AppColors.white,
                     fontWeight: FontWeight.bold,
@@ -215,14 +224,15 @@ class _HomePageState extends State<HomePage> {
             children: [
               Icon(
                 Icons.trending_up,
-                color: AppColors.white.withOpacity(0.8),
+                color: AppColors.white.withAlpha(204),
                 size: 16,
               ),
               const SizedBox(width: 4),
               Text(
-                'Last updated: ${DateFormat('dd MMM yyyy, HH:mm').format(DateTime.now())}',
+                l.lastUpdated(
+                    DateFormat('dd MMM yyyy, HH:mm').format(DateTime.now())),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AppColors.white.withOpacity(0.7),
+                      color: AppColors.white.withAlpha(179),
                     ),
               ),
             ],
@@ -233,20 +243,22 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildQuickActions(BuildContext context) {
+    final l = context.l10n;
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.grey.withOpacity(0.2),
+          color: AppColors.grey.withAlpha(51),
         ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Quick Actions',
+            l.quickActions,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColors.darkPurple1,
@@ -259,7 +271,7 @@ class _HomePageState extends State<HomePage> {
                 child: _buildActionButton(
                   context,
                   icon: Icons.add_circle_outline,
-                  label: 'Deposit',
+                  label: l.deposit,
                   color: AppColors.purple,
                   onTap: () {
                     context.push('/deposit');
@@ -271,7 +283,7 @@ class _HomePageState extends State<HomePage> {
                 child: _buildActionButton(
                   context,
                   icon: Icons.remove_circle_outline,
-                  label: 'Withdraw',
+                  label: l.withdraw,
                   color: AppColors.pink,
                   onTap: () {
                     context.push('/withdrawal');
@@ -283,13 +295,12 @@ class _HomePageState extends State<HomePage> {
                 child: _buildActionButton(
                   context,
                   icon: Icons.swap_horiz,
-                  label: 'Transfer',
+                  label: l.transfer,
                   color: AppColors.darkPurple2,
                   onTap: () {
                     // Navigate to transfer page when available
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                          content: Text('Transfer feature coming soon!')),
+                      SnackBar(content: Text(l.transferFeatureSoon)),
                     );
                   },
                 ),
@@ -314,7 +325,7 @@ class _HomePageState extends State<HomePage> {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
+          color: color.withAlpha(26),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -340,14 +351,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildWalletChart(BuildContext context, List<WalletModel> wallets) {
+    final l = context.l10n;
+
     if (wallets.isEmpty) {
       return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16),
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: AppColors.grey.withOpacity(0.2),
+            color: AppColors.grey.withAlpha(51),
           ),
         ),
         child: Column(
@@ -355,11 +369,11 @@ class _HomePageState extends State<HomePage> {
             Icon(
               Icons.pie_chart_outline,
               size: 48,
-              color: AppColors.grey.withOpacity(0.5),
+              color: AppColors.grey.withAlpha(128),
             ),
             const SizedBox(height: 16),
             Text(
-              'No wallets to display',
+              l.noWalletsToDisplay,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: AppColors.grey,
                   ),
@@ -375,14 +389,14 @@ class _HomePageState extends State<HomePage> {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.grey.withOpacity(0.2),
+          color: AppColors.grey.withAlpha(51),
         ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Wallet Distribution',
+            l.walletDistribution,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColors.darkPurple1,
@@ -483,6 +497,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildWalletsList(BuildContext context, List<WalletModel> wallets) {
+    final l = context.l10n;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -490,7 +506,7 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'My Wallets',
+              l.myWallets,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.darkPurple1,
@@ -500,7 +516,7 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 context.go(AppRouter.wallet);
               },
-              child: const Text('View All'),
+              child: Text(l.viewAll),
             ),
           ],
         ),
@@ -514,14 +530,18 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildEmptyWalletsState(BuildContext context) {
+    final l = context.l10n;
+
     return Container(
+      margin: const EdgeInsets.symmetric(
+          horizontal: 16), // Added horizontal padding
       width: double.infinity,
       padding: const EdgeInsets.all(32),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.grey.withOpacity(0.2),
+          color: AppColors.grey.withAlpha(51),
         ),
       ),
       child: Column(
@@ -529,20 +549,20 @@ class _HomePageState extends State<HomePage> {
           Icon(
             Icons.account_balance_wallet_outlined,
             size: 48,
-            color: AppColors.grey.withOpacity(0.5),
+            color: AppColors.grey.withAlpha(128),
           ),
           const SizedBox(height: 16),
           Text(
-            'No wallets yet',
+            l.noWalletsYet,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: AppColors.grey,
                 ),
           ),
           const SizedBox(height: 8),
           Text(
-            'Create your first wallet to get started',
+            l.createFirstWallet,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.grey.withOpacity(0.7),
+                  color: AppColors.grey.withAlpha(179),
                 ),
             textAlign: TextAlign.center,
           ),
@@ -551,7 +571,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               // Navigate to create wallet
             },
-            child: const Text('Create Wallet'),
+            child: Text(l.createWallet),
           ),
         ],
       ),
@@ -569,7 +589,7 @@ class _HomePageState extends State<HomePage> {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: AppColors.grey.withOpacity(0.2),
+          color: AppColors.grey.withAlpha(51),
         ),
       ),
       child: Row(
@@ -577,7 +597,7 @@ class _HomePageState extends State<HomePage> {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: AppColors.purple.withOpacity(0.1),
+              color: AppColors.purple.withAlpha(26),
               borderRadius: BorderRadius.circular(8),
             ),
             child: const Icon(
@@ -651,13 +671,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildRecentTransactions(BuildContext context) {
+    final l = context.l10n;
+
     return Container(
+      margin: const EdgeInsets.symmetric(
+          horizontal: 16), // Added horizontal padding
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.grey.withOpacity(0.2),
+          color: AppColors.grey.withAlpha(51),
         ),
       ),
       child: Column(
@@ -667,7 +691,7 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Recent Transactions',
+                l.recentTransactions,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w600,
                       color: AppColors.darkPurple1,
@@ -677,7 +701,7 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () {
                   context.go(AppRouter.transactions);
                 },
-                child: const Text('View All'),
+                child: Text(l.viewAll),
               ),
             ],
           ),
@@ -707,7 +731,7 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(height: 8),
           Center(
             child: Text(
-              'Connect to API to see real transactions',
+              l.connectApiForTransactions,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: AppColors.grey,
                     fontStyle: FontStyle.italic,
@@ -733,7 +757,7 @@ class _HomePageState extends State<HomePage> {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: AppColors.grey.withOpacity(0.1),
+          color: AppColors.grey.withAlpha(26),
         ),
       ),
       child: Row(
@@ -741,7 +765,7 @@ class _HomePageState extends State<HomePage> {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: (isIncome ? Colors.green : Colors.red).withOpacity(0.1),
+              color: (isIncome ? Colors.green : Colors.red).withAlpha(26),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(

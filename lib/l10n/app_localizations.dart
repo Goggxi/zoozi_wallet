@@ -110,11 +110,11 @@ abstract class AppLocalizations {
   /// **'Welcome to Zoozi Wallet'**
   String get welcome;
 
-  /// Welcome back message on login screen
+  /// Welcome message with user name
   ///
   /// In en, this message translates to:
-  /// **'Welcome back\nto Zoozi wallet'**
-  String get welcomeBack;
+  /// **'Welcome back,\n{name}!'**
+  String welcomeBack(String name);
 
   /// Create account message on register screen
   ///
@@ -937,6 +937,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Clear Filter'**
   String get clearFilter;
+
+  /// Title for total balance card
+  ///
+  /// In en, this message translates to:
+  /// **'Total Balance'**
+  String get totalBalance;
+
+  /// Text shown when user has no wallets
+  ///
+  /// In en, this message translates to:
+  /// **'No wallets'**
+  String get noWallets;
+
+  /// Text showing when balance was last updated
+  ///
+  /// In en, this message translates to:
+  /// **'Last updated: {date}'**
+  String lastUpdated(String date);
+
+  /// Title for quick actions section
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get quickActions;
+
+  /// Title for wallet chart section
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet Distribution'**
+  String get walletDistribution;
+
+  /// Message shown when there are no wallets to show in chart
+  ///
+  /// In en, this message translates to:
+  /// **'No wallets to display'**
+  String get noWalletsToDisplay;
+
+  /// Title for empty wallet state
+  ///
+  /// In en, this message translates to:
+  /// **'No wallets yet'**
+  String get noWalletsYet;
+
+  /// Message encouraging user to create first wallet
+  ///
+  /// In en, this message translates to:
+  /// **'Create your first wallet to get started'**
+  String get createFirstWallet;
+
+  /// Message for transfer feature not available yet
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer feature coming soon!'**
+  String get transferFeatureSoon;
+
+  /// Subtitle for welcome message
+  ///
+  /// In en, this message translates to:
+  /// **'Here\'s your wallet overview'**
+  String get walletOverview;
+
+  /// Message about connecting to API for real transactions
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to API to see real transactions'**
+  String get connectApiForTransactions;
 }
 
 class _AppLocalizationsDelegate

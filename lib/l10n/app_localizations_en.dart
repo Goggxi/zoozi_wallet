@@ -15,7 +15,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get welcome => 'Welcome to Zoozi Wallet';
 
   @override
-  String get welcomeBack => 'Welcome back\nto Zoozi wallet';
+  String welcomeBack(String name) {
+    return 'Welcome back,\n$name!';
+  }
 
   @override
   String get createAccount => 'Create an account\nit\'s free and easy';
@@ -462,4 +464,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get clearFilter => 'Clear Filter';
+
+  @override
+  String get totalBalance => 'Total Balance';
+
+  @override
+  String get noWallets => 'No wallets';
+
+  @override
+  String lastUpdated(String date) {
+    return 'Last updated: $date';
+  }
+
+  @override
+  String get quickActions => 'Quick Actions';
+
+  @override
+  String get walletDistribution => 'Wallet Distribution';
+
+  @override
+  String get noWalletsToDisplay => 'No wallets to display';
+
+  @override
+  String get noWalletsYet => 'No wallets yet';
+
+  @override
+  String get createFirstWallet => 'Create your first wallet to get started';
+
+  @override
+  String get transferFeatureSoon => 'Transfer feature coming soon!';
+
+  @override
+  String get walletOverview => 'Here\'s your wallet overview';
+
+  @override
+  String get connectApiForTransactions =>
+      'Connect to API to see real transactions';
 }

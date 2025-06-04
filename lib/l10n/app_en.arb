@@ -8,9 +8,15 @@
   "@welcome": {
     "description": "Welcome message shown on the home screen"
   },
-  "welcomeBack": "Welcome back\nto Zoozi wallet",
+  "welcomeBack": "Welcome back,\n{name}!",
   "@welcomeBack": {
-    "description": "Welcome back message on login screen"
+    "description": "Welcome message with user name",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "John"
+      }
+    }
   },
   "createAccount": "Create an account\nit's free and easy",
   "@createAccount": {
@@ -647,5 +653,59 @@
   "clearFilter": "Clear Filter",
   "@clearFilter": {
     "description": "Clear filter button text"
+  },
+  "totalBalance": "Total Balance",
+  "@totalBalance": {
+    "description": "Title for total balance card"
+  },
+  "noWallets": "No wallets",
+  "@noWallets": {
+    "description": "Text shown when user has no wallets"
+  },
+  "lastUpdated": "Last updated: {date}",
+  "@lastUpdated": {
+    "description": "Text showing when balance was last updated",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "12 Jan 2024, 10:30"
+      }
+    }
+  },
+  "quickActions": "Quick Actions",
+  "@quickActions": {
+    "description": "Title for quick actions section"
+  },
+  "walletDistribution": "Wallet Distribution",
+  "@walletDistribution": {
+    "description": "Title for wallet chart section"
+  },
+  "noWalletsToDisplay": "No wallets to display",
+  "@noWalletsToDisplay": {
+    "description": "Message shown when there are no wallets to show in chart"
+  },
+  "viewAll": "View All",
+  "@viewAll": {
+    "description": "Button text to view all items"
+  },
+  "noWalletsYet": "No wallets yet",
+  "@noWalletsYet": {
+    "description": "Title for empty wallet state"
+  },
+  "createFirstWallet": "Create your first wallet to get started",
+  "@createFirstWallet": {
+    "description": "Message encouraging user to create first wallet"
+  },
+  "transferFeatureSoon": "Transfer feature coming soon!",
+  "@transferFeatureSoon": {
+    "description": "Message for transfer feature not available yet"
+  },
+  "walletOverview": "Here's your wallet overview",
+  "@walletOverview": {
+    "description": "Subtitle for welcome message"
+  },
+  "connectApiForTransactions": "Connect to API to see real transactions",
+  "@connectApiForTransactions": {
+    "description": "Message about connecting to API for real transactions"
   }
 }

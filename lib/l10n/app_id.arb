@@ -8,7 +8,7 @@
   "@welcome": {
     "description": "Welcome message shown on the home screen"
   },
-  "welcomeBack": "Selamat datang kembali\ndi Zoozi wallet",
+  "welcomeBack": "Selamat datang kembali,\n{name}!",
   "@welcomeBack": {
     "description": "Welcome back message on login screen"
   },
@@ -294,7 +294,7 @@
   "@pleaseEnterValidNumber": {
     "description": "Validation message for number input"
   },
-  "createWallet": "Buat Dompet",
+  "createWallet": "Buat Wallet",
   "@createWallet": {
     "description": "Button text to create a new wallet"
   },
@@ -491,5 +491,17 @@
   "thisMonth": "Bulan Ini",
   "customRange": "Rentang Kustom",
   "applyFilter": "Terapkan Filter",
-  "clearFilter": "Hapus Filter"
+  "clearFilter": "Hapus Filter",
+  "totalBalance": "Total Saldo",
+  "noWallets": "Tidak ada wallet",
+  "lastUpdated": "Terakhir diperbarui: {date}",
+  "quickActions": "Aksi Cepat",
+  "walletDistribution": "Distribusi Wallet",
+  "noWalletsToDisplay": "Tidak ada wallet untuk ditampilkan",
+  "viewAll": "Lihat Semua",
+  "noWalletsYet": "Belum ada wallet",
+  "createFirstWallet": "Buat wallet pertama Anda untuk memulai",
+  "transferFeatureSoon": "Fitur transfer segera hadir!",
+  "walletOverview": "Ini adalah ringkasan wallet Anda",
+  "connectApiForTransactions": "Hubungkan ke API untuk melihat transaksi nyata"
 }
