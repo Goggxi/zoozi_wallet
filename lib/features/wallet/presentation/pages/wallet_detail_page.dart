@@ -115,24 +115,27 @@ class _WalletDetailPageState extends State<WalletDetailPage>
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: isDark ? theme.scaffoldBackgroundColor : Colors.grey[50],
       appBar: AppBar(
         title: Text(l.walletDetails),
         elevation: 0,
         backgroundColor: Colors.transparent,
-        foregroundColor: AppColors.darkPurple1,
+        foregroundColor: theme.colorScheme.onSurface,
         actions: [
           if (_isRefreshing)
             Container(
               padding: const EdgeInsets.all(16),
-              child: const SizedBox(
+              child: SizedBox(
                 width: 20,
                 height: 20,
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
                   valueColor:
-                      AlwaysStoppedAnimation<Color>(AppColors.darkPurple1),
+                      AlwaysStoppedAnimation<Color>(theme.colorScheme.primary),
                 ),
               ),
             )
@@ -215,6 +218,7 @@ class _WalletDetailPageState extends State<WalletDetailPage>
                   }
                 },
                 child: CustomScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
                   controller: _scrollController,
                   slivers: [
                     SliverToBoxAdapter(
@@ -447,14 +451,19 @@ class _WalletDetailPageState extends State<WalletDetailPage>
 
   Widget _buildStatCard(
       String title, String value, IconData icon, Color color) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withAlpha((0.1 * 255).round()),
+            color: isDark
+                ? Colors.black.withAlpha((0.3 * 255).round())
+                : Colors.grey.withAlpha((0.1 * 255).round()),
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),
@@ -472,7 +481,7 @@ class _WalletDetailPageState extends State<WalletDetailPage>
           Text(
             title,
             style: TextStyle(
-              color: Colors.grey[600],
+              color: theme.colorScheme.onSurfaceVariant,
               fontSize: 12,
               fontWeight: FontWeight.w500,
             ),
@@ -534,6 +543,8 @@ class _WalletDetailPageState extends State<WalletDetailPage>
   }
 
   Widget _buildTransactionHeader(BuildContext context, dynamic l) {
+    final theme = Theme.of(context);
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
@@ -541,10 +552,10 @@ class _WalletDetailPageState extends State<WalletDetailPage>
         children: [
           Text(
             l.recentTransactions,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: AppColors.darkPurple1,
+              color: theme.colorScheme.onSurface,
             ),
           ),
           if (_transactions.isNotEmpty)
@@ -554,8 +565,8 @@ class _WalletDetailPageState extends State<WalletDetailPage>
               },
               child: Text(
                 l.viewAll,
-                style: const TextStyle(
-                  color: AppColors.purple,
+                style: TextStyle(
+                  color: theme.colorScheme.primary,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -586,16 +597,21 @@ class _WalletDetailPageState extends State<WalletDetailPage>
 
     // Show empty state when no transactions and not loading
     if (_transactions.isEmpty && !_isLoadingTransactions) {
+      final theme = Theme.of(context);
+      final isDark = theme.brightness == Brightness.dark;
+
       return SliverToBoxAdapter(
         child: Container(
           margin: const EdgeInsets.all(16),
           padding: const EdgeInsets.all(32),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: theme.cardColor,
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withAlpha((0.1 * 255).round()),
+                color: isDark
+                    ? Colors.black.withAlpha((0.3 * 255).round())
+                    : Colors.grey.withAlpha((0.1 * 255).round()),
                 blurRadius: 10,
                 offset: const Offset(0, 5),
               ),
@@ -606,7 +622,7 @@ class _WalletDetailPageState extends State<WalletDetailPage>
               Icon(
                 Icons.receipt_long_outlined,
                 size: 64,
-                color: Colors.grey[400],
+                color: theme.colorScheme.outline,
               ),
               const SizedBox(height: 16),
               Text(
@@ -614,7 +630,7 @@ class _WalletDetailPageState extends State<WalletDetailPage>
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
-                  color: Colors.grey[600],
+                  color: theme.colorScheme.onSurface,
                 ),
               ),
               const SizedBox(height: 8),
@@ -622,7 +638,7 @@ class _WalletDetailPageState extends State<WalletDetailPage>
                 l.transactionsWillAppearHere,
                 style: TextStyle(
                   fontSize: 14,
-                  color: Colors.grey[500],
+                  color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),
             ],
@@ -777,6 +793,8 @@ class _WalletDetailPageState extends State<WalletDetailPage>
   }
 
   Widget _buildErrorState(String message, dynamic l) {
+    final theme = Theme.of(context);
+
     return Container(
       padding: const EdgeInsets.all(24),
       child: Column(
@@ -785,7 +803,7 @@ class _WalletDetailPageState extends State<WalletDetailPage>
           Icon(
             Icons.error_outline,
             size: 64,
-            color: Colors.red[400],
+            color: theme.colorScheme.error,
           ),
           const SizedBox(height: 16),
           Text(
@@ -793,7 +811,7 @@ class _WalletDetailPageState extends State<WalletDetailPage>
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Colors.grey[800],
+              color: theme.colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 8),
@@ -802,7 +820,7 @@ class _WalletDetailPageState extends State<WalletDetailPage>
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 14,
-              color: Colors.grey[600],
+              color: theme.colorScheme.onSurfaceVariant,
             ),
           ),
           const SizedBox(height: 24),
@@ -814,8 +832,8 @@ class _WalletDetailPageState extends State<WalletDetailPage>
               _loadTransactions();
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.purple,
-              foregroundColor: Colors.white,
+              backgroundColor: theme.colorScheme.primary,
+              foregroundColor: theme.colorScheme.onPrimary,
               padding: const EdgeInsets.symmetric(
                 horizontal: 24,
                 vertical: 12,
@@ -832,14 +850,16 @@ class _WalletDetailPageState extends State<WalletDetailPage>
   }
 
   void _showWalletOptions(BuildContext context, dynamic l) {
+    final theme = Theme.of(context);
+
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       builder: (context) => Container(
         padding: const EdgeInsets.all(20),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        decoration: BoxDecoration(
+          color: theme.cardColor,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -848,13 +868,13 @@ class _WalletDetailPageState extends State<WalletDetailPage>
               width: 40,
               height: 4,
               decoration: BoxDecoration(
-                color: Colors.grey[300],
+                color: theme.colorScheme.outline,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
             const SizedBox(height: 20),
             ListTile(
-              leading: const Icon(Icons.edit, color: AppColors.purple),
+              leading: Icon(Icons.edit, color: theme.colorScheme.primary),
               title: Text(l.editWallet),
               onTap: () {
                 Navigator.pop(context);
@@ -862,7 +882,7 @@ class _WalletDetailPageState extends State<WalletDetailPage>
               },
             ),
             ListTile(
-              leading: const Icon(Icons.history, color: AppColors.purple),
+              leading: Icon(Icons.history, color: theme.colorScheme.primary),
               title: Text(l.transactionHistory),
               onTap: () {
                 Navigator.pop(context);
@@ -870,7 +890,7 @@ class _WalletDetailPageState extends State<WalletDetailPage>
               },
             ),
             ListTile(
-              leading: const Icon(Icons.settings, color: AppColors.purple),
+              leading: Icon(Icons.settings, color: theme.colorScheme.primary),
               title: Text(l.walletSettings),
               onTap: () {
                 Navigator.pop(context);
@@ -899,13 +919,18 @@ class _EnhancedActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withAlpha((0.1 * 255).round()),
+            color: isDark
+                ? Colors.black.withAlpha((0.3 * 255).round())
+                : Colors.grey.withAlpha((0.1 * 255).round()),
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),

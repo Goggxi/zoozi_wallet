@@ -397,6 +397,7 @@ class _TransactionPageState extends State<TransactionPage>
         _loadAllTransactions();
       },
       child: ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(),
         controller: _scrollController,
         padding: const EdgeInsets.all(16),
         itemCount: _filteredTransactions.length,
