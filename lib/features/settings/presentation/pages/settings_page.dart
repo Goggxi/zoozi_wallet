@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:zoozi_wallet/core/theme/app_theme.dart';
+import 'package:zoozi_wallet/core/router/app_router.dart';
+import 'package:zoozi_wallet/core/utils/extensions/context_extension.dart';
 import 'package:zoozi_wallet/di/di.dart';
-import 'package:zoozi_wallet/features/settings/presentation/bloc/theme_bloc.dart';
-import 'package:zoozi_wallet/features/settings/presentation/bloc/theme_state.dart';
-import 'package:zoozi_wallet/features/settings/presentation/bloc/language_bloc.dart';
-import 'package:zoozi_wallet/features/settings/presentation/bloc/language_state.dart';
+
+import '../../../auth/presentation/bloc/auth_bloc.dart';
+import '../../../auth/presentation/bloc/auth_event.dart';
+import '../../../auth/presentation/bloc/auth_state.dart';
+import '../bloc/theme_bloc.dart';
+import '../bloc/theme_event.dart';
+import '../bloc/theme_state.dart';
+import '../bloc/language_bloc.dart';
+import '../bloc/language_event.dart';
+import '../bloc/language_state.dart';
 import '../widgets/theme_switch_dialog.dart';
 import '../widgets/language_switch_dialog.dart';
-import 'package:zoozi_wallet/core/utils/extensions/context_extension.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -125,7 +133,7 @@ class SettingsPage extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton.icon(
                 onPressed: () {
-                  // TODO: Handle logout
+                  _showLogoutConfirmationDialog(context);
                 },
                 icon: Icon(
                   Icons.logout,
@@ -212,6 +220,143 @@ class SettingsPage extends StatelessWidget {
               ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _showLogoutConfirmationDialog(BuildContext context) {
+    final theme = Theme.of(context);
+    final l = context.l10n;
+    final authBloc = getIt<AuthBloc>();
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        title: Text(
+          'Confirm Logout',
+          style: theme.textTheme.headlineSmall?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Are you sure you want to logout from your account?',
+              style: theme.textTheme.bodyLarge,
+            ),
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.orange.withAlpha((0.1 * 255).round()),
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: Colors.orange.withAlpha((0.3 * 255).round()),
+                ),
+              ),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.info_outline,
+                    color: Colors.orange,
+                    size: 20,
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'You will need to login again to access your wallet',
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: Colors.orange[800],
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          Row(
+            children: [
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: theme.colorScheme.primary,
+                    side: BorderSide(color: theme.colorScheme.primary),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                  ),
+                  child: Text(l.cancel),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: BlocListener<AuthBloc, AuthState>(
+                  bloc: authBloc,
+                  listener: (context, state) {
+                    if (state is AuthUnauthenticated) {
+                      Navigator.of(context).pop(); // Close dialog
+                      context.go(AppRouter.login); // Navigate to login
+                    } else if (state is AuthError) {
+                      Navigator.of(context).pop(); // Close dialog
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Logout failed: ${state.message}'),
+                          backgroundColor: theme.colorScheme.error,
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                  child: BlocBuilder<AuthBloc, AuthState>(
+                    bloc: authBloc,
+                    builder: (context, state) {
+                      return ElevatedButton(
+                        onPressed: state is AuthLoading
+                            ? null
+                            : () {
+                                authBloc.add(LogoutEvent());
+                              },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: theme.colorScheme.error,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                        ),
+                        child: state is AuthLoading
+                            ? const SizedBox(
+                                height: 16,
+                                width: 16,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    Colors.white,
+                                  ),
+                                ),
+                              )
+                            : Text(l.logout),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

@@ -34,14 +34,28 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onRegister(RegisterEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
 
-    final result = await _authRepository.register(
+    final registerResult = await _authRepository.register(
       email: event.email,
       password: event.password,
       name: event.name,
     );
 
-    result.fold(
-      onSuccess: (user) => emit(AuthAuthenticated(user)),
+    await registerResult.fold(
+      onSuccess: (user) async {
+        // Registration successful, now automatically login to get token
+        final loginResult =
+            await _authRepository.login(event.email, event.password);
+
+        loginResult.fold(
+          onSuccess: (authenticatedUser) =>
+              emit(AuthAuthenticated(authenticatedUser)),
+          onError: (loginError) {
+            loginError = loginError.copyWith(context: event.context);
+            emit(AuthError(
+                'Registration successful but login failed: ${loginError.getLocalizedMessage()}'));
+          },
+        );
+      },
       onError: (error) {
         error = error.copyWith(context: event.context);
         emit(AuthError(error.getLocalizedMessage()));
@@ -59,10 +73,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     final result = await _authRepository.logout();
 
-    result.fold(
-      onSuccess: (_) => emit(AuthUnauthenticated()),
-      onError: (error) => emit(AuthError(error.message)),
-    );
+    if (result.isSuccess) {
+      emit(AuthUnauthenticated());
+    } else {
+      emit(AuthError(result.error?.message ?? 'Logout failed'));
+    }
   }
 
   Future<void> _onCheckAuthStatus(

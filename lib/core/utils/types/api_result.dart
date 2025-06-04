@@ -11,7 +11,7 @@ typedef ApiResult<T> = ({ApiException? error, T? data});
 /// Extension methods for ApiResult to make it easier to work with
 extension ApiResultExtension<T> on ApiResult<T> {
   /// Returns true if the result is successful (no error)
-  bool get isSuccess => error == null && data != null;
+  bool get isSuccess => error == null;
 
   /// Returns true if the result has an error
   bool get isError => error != null;
@@ -30,7 +30,12 @@ extension ApiResultExtension<T> on ApiResult<T> {
     required R Function(ApiException error) onError,
   }) {
     if (isSuccess) {
-      return onSuccess(data as T);
+      try {
+        return onSuccess(data as T);
+      } catch (e) {
+        // Handle void types or null data
+        return onSuccess(null as T);
+      }
     } else {
       return onError(error!);
     }
@@ -39,7 +44,12 @@ extension ApiResultExtension<T> on ApiResult<T> {
   /// Maps the result to a new type
   ApiResult<R> map<R>(R Function(T data) mapper) {
     if (isSuccess) {
-      return (error: null, data: mapper(data as T));
+      try {
+        return (error: null, data: mapper(data as T));
+      } catch (e) {
+        // Handle void types or null data
+        return (error: null, data: mapper(null as T));
+      }
     } else {
       return (error: error, data: null);
     }

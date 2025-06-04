@@ -68,7 +68,7 @@ class AuthRepository implements IAuthRepository {
   Future<ApiResult<void>> logout() async {
     try {
       await _localDataSource.clearAuth();
-      return Success(null);
+      return (error: null, data: null);
     } on ApiException catch (e) {
       return Error(e);
     }
