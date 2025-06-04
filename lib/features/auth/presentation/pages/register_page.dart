@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:zoozi_wallet/core/router/app_router.dart';
 import 'package:zoozi_wallet/core/utils/extensions/context_extension.dart';
 import 'package:zoozi_wallet/di/di.dart';
+import 'package:zoozi_wallet/features/auth/presentation/bloc/auth_event.dart';
+import 'package:zoozi_wallet/features/auth/presentation/bloc/auth_state.dart';
 
 import '../bloc/auth_bloc.dart';
 import '../../../../core/utils/validators/form_validators.dart';

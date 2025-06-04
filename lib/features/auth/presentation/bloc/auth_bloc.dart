@@ -1,89 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/utils/types/api_result.dart';
 import '../../data/models/auth_model.dart';
 import '../../domain/repositories/auth_repository.dart';
+import 'auth_event.dart';
+import 'auth_state.dart';
 
-// Events
-abstract class AuthEvent extends Equatable {
-  const AuthEvent();
-
-  @override
-  List<Object?> get props => [];
-}
-
-class LoginEvent extends AuthEvent {
-  final String email;
-  final String password;
-  final BuildContext context;
-
-  const LoginEvent({
-    required this.email,
-    required this.password,
-    required this.context,
-  });
-
-  @override
-  List<Object?> get props => [email, password, context];
-}
-
-class RegisterEvent extends AuthEvent {
-  final String email;
-  final String password;
-  final String? name;
-  final BuildContext context;
-
-  const RegisterEvent({
-    required this.email,
-    required this.password,
-    this.name,
-    required this.context,
-  });
-
-  @override
-  List<Object?> get props => [email, password, name, context];
-}
-
-class LogoutEvent extends AuthEvent {}
-
-class CheckAuthStatusEvent extends AuthEvent {}
-
-// States
-abstract class AuthState extends Equatable {
-  const AuthState();
-
-  @override
-  List<Object?> get props => [];
-}
-
-class AuthInitial extends AuthState {}
-
-class AuthLoading extends AuthState {}
-
-class AuthAuthenticated extends AuthState {
-  final AuthModel user;
-
-  const AuthAuthenticated(this.user);
-
-  @override
-  List<Object?> get props => [user];
-}
-
-class AuthUnauthenticated extends AuthState {}
-
-class AuthError extends AuthState {
-  final String message;
-
-  const AuthError(this.message);
-
-  @override
-  List<Object?> get props => [message];
-}
-
-// Bloc
 @injectable
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final IAuthRepository _authRepository;
@@ -128,6 +52,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onLogout(LogoutEvent event, Emitter<AuthState> emit) async {
+    if (_authRepository.getCurrentUser() == null) {
+      emit(AuthUnauthenticated());
+      return;
+    }
+
     emit(AuthLoading());
 
     final result = await _authRepository.logout();

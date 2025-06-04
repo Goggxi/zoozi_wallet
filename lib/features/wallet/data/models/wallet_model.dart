@@ -6,19 +6,31 @@ part 'wallet_model.g.dart';
 
 enum Currency { USD, EUR, GBP }
 
+String? _idFromJson(dynamic id) => id?.toString();
+String _nameFromJson(dynamic name) => name?.toString() ?? 'Unnamed Wallet';
+double _balanceFromJson(dynamic balance) =>
+    (balance as num?)?.toDouble() ?? 0.0;
+String _currencyFromJson(dynamic currency) => currency?.toString() ?? 'USD';
+DateTime _dateFromJson(dynamic date) =>
+    date != null ? DateTime.parse(date.toString()) : DateTime.now();
+
 @JsonSerializable()
 class WalletModel {
-  final String id;
+  @JsonKey(fromJson: _idFromJson)
+  final String? id;
+  @JsonKey(fromJson: _nameFromJson)
   final String name;
+  @JsonKey(fromJson: _balanceFromJson)
   final double balance;
+  @JsonKey(fromJson: _currencyFromJson)
   final String currency;
-  @JsonKey(name: 'created_at')
+  @JsonKey(name: 'created_at', fromJson: _dateFromJson)
   final DateTime createdAt;
-  @JsonKey(name: 'updated_at')
+  @JsonKey(name: 'updated_at', fromJson: _dateFromJson)
   final DateTime updatedAt;
 
   const WalletModel({
-    required this.id,
+    this.id,
     required this.name,
     required this.balance,
     required this.currency,
@@ -33,7 +45,7 @@ class WalletModel {
 
   Wallet toEntity() {
     return Wallet(
-      id: id,
+      id: id ?? '',
       name: name,
       balance: balance,
       currency: currency,

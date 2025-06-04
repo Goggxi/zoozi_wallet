@@ -68,32 +68,36 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i786.ThemeBloc(gh<_i897.IThemeRepository>()));
     gh.factory<_i712.ILanguageRepository>(
         () => _i712.LanguageRepository(gh<_i937.ILocalStorage>()));
-    gh.factory<_i74.HttpClient>(() => _i74.HttpClient(
-          gh<_i519.Client>(),
-          gh<_i755.IAppLogger>(),
-        ));
-    gh.factory<_i103.IAuthRemoteDataSource>(() => _i103.AuthRemoteDataSource(
-          gh<_i74.HttpClient>(),
-          gh<_i755.IAppLogger>(),
-        ));
     gh.factory<_i54.IAuthLocalDataSource>(() => _i54.AuthLocalDataSource(
           gh<_i937.ILocalStorage>(),
           gh<_i755.IAppLogger>(),
         ));
     gh.singleton<_i664.LanguageBloc>(
         () => _i664.LanguageBloc(gh<_i712.ILanguageRepository>()));
+    gh.factory<_i74.HttpClient>(() => _i74.HttpClient(
+          gh<_i519.Client>(),
+          gh<_i755.IAppLogger>(),
+          gh<_i54.IAuthLocalDataSource>(),
+        ));
+    gh.factory<_i411.IWalletRemoteDataSource>(
+        () => _i411.WalletRemoteDataSource(
+              gh<_i74.HttpClient>(),
+              gh<_i54.IAuthLocalDataSource>(),
+            ));
+    gh.factory<_i126.IWalletRepository>(
+        () => _i126.WalletRepository(gh<_i411.IWalletRemoteDataSource>()));
+    gh.factory<_i103.IAuthRemoteDataSource>(() => _i103.AuthRemoteDataSource(
+          gh<_i74.HttpClient>(),
+          gh<_i755.IAppLogger>(),
+        ));
     gh.factory<_i173.IAuthRepository>(() => _i173.AuthRepository(
           gh<_i103.IAuthRemoteDataSource>(),
           gh<_i54.IAuthLocalDataSource>(),
         ));
-    gh.factory<_i411.IWalletRemoteDataSource>(
-        () => _i411.WalletRemoteDataSource(gh<_i74.HttpClient>()));
-    gh.factory<_i126.IWalletRepository>(
-        () => _i126.WalletRepository(gh<_i411.IWalletRemoteDataSource>()));
-    gh.factory<_i138.AuthBloc>(
-        () => _i138.AuthBloc(gh<_i173.IAuthRepository>()));
     gh.factory<_i424.WalletBloc>(
         () => _i424.WalletBloc(gh<_i126.IWalletRepository>()));
+    gh.factory<_i138.AuthBloc>(
+        () => _i138.AuthBloc(gh<_i173.IAuthRepository>()));
     return this;
   }
 }

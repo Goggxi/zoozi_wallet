@@ -7,8 +7,8 @@ abstract class IAppLogger {
   void warning(dynamic message, [dynamic error, StackTrace? stackTrace]);
   void error(dynamic message, [dynamic error, StackTrace? stackTrace]);
   void wtf(dynamic message, [dynamic error, StackTrace? stackTrace]);
-  void network(String method, String url, dynamic body, dynamic response,
-      int? statusCode);
+  void network(String method, String url, dynamic body, dynamic headers,
+      dynamic response, int? statusCode);
 }
 
 @Singleton(as: IAppLogger)
@@ -53,14 +53,15 @@ class AppLogger implements IAppLogger {
   }
 
   @override
-  void network(String method, String url, dynamic body, dynamic response,
-      int? statusCode) {
+  void network(String method, String url, dynamic body, dynamic headers,
+      dynamic response, int? statusCode) {
     final emoji =
         statusCode != null && statusCode >= 200 && statusCode < 300 ? '✅' : '❌';
     _logger.i('''
 $emoji Network Request:
 Method: $method
 URL: $url
+Headers: $headers
 Body: $body
 Status Code: $statusCode
 Response: $response

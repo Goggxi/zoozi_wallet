@@ -5,6 +5,8 @@ import 'package:zoozi_wallet/core/router/app_router.dart';
 import 'package:zoozi_wallet/core/utils/extensions/context_extension.dart';
 import 'package:zoozi_wallet/di/di.dart';
 import 'package:zoozi_wallet/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:zoozi_wallet/features/auth/presentation/bloc/auth_event.dart';
+import 'package:zoozi_wallet/features/auth/presentation/bloc/auth_state.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});

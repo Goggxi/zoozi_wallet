@@ -4,6 +4,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 
+import '../../../di/di.dart';
+import '../../../features/auth/data/datasources/auth_local_data_source.dart';
+import '../../../features/auth/presentation/bloc/auth_bloc.dart';
+import '../../../features/auth/presentation/bloc/auth_event.dart';
 import '../exceptions/api_exception.dart';
 import '../logger/app_logger.dart';
 
@@ -13,8 +17,13 @@ enum RequestMethod { get, post, put, delete }
 class HttpClient {
   final http.Client _client;
   final IAppLogger _logger;
+  final IAuthLocalDataSource _authLocalDataSource;
 
-  HttpClient(this._client, this._logger);
+  HttpClient(
+    this._client,
+    this._logger,
+    this._authLocalDataSource,
+  );
 
   Future<http.Response> apiRequest({
     required String url,
@@ -81,12 +90,18 @@ class HttpClient {
         method.name.toUpperCase(),
         uri.toString(),
         requestBody,
+        requestHeaders,
         response.body,
         response.statusCode,
       );
 
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return response;
+      }
+
+      // Handle 401 Unauthorized globally for non-auth endpoints
+      if (response.statusCode == 401 && !apiPath.contains('/auth/')) {
+        await _handleUnauthorized();
       }
 
       throw _handleErrorResponse(response);
@@ -100,6 +115,12 @@ class HttpClient {
       _logger.error('Network error', e);
       throw ApiException.network(e);
     }
+  }
+
+  Future<void> _handleUnauthorized() async {
+    _logger.debug('Handling unauthorized response');
+    await _authLocalDataSource.clearAuth();
+    getIt<AuthBloc>().add(LogoutEvent());
   }
 
   ApiException _handleErrorResponse(http.Response response) {

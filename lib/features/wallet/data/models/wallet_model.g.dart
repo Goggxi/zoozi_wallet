@@ -7,12 +7,12 @@ part of 'wallet_model.dart';
 // **************************************************************************
 
 WalletModel _$WalletModelFromJson(Map<String, dynamic> json) => WalletModel(
-      id: json['id'] as String,
-      name: json['name'] as String,
-      balance: (json['balance'] as num).toDouble(),
-      currency: json['currency'] as String,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
+      id: _idFromJson(json['id']),
+      name: _nameFromJson(json['name']),
+      balance: _balanceFromJson(json['balance']),
+      currency: _currencyFromJson(json['currency']),
+      createdAt: _dateFromJson(json['created_at']),
+      updatedAt: _dateFromJson(json['updated_at']),
     );
 
 Map<String, dynamic> _$WalletModelToJson(WalletModel instance) =>
