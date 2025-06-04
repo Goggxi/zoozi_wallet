@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/utils/constants/currency.dart';
 import '../../data/models/transaction_model.dart';
+import '../../domain/entities/transaction.dart' as entity;
 
 class TransactionListItem extends StatelessWidget {
   final TransactionModel transaction;
@@ -14,33 +15,33 @@ class TransactionListItem extends StatelessWidget {
 
   Color _getAmountColor() {
     switch (transaction.type) {
-      case TransactionType.deposit:
+      case entity.TransactionType.income:
         return Colors.green;
-      case TransactionType.withdrawal:
+      case entity.TransactionType.expense:
         return Colors.red;
-      default:
-        return Colors.grey;
+      case entity.TransactionType.transfer:
+        return Colors.blue;
     }
   }
 
   String _getAmountPrefix() {
     switch (transaction.type) {
-      case TransactionType.deposit:
+      case entity.TransactionType.income:
         return '+';
-      case TransactionType.withdrawal:
+      case entity.TransactionType.expense:
         return '-';
-      default:
+      case entity.TransactionType.transfer:
         return '';
     }
   }
 
   IconData _getTransactionIcon() {
     switch (transaction.type) {
-      case TransactionType.deposit:
+      case entity.TransactionType.income:
         return Icons.add_circle_outline;
-      case TransactionType.withdrawal:
+      case entity.TransactionType.expense:
         return Icons.remove_circle_outline;
-      default:
+      case entity.TransactionType.transfer:
         return Icons.swap_horiz;
     }
   }
@@ -59,7 +60,7 @@ class TransactionListItem extends StatelessWidget {
           vertical: 8,
         ),
         leading: CircleAvatar(
-          backgroundColor: _getAmountColor().withOpacity(0.1),
+          backgroundColor: _getAmountColor().withValues(alpha: 0.1),
           child: Icon(
             _getTransactionIcon(),
             color: _getAmountColor(),

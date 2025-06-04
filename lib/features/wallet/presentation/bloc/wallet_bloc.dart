@@ -41,12 +41,17 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     GetWalletsEvent event,
     Emitter<WalletState> emit,
   ) async {
-    emit(WalletLoading());
+    // Only emit loading if we don't have wallets data or if explicitly requested
+    if (state is! WalletsLoaded || event.forceRefresh) {
+      emit(WalletLoading());
+    }
 
     final result = await _walletRepository.getWallets();
 
     result.fold(
-      onSuccess: (wallets) => emit(WalletsLoaded(wallets)),
+      onSuccess: (wallets) {
+        emit(WalletsLoaded(wallets));
+      },
       onError: (error) => emit(WalletError(error.message)),
     );
   }
@@ -55,13 +60,21 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     GetWalletByIdEvent event,
     Emitter<WalletState> emit,
   ) async {
-    emit(WalletLoading());
+    // Don't emit loading if we're already showing wallets list
+    // This prevents the loading state from affecting the wallet list page
+    if (state is! WalletsLoaded) {
+      emit(WalletLoading());
+    }
 
     final result = await _walletRepository.getWalletById(event.id);
 
     result.fold(
-      onSuccess: (wallet) => emit(WalletLoaded(wallet)),
-      onError: (error) => emit(WalletError(error.message)),
+      onSuccess: (wallet) {
+        emit(WalletLoaded(wallet));
+      },
+      onError: (error) {
+        emit(WalletError(error.message));
+      },
     );
   }
 
@@ -107,8 +120,8 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     GetTransactionsEvent event,
     Emitter<WalletState> emit,
   ) async {
-    emit(WalletLoading());
-
+    // Don't emit loading for transaction requests to prevent affecting wallet list
+    // The wallet detail page will handle its own loading state
     final result = await _walletRepository.getTransactions(
       walletId: event.walletId,
       page: event.page,
@@ -116,8 +129,12 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     );
 
     result.fold(
-      onSuccess: (transactions) => emit(TransactionsLoaded(transactions)),
-      onError: (error) => emit(WalletError(error.message)),
+      onSuccess: (transactions) {
+        emit(TransactionsLoaded(transactions));
+      },
+      onError: (error) {
+        emit(WalletError(error.message));
+      },
     );
   }
 

@@ -8,14 +8,14 @@ part of 'transaction_model.dart';
 
 TransactionModel _$TransactionModelFromJson(Map<String, dynamic> json) =>
     TransactionModel(
-      id: json['id'] as String,
-      title: json['title'] as String,
-      description: json['description'] as String,
-      amount: (json['amount'] as num).toDouble(),
-      typeString: json['type'] as String,
-      fromWalletId: json['from_wallet_id'] as String,
+      id: _stringFromJson(json['id']),
+      title: _stringFromJson(json['title']),
+      description: _stringFromJson(json['description']),
+      amount: _doubleFromJson(json['amount']),
+      typeString: _stringFromJson(json['type']),
+      fromWalletId: _stringFromJson(json['from_wallet_id']),
       toWalletId: json['to_wallet_id'] as String?,
-      createdAt: DateTime.parse(json['created_at'] as String),
+      createdAt: _dateFromJson(json['created_at']),
     );
 
 Map<String, dynamic> _$TransactionModelToJson(TransactionModel instance) =>
@@ -47,12 +47,10 @@ Map<String, dynamic> _$TransactionRequestToJson(TransactionRequest instance) =>
 TransactionListResponse _$TransactionListResponseFromJson(
         Map<String, dynamic> json) =>
     TransactionListResponse(
-      transactions: (json['transactions'] as List<dynamic>)
-          .map((e) => TransactionModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      total: (json['total'] as num).toInt(),
-      page: (json['page'] as num).toInt(),
-      limit: (json['limit'] as num).toInt(),
+      transactions: _transactionsFromJson(json['transactions']),
+      total: _intFromJson(json['total']),
+      page: _intFromJson(json['page']),
+      limit: _intFromJson(json['limit']),
     );
 
 Map<String, dynamic> _$TransactionListResponseToJson(

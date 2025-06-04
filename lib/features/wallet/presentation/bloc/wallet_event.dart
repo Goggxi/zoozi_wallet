@@ -17,7 +17,14 @@ class CreateWalletEvent extends WalletEvent {
   List<Object?> get props => [currency, initialBalance];
 }
 
-class GetWalletsEvent extends WalletEvent {}
+class GetWalletsEvent extends WalletEvent {
+  final bool forceRefresh;
+
+  const GetWalletsEvent({this.forceRefresh = false});
+
+  @override
+  List<Object?> get props => [forceRefresh];
+}
 
 class GetWalletByIdEvent extends WalletEvent {
   final String id;

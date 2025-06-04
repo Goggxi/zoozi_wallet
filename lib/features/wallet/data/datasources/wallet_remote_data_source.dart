@@ -178,18 +178,76 @@ class WalletRemoteDataSource implements IWalletRemoteDataSource {
     int? page,
     int? limit,
   }) async {
-    final response = await _client.apiRequest(
-      url: baseUrl,
-      method: RequestMethod.get,
-      apiPath: '/wallets/$walletId/transactions',
-      headers: _headers,
-      queryParameters: {
-        if (page != null) 'page': page,
-        if (limit != null) 'limit': limit,
-      },
-    );
+    try {
+      final response = await _client.apiRequest(
+        url: baseUrl,
+        method: RequestMethod.get,
+        apiPath: '/wallets/$walletId/transactions',
+        headers: _headers,
+        queryParameters: {
+          if (page != null) 'page': page,
+          if (limit != null) 'limit': limit,
+        },
+      );
 
-    return TransactionListResponse.fromJson(jsonDecode(response.body));
+      final responseBody = response.body;
+      if (responseBody.isEmpty) {
+        // Return empty response if API returns empty body
+        return const TransactionListResponse(
+          transactions: [],
+          total: 0,
+          page: 1,
+          limit: 20,
+        );
+      }
+
+      final jsonData = jsonDecode(responseBody);
+
+      // Handle case where API returns array directly instead of object
+      if (jsonData is List) {
+        // Parse each transaction safely
+        final transactions = <TransactionModel>[];
+        for (final item in jsonData) {
+          try {
+            if (item is Map<String, dynamic>) {
+              transactions.add(TransactionModel.fromJson(item));
+            }
+          } catch (e) {
+            print('Error parsing individual transaction: $e');
+            // Skip invalid transactions instead of crashing
+          }
+        }
+
+        return TransactionListResponse(
+          transactions: transactions,
+          total: transactions.length,
+          page: page ?? 1,
+          limit: limit ?? 20,
+        );
+      }
+
+      // Handle normal object response
+      if (jsonData is Map<String, dynamic>) {
+        return TransactionListResponse.fromJson(jsonData);
+      }
+
+      // Fallback for unexpected response format
+      return TransactionListResponse(
+        transactions: const [],
+        total: 0,
+        page: page ?? 1,
+        limit: limit ?? 20,
+      );
+    } catch (e) {
+      // If parsing fails, return empty response instead of crashing
+      print('Error parsing transactions: $e');
+      return TransactionListResponse(
+        transactions: const [],
+        total: 0,
+        page: page ?? 1,
+        limit: limit ?? 20,
+      );
+    }
   }
 
   @override

@@ -32,7 +32,6 @@ class _AddWalletPageState extends State<AddWalletPage> {
   @override
   void dispose() {
     _initialBalanceController.dispose();
-    _walletBloc.close();
     super.dispose();
   }
 

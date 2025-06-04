@@ -309,5 +309,129 @@
   "transactions": "Transaksi",
   "@transactions": {
     "description": "Title for transactions screen"
+  },
+  "failedToLoadWallets": "Gagal memuat dompet",
+  "@failedToLoadWallets": {
+    "description": "Error message when wallets fail to load"
+  },
+  "tryAgain": "Coba Lagi",
+  "@tryAgain": {
+    "description": "Button text to try again"
+  },
+  "myWallet": "Dompet Saya",
+  "@myWallet": {
+    "description": "Label for wallet card"
+  },
+  "currentBalance": "Saldo Saat Ini",
+  "@currentBalance": {
+    "description": "Label for current balance"
+  },
+  "walletId": "ID Dompet: {id}",
+  "@walletId": {
+    "description": "Label showing wallet ID",
+    "placeholders": {
+      "id": {
+        "type": "String",
+        "example": "12345"
+      }
+    }
+  },
+  "updated": "Diperbarui {time}",
+  "@updated": {
+    "description": "Label showing last update time",
+    "placeholders": {
+      "time": {
+        "type": "String",
+        "example": "2j lalu"
+      }
+    }
+  },
+  "daysAgo": "{days}h lalu",
+  "@daysAgo": {
+    "description": "Time format for days ago",
+    "placeholders": {
+      "days": {
+        "type": "int",
+        "example": "2"
+      }
+    }
+  },
+  "hoursAgo": "{hours}j lalu",
+  "@hoursAgo": {
+    "description": "Time format for hours ago",
+    "placeholders": {
+      "hours": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "minutesAgo": "{minutes}m lalu",
+  "@minutesAgo": {
+    "description": "Time format for minutes ago",
+    "placeholders": {
+      "minutes": {
+        "type": "int",
+        "example": "15"
+      }
+    }
+  },
+  "justNow": "Baru saja",
+  "@justNow": {
+    "description": "Time format for just now"
+  },
+  "totalIncome": "Total Pemasukan",
+  "@totalIncome": {
+    "description": "Label for total income stat"
+  },
+  "totalExpense": "Total Pengeluaran",
+  "@totalExpense": {
+    "description": "Label for total expense stat"
+  },
+  "viewAll": "Lihat Semua",
+  "@viewAll": {
+    "description": "Button text to view all items"
+  },
+  "noTransactionsYet": "Belum ada transaksi",
+  "@noTransactionsYet": {
+    "description": "Message when no transactions exist"
+  },
+  "transactionsWillAppearHere": "Transaksi Anda akan muncul di sini",
+  "@transactionsWillAppearHere": {
+    "description": "Subtitle for empty transactions"
+  },
+  "allTransactionsLoaded": "Semua transaksi telah dimuat",
+  "@allTransactionsLoaded": {
+    "description": "Message when all transactions are loaded"
+  },
+  "transactionInTotal": "{count} transaksi{suffix} total",
+  "@transactionInTotal": {
+    "description": "Shows total transaction count",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      },
+      "suffix": {
+        "type": "String",
+        "example": " "
+      }
+    }
+  },
+  "oopsSomethingWentWrong": "Ups! Terjadi kesalahan",
+  "@oopsSomethingWentWrong": {
+    "description": "Error title message"
+  },
+  "editWallet": "Edit Dompet",
+  "@editWallet": {
+    "description": "Menu option to edit wallet"
+  },
+  "transactionHistory": "Riwayat Transaksi",
+  "@transactionHistory": {
+    "description": "Menu option for transaction history"
+  },
+  "walletSettings": "Pengaturan Dompet",
+  "@walletSettings": {
+    "description": "Menu option for wallet settings"
   }
 }

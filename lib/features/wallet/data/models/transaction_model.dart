@@ -11,19 +11,35 @@ enum TransactionType {
   withdrawal,
 }
 
+// Safe JSON parsing helper functions
+String _stringFromJson(dynamic value) => value?.toString() ?? '';
+double _doubleFromJson(dynamic value) => (value as num?)?.toDouble() ?? 0.0;
+DateTime _dateFromJson(dynamic value) {
+  if (value == null) return DateTime.now();
+  try {
+    return DateTime.parse(value.toString());
+  } catch (e) {
+    return DateTime.now();
+  }
+}
+
 @JsonSerializable()
 class TransactionModel extends Equatable {
+  @JsonKey(fromJson: _stringFromJson)
   final String id;
+  @JsonKey(fromJson: _stringFromJson)
   final String title;
+  @JsonKey(fromJson: _stringFromJson)
   final String description;
+  @JsonKey(fromJson: _doubleFromJson)
   final double amount;
-  @JsonKey(name: 'type')
+  @JsonKey(name: 'type', fromJson: _stringFromJson)
   final String typeString;
-  @JsonKey(name: 'from_wallet_id')
+  @JsonKey(name: 'from_wallet_id', fromJson: _stringFromJson)
   final String fromWalletId;
   @JsonKey(name: 'to_wallet_id')
   final String? toWalletId;
-  @JsonKey(name: 'created_at')
+  @JsonKey(name: 'created_at', fromJson: _dateFromJson)
   final DateTime createdAt;
 
   const TransactionModel({
@@ -57,13 +73,15 @@ class TransactionModel extends Equatable {
   entity.TransactionType get type {
     switch (typeString.toLowerCase()) {
       case 'income':
+      case 'deposit':
         return entity.TransactionType.income;
       case 'expense':
+      case 'withdrawal':
         return entity.TransactionType.expense;
       case 'transfer':
         return entity.TransactionType.transfer;
       default:
-        throw ArgumentError('Invalid transaction type: $typeString');
+        return entity.TransactionType.income; // Default fallback
     }
   }
 
@@ -126,11 +144,41 @@ class TransactionRequest extends Equatable {
   List<Object?> get props => [amount, description, referenceId];
 }
 
+// Safe parsing helper functions for list response
+List<TransactionModel> _transactionsFromJson(dynamic value) {
+  if (value == null) return [];
+  if (value is! List) return [];
+
+  return value
+      .where((item) => item != null)
+      .map((item) {
+        try {
+          if (item is Map<String, dynamic>) {
+            return TransactionModel.fromJson(item);
+          }
+          return null;
+        } catch (e) {
+          // Log error but don't crash
+          print('Error parsing transaction: $e');
+          return null;
+        }
+      })
+      .where((item) => item != null)
+      .cast<TransactionModel>()
+      .toList();
+}
+
+int _intFromJson(dynamic value) => (value as num?)?.toInt() ?? 0;
+
 @JsonSerializable()
 class TransactionListResponse extends Equatable {
+  @JsonKey(fromJson: _transactionsFromJson)
   final List<TransactionModel> transactions;
+  @JsonKey(fromJson: _intFromJson)
   final int total;
+  @JsonKey(fromJson: _intFromJson)
   final int page;
+  @JsonKey(fromJson: _intFromJson)
   final int limit;
 
   const TransactionListResponse({

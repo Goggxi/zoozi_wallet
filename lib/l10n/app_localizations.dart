@@ -535,6 +535,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Transactions'**
   String get transactions;
+
+  /// Error message when wallets fail to load
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load wallets'**
+  String get failedToLoadWallets;
+
+  /// Button text to try again
+  ///
+  /// In en, this message translates to:
+  /// **'Try Again'**
+  String get tryAgain;
+
+  /// Label for wallet card
+  ///
+  /// In en, this message translates to:
+  /// **'My Wallet'**
+  String get myWallet;
+
+  /// Label for current balance
+  ///
+  /// In en, this message translates to:
+  /// **'Current Balance'**
+  String get currentBalance;
+
+  /// Label showing wallet ID
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet ID: {id}'**
+  String walletId(String id);
+
+  /// Label showing last update time
+  ///
+  /// In en, this message translates to:
+  /// **'Updated {time}'**
+  String updated(String time);
+
+  /// Time format for days ago
+  ///
+  /// In en, this message translates to:
+  /// **'{days}d ago'**
+  String daysAgo(int days);
+
+  /// Time format for hours ago
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h ago'**
+  String hoursAgo(int hours);
+
+  /// Time format for minutes ago
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes}m ago'**
+  String minutesAgo(int minutes);
+
+  /// Time format for just now
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get justNow;
+
+  /// Label for total income stat
+  ///
+  /// In en, this message translates to:
+  /// **'Total Income'**
+  String get totalIncome;
+
+  /// Label for total expense stat
+  ///
+  /// In en, this message translates to:
+  /// **'Total Expense'**
+  String get totalExpense;
+
+  /// Button text to view all items
+  ///
+  /// In en, this message translates to:
+  /// **'View All'**
+  String get viewAll;
+
+  /// Message when no transactions exist
+  ///
+  /// In en, this message translates to:
+  /// **'No transactions yet'**
+  String get noTransactionsYet;
+
+  /// Subtitle for empty transactions
+  ///
+  /// In en, this message translates to:
+  /// **'Your transactions will appear here'**
+  String get transactionsWillAppearHere;
+
+  /// Message when all transactions are loaded
+  ///
+  /// In en, this message translates to:
+  /// **'All transactions loaded'**
+  String get allTransactionsLoaded;
+
+  /// Shows total transaction count
+  ///
+  /// In en, this message translates to:
+  /// **'{count} transaction{suffix} in total'**
+  String transactionInTotal(int count, String suffix);
+
+  /// Error title message
+  ///
+  /// In en, this message translates to:
+  /// **'Oops! Something went wrong'**
+  String get oopsSomethingWentWrong;
+
+  /// Menu option to edit wallet
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Wallet'**
+  String get editWallet;
+
+  /// Menu option for transaction history
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction History'**
+  String get transactionHistory;
+
+  /// Menu option for wallet settings
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet Settings'**
+  String get walletSettings;
 }
 
 class _AppLocalizationsDelegate

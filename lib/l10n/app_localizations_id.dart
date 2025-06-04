@@ -241,4 +241,79 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get transactions => 'Transaksi';
+
+  @override
+  String get failedToLoadWallets => 'Gagal memuat dompet';
+
+  @override
+  String get tryAgain => 'Coba Lagi';
+
+  @override
+  String get myWallet => 'Dompet Saya';
+
+  @override
+  String get currentBalance => 'Saldo Saat Ini';
+
+  @override
+  String walletId(String id) {
+    return 'ID Dompet: $id';
+  }
+
+  @override
+  String updated(String time) {
+    return 'Diperbarui $time';
+  }
+
+  @override
+  String daysAgo(int days) {
+    return '${days}h lalu';
+  }
+
+  @override
+  String hoursAgo(int hours) {
+    return '${hours}j lalu';
+  }
+
+  @override
+  String minutesAgo(int minutes) {
+    return '${minutes}m lalu';
+  }
+
+  @override
+  String get justNow => 'Baru saja';
+
+  @override
+  String get totalIncome => 'Total Pemasukan';
+
+  @override
+  String get totalExpense => 'Total Pengeluaran';
+
+  @override
+  String get viewAll => 'Lihat Semua';
+
+  @override
+  String get noTransactionsYet => 'Belum ada transaksi';
+
+  @override
+  String get transactionsWillAppearHere => 'Transaksi Anda akan muncul di sini';
+
+  @override
+  String get allTransactionsLoaded => 'Semua transaksi telah dimuat';
+
+  @override
+  String transactionInTotal(int count, String suffix) {
+    return '$count transaksi$suffix total';
+  }
+
+  @override
+  String get oopsSomethingWentWrong => 'Ups! Terjadi kesalahan';
+
+  @override
+  String get editWallet => 'Edit Dompet';
+
+  @override
+  String get transactionHistory => 'Riwayat Transaksi';
+
+  @override
+  String get walletSettings => 'Pengaturan Dompet';
 }

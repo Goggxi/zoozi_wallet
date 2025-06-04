@@ -309,5 +309,129 @@
   "transactions": "Transactions",
   "@transactions": {
     "description": "Title for transactions screen"
+  },
+  "failedToLoadWallets": "Failed to load wallets",
+  "@failedToLoadWallets": {
+    "description": "Error message when wallets fail to load"
+  },
+  "tryAgain": "Try Again",
+  "@tryAgain": {
+    "description": "Button text to try again"
+  },
+  "myWallet": "My Wallet",
+  "@myWallet": {
+    "description": "Label for wallet card"
+  },
+  "currentBalance": "Current Balance",
+  "@currentBalance": {
+    "description": "Label for current balance"
+  },
+  "walletId": "Wallet ID: {id}",
+  "@walletId": {
+    "description": "Label showing wallet ID",
+    "placeholders": {
+      "id": {
+        "type": "String",
+        "example": "12345"
+      }
+    }
+  },
+  "updated": "Updated {time}",
+  "@updated": {
+    "description": "Label showing last update time",
+    "placeholders": {
+      "time": {
+        "type": "String",
+        "example": "2h ago"
+      }
+    }
+  },
+  "daysAgo": "{days}d ago",
+  "@daysAgo": {
+    "description": "Time format for days ago",
+    "placeholders": {
+      "days": {
+        "type": "int",
+        "example": "2"
+      }
+    }
+  },
+  "hoursAgo": "{hours}h ago",
+  "@hoursAgo": {
+    "description": "Time format for hours ago",
+    "placeholders": {
+      "hours": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "minutesAgo": "{minutes}m ago",
+  "@minutesAgo": {
+    "description": "Time format for minutes ago",
+    "placeholders": {
+      "minutes": {
+        "type": "int",
+        "example": "15"
+      }
+    }
+  },
+  "justNow": "Just now",
+  "@justNow": {
+    "description": "Time format for just now"
+  },
+  "totalIncome": "Total Income",
+  "@totalIncome": {
+    "description": "Label for total income stat"
+  },
+  "totalExpense": "Total Expense",
+  "@totalExpense": {
+    "description": "Label for total expense stat"
+  },
+  "viewAll": "View All",
+  "@viewAll": {
+    "description": "Button text to view all items"
+  },
+  "noTransactionsYet": "No transactions yet",
+  "@noTransactionsYet": {
+    "description": "Message when no transactions exist"
+  },
+  "transactionsWillAppearHere": "Your transactions will appear here",
+  "@transactionsWillAppearHere": {
+    "description": "Subtitle for empty transactions"
+  },
+  "allTransactionsLoaded": "All transactions loaded",
+  "@allTransactionsLoaded": {
+    "description": "Message when all transactions are loaded"
+  },
+  "transactionInTotal": "{count} transaction{suffix} in total",
+  "@transactionInTotal": {
+    "description": "Shows total transaction count",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      },
+      "suffix": {
+        "type": "String",
+        "example": "s"
+      }
+    }
+  },
+  "oopsSomethingWentWrong": "Oops! Something went wrong",
+  "@oopsSomethingWentWrong": {
+    "description": "Error title message"
+  },
+  "editWallet": "Edit Wallet",
+  "@editWallet": {
+    "description": "Menu option to edit wallet"
+  },
+  "transactionHistory": "Transaction History",
+  "@transactionHistory": {
+    "description": "Menu option for transaction history"
+  },
+  "walletSettings": "Wallet Settings",
+  "@walletSettings": {
+    "description": "Menu option for wallet settings"
   }
 }
