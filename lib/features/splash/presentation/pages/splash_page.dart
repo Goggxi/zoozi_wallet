@@ -17,7 +17,6 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   final _authBloc = getIt<AuthBloc>();
-  bool _hasNavigated = false; // Prevent multiple navigation
 
   @override
   void initState() {
@@ -26,20 +25,11 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   void _checkAuthStatus() {
-    // Add a small delay to allow app to fully initialize and avoid race conditions
-    Future.delayed(const Duration(milliseconds: 300), () {
+    Future.delayed(const Duration(seconds: 2), () {
       if (mounted) {
         _authBloc.add(CheckAuthStatusEvent());
       }
     });
-  }
-
-  void _navigateTo(String route) {
-    if (!_hasNavigated && mounted) {
-      _hasNavigated = true;
-      // Use replace instead of go to prevent back navigation to splash
-      context.pushReplacement(route);
-    }
   }
 
   @override
@@ -49,68 +39,22 @@ class _SplashPageState extends State<SplashPage> {
       bloc: _authBloc,
       listener: (context, state) {
         if (state is AuthAuthenticated) {
-          _navigateTo(AppRouter.home);
+          context.go(AppRouter.home);
         } else if (state is AuthUnauthenticated) {
-          _navigateTo(AppRouter.login);
+          context.go(AppRouter.login);
         }
       },
       child: Scaffold(
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // App logo or icon could go here
-              Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor.withAlpha(25),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Icon(
-                  Icons.account_balance_wallet_outlined,
-                  size: 40,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-              const SizedBox(height: 24),
-              Text(
-                l.appName,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                l.welcome,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey[600],
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 32),
-              // Loading indicator
-              SizedBox(
-                width: 24,
-                height: 24,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    Theme.of(context).primaryColor,
-                  ),
-                ),
-              ),
-            ],
+          child: Text(
+            l.appName,
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 }

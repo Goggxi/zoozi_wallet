@@ -8,7 +8,6 @@ import '../../../di/di.dart';
 import '../../../features/auth/data/datasources/auth_local_data_source.dart';
 import '../../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../../features/auth/presentation/bloc/auth_event.dart';
-import '../../../features/auth/presentation/bloc/auth_state.dart';
 import '../exceptions/api_exception.dart';
 import '../logger/app_logger.dart';
 
@@ -51,15 +50,6 @@ class HttpClient {
         ...?headers,
       };
 
-      // Add authentication token if available
-      final token = _authLocalDataSource.getToken();
-      if (token != null && token.isNotEmpty) {
-        requestHeaders['Authorization'] = 'Bearer $token';
-        _logger.debug('Added auth token to request headers');
-      } else {
-        _logger.debug('No auth token available for request');
-      }
-
       http.Response response;
       final requestBody = body != null ? jsonEncode(body) : null;
 
@@ -67,7 +57,9 @@ class HttpClient {
       if (body != null) {
         _logger.debug('Request Body: $body');
       }
-      _logger.debug('Request Headers: ${requestHeaders.keys.toList()}');
+      if (headers != null) {
+        _logger.debug('Request Headers: $headers');
+      }
       if (queryParameters != null) {
         _logger.debug('Query Parameters: $queryParameters');
       }
@@ -103,16 +95,13 @@ class HttpClient {
         response.statusCode,
       );
 
-      _logger.debug(
-          'API Response: ${response.statusCode} - ${response.body.length} bytes');
-
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return response;
       }
 
-      // Handle 401 Unauthorized with better logic
-      if (response.statusCode == 401) {
-        await _handleUnauthorized(apiPath);
+      // Handle 401 Unauthorized globally for non-auth endpoints
+      if (response.statusCode == 401 && !apiPath.contains('/auth/')) {
+        await _handleUnauthorized();
       }
 
       throw _handleErrorResponse(response);
@@ -128,50 +117,10 @@ class HttpClient {
     }
   }
 
-  Future<void> _handleUnauthorized(String apiPath) async {
-    _logger.warning('Received 401 Unauthorized for: $apiPath');
-
-    // Only trigger logout for non-auth endpoints and avoid aggressive logout
-    if (!apiPath.contains('/auth/')) {
-      _logger.debug('Clearing auth data due to 401 on protected endpoint');
-
-      // Check if this is during app initialization by checking if user is still logged in
-      final currentUser = _authLocalDataSource.getUser();
-      final currentToken = _authLocalDataSource.getToken();
-
-      if (currentUser == null || currentToken == null) {
-        _logger.debug('User already logged out, skipping additional logout');
-        return;
-      }
-
-      // Clear auth data first
-      await _authLocalDataSource.clearAuth();
-
-      // Add delay to prevent immediate logout during app initialization
-      await Future.delayed(const Duration(milliseconds: 1000));
-
-      // Double-check if the user hasn't been re-authenticated during the delay
-      final tokenAfterDelay = _authLocalDataSource.getToken();
-      final userAfterDelay = _authLocalDataSource.getUser();
-
-      // Only trigger logout if auth is still cleared and no new login occurred
-      if (tokenAfterDelay == null && userAfterDelay == null) {
-        _logger.debug('Triggering logout event after 401');
-        try {
-          final authBloc = getIt<AuthBloc>();
-          // Check if the bloc is in a state that can handle logout
-          if (authBloc.state is! AuthLoading) {
-            authBloc.add(LogoutEvent());
-          }
-        } catch (e) {
-          _logger.error('Failed to trigger logout after 401', e);
-        }
-      } else {
-        _logger.debug('User re-authenticated during delay, skipping logout');
-      }
-    } else {
-      _logger.debug('401 on auth endpoint - not triggering automatic logout');
-    }
+  Future<void> _handleUnauthorized() async {
+    _logger.debug('Handling unauthorized response');
+    await _authLocalDataSource.clearAuth();
+    getIt<AuthBloc>().add(LogoutEvent());
   }
 
   ApiException _handleErrorResponse(http.Response response) {

@@ -560,10 +560,10 @@ abstract class AppLocalizations {
   /// **'Current Balance'**
   String get currentBalance;
 
-  /// Wallet ID label
+  /// Label showing wallet ID
   ///
   /// In en, this message translates to:
-  /// **'ID: {id}'**
+  /// **'Wallet ID: {id}'**
   String walletId(String id);
 
   /// Label showing last update time
@@ -937,162 +937,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Clear Filter'**
   String get clearFilter;
-
-  /// Error label
-  ///
-  /// In en, this message translates to:
-  /// **'Error'**
-  String get error;
-
-  /// Retry button text
-  ///
-  /// In en, this message translates to:
-  /// **'Retry'**
-  String get retry;
-
-  /// Default welcome message
-  ///
-  /// In en, this message translates to:
-  /// **'Welcome to Zoozi Wallet'**
-  String get welcomeToZooziWallet;
-
-  /// Default user name
-  ///
-  /// In en, this message translates to:
-  /// **'User'**
-  String get user;
-
-  /// Welcome back message with user name
-  ///
-  /// In en, this message translates to:
-  /// **'Welcome back,\n{userName}!'**
-  String welcomeBackUser(String userName);
-
-  /// Wallet overview subtitle
-  ///
-  /// In en, this message translates to:
-  /// **'Here\'s your wallet overview'**
-  String get walletOverview;
-
-  /// Total balance card title
-  ///
-  /// In en, this message translates to:
-  /// **'Total Balance'**
-  String get totalBalance;
-
-  /// No wallets available message
-  ///
-  /// In en, this message translates to:
-  /// **'No wallets'**
-  String get noWallets;
-
-  /// Last updated timestamp
-  ///
-  /// In en, this message translates to:
-  /// **'Last updated: {date}'**
-  String lastUpdated(String date);
-
-  /// Quick actions section title
-  ///
-  /// In en, this message translates to:
-  /// **'Quick Actions'**
-  String get quickActions;
-
-  /// Transfer feature coming soon message
-  ///
-  /// In en, this message translates to:
-  /// **'Transfer feature coming soon!'**
-  String get transferFeatureComingSoon;
-
-  /// Empty wallet chart message
-  ///
-  /// In en, this message translates to:
-  /// **'No wallets to display'**
-  String get noWalletsToDisplay;
-
-  /// Wallet distribution chart title
-  ///
-  /// In en, this message translates to:
-  /// **'Wallet Distribution'**
-  String get walletDistribution;
-
-  /// Empty wallet list title
-  ///
-  /// In en, this message translates to:
-  /// **'No wallets yet'**
-  String get noWalletsYet;
-
-  /// Empty wallet list subtitle
-  ///
-  /// In en, this message translates to:
-  /// **'Create your first wallet to get started'**
-  String get createFirstWallet;
-
-  /// Mock transaction title
-  ///
-  /// In en, this message translates to:
-  /// **'Deposit to Main Wallet'**
-  String get depositToMainWallet;
-
-  /// Mock transaction title
-  ///
-  /// In en, this message translates to:
-  /// **'Transfer to Savings'**
-  String get transferToSavings;
-
-  /// Mock transaction title
-  ///
-  /// In en, this message translates to:
-  /// **'Withdrawal'**
-  String get withdrawal;
-
-  /// Mock transactions footer message
-  ///
-  /// In en, this message translates to:
-  /// **'Connect to API to see real transactions'**
-  String get connectToApiMessage;
-
-  /// Logout confirmation dialog title
-  ///
-  /// In en, this message translates to:
-  /// **'Confirm Logout'**
-  String get confirmLogout;
-
-  /// Logout confirmation dialog message
-  ///
-  /// In en, this message translates to:
-  /// **'Are you sure you want to logout?'**
-  String get logoutConfirmationMessage;
-
-  /// Logging out progress message
-  ///
-  /// In en, this message translates to:
-  /// **'Logging out...'**
-  String get loggingOut;
-
-  /// Message shown when registration is successful but user needs to login manually
-  ///
-  /// In en, this message translates to:
-  /// **'Registration successful! Please login to continue.'**
-  String get registrationSuccessfulPleaseLogin;
-
-  /// Message shown in logout dialog about redirecting to login page
-  ///
-  /// In en, this message translates to:
-  /// **'You will be redirected to the login page.'**
-  String get logoutRedirectMessage;
-
-  /// Currency field label
-  ///
-  /// In en, this message translates to:
-  /// **'Currency'**
-  String get currency;
-
-  /// Currency validation message
-  ///
-  /// In en, this message translates to:
-  /// **'Please select a currency'**
-  String get pleaseSelectCurrency;
 }
 
 class _AppLocalizationsDelegate

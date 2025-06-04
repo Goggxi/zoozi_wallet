@@ -256,7 +256,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String walletId(String id) {
-    return 'ID: $id';
+    return 'ID Dompet: $id';
   }
 
   @override
@@ -464,88 +464,4 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get clearFilter => 'Hapus Filter';
-
-  @override
-  String get error => 'Error';
-
-  @override
-  String get retry => 'Coba Lagi';
-
-  @override
-  String get welcomeToZooziWallet => 'Selamat datang di Zoozi Wallet';
-
-  @override
-  String get user => 'Pengguna';
-
-  @override
-  String welcomeBackUser(String userName) {
-    return 'Selamat datang kembali,\n$userName!';
-  }
-
-  @override
-  String get walletOverview => 'Berikut ringkasan dompet Anda';
-
-  @override
-  String get totalBalance => 'Total Saldo';
-
-  @override
-  String get noWallets => 'Tidak ada dompet';
-
-  @override
-  String lastUpdated(String date) {
-    return 'Terakhir diperbarui: $date';
-  }
-
-  @override
-  String get quickActions => 'Aksi Cepat';
-
-  @override
-  String get transferFeatureComingSoon => 'Fitur transfer segera hadir!';
-
-  @override
-  String get noWalletsToDisplay => 'Tidak ada dompet untuk ditampilkan';
-
-  @override
-  String get walletDistribution => 'Distribusi Dompet';
-
-  @override
-  String get noWalletsYet => 'Belum ada dompet';
-
-  @override
-  String get createFirstWallet => 'Buat dompet pertama Anda untuk memulai';
-
-  @override
-  String get depositToMainWallet => 'Setor ke Dompet Utama';
-
-  @override
-  String get transferToSavings => 'Transfer ke Tabungan';
-
-  @override
-  String get withdrawal => 'Penarikan';
-
-  @override
-  String get connectToApiMessage =>
-      'Hubungkan ke API untuk melihat transaksi nyata';
-
-  @override
-  String get confirmLogout => 'Konfirmasi Keluar';
-
-  @override
-  String get logoutConfirmationMessage => 'Apakah Anda yakin ingin keluar?';
-
-  @override
-  String get loggingOut => 'Sedang keluar...';
-
-  @override
-  String get registrationSuccessfulPleaseLogin =>
-      'Pendaftaran berhasil! Silakan login untuk melanjutkan.';
-
-  @override
-  String get logoutRedirectMessage => 'Anda akan diarahkan ke halaman login.';
-
-  @override
-  String get currency => 'Mata Uang';
-
-  @override
-  String get pleaseSelectCurrency => 'Silakan pilih mata uang';
 }

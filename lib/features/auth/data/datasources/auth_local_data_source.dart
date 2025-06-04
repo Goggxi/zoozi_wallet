@@ -95,14 +95,13 @@ class AuthLocalDataSource implements IAuthLocalDataSource {
   @override
   bool get isAuthenticated {
     try {
-      final token = _localStorage.getString(_tokenKey);
-      final hasValidToken = token != null && token.isNotEmpty;
+      final hasToken = _localStorage.hasKey(_tokenKey);
       _logger.debug(
-          'Auth status: ${hasValidToken ? 'authenticated' : 'not authenticated'} (token: ${token != null ? 'exists' : 'missing'})');
-      return hasValidToken;
+          'Auth status: ${hasToken ? 'authenticated' : 'not authenticated'}');
+      return hasToken;
     } catch (e) {
       _logger.error('Failed to check auth status', e);
-      return false; // Default to not authenticated on error
+      rethrow;
     }
   }
 }

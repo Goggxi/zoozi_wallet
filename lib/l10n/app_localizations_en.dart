@@ -254,7 +254,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String walletId(String id) {
-    return 'ID: $id';
+    return 'Wallet ID: $id';
   }
 
   @override
@@ -462,88 +462,4 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get clearFilter => 'Clear Filter';
-
-  @override
-  String get error => 'Error';
-
-  @override
-  String get retry => 'Retry';
-
-  @override
-  String get welcomeToZooziWallet => 'Welcome to Zoozi Wallet';
-
-  @override
-  String get user => 'User';
-
-  @override
-  String welcomeBackUser(String userName) {
-    return 'Welcome back,\n$userName!';
-  }
-
-  @override
-  String get walletOverview => 'Here\'s your wallet overview';
-
-  @override
-  String get totalBalance => 'Total Balance';
-
-  @override
-  String get noWallets => 'No wallets';
-
-  @override
-  String lastUpdated(String date) {
-    return 'Last updated: $date';
-  }
-
-  @override
-  String get quickActions => 'Quick Actions';
-
-  @override
-  String get transferFeatureComingSoon => 'Transfer feature coming soon!';
-
-  @override
-  String get noWalletsToDisplay => 'No wallets to display';
-
-  @override
-  String get walletDistribution => 'Wallet Distribution';
-
-  @override
-  String get noWalletsYet => 'No wallets yet';
-
-  @override
-  String get createFirstWallet => 'Create your first wallet to get started';
-
-  @override
-  String get depositToMainWallet => 'Deposit to Main Wallet';
-
-  @override
-  String get transferToSavings => 'Transfer to Savings';
-
-  @override
-  String get withdrawal => 'Withdrawal';
-
-  @override
-  String get connectToApiMessage => 'Connect to API to see real transactions';
-
-  @override
-  String get confirmLogout => 'Confirm Logout';
-
-  @override
-  String get logoutConfirmationMessage => 'Are you sure you want to logout?';
-
-  @override
-  String get loggingOut => 'Logging out...';
-
-  @override
-  String get registrationSuccessfulPleaseLogin =>
-      'Registration successful! Please login to continue.';
-
-  @override
-  String get logoutRedirectMessage =>
-      'You will be redirected to the login page.';
-
-  @override
-  String get currency => 'Currency';
-
-  @override
-  String get pleaseSelectCurrency => 'Please select a currency';
 }

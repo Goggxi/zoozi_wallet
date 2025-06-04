@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:zoozi_wallet/core/theme/app_theme.dart';
 import 'package:zoozi_wallet/di/di.dart';
 import 'package:zoozi_wallet/features/settings/presentation/bloc/theme_bloc.dart';
 import 'package:zoozi_wallet/features/settings/presentation/bloc/theme_state.dart';
 import 'package:zoozi_wallet/features/settings/presentation/bloc/language_bloc.dart';
 import 'package:zoozi_wallet/features/settings/presentation/bloc/language_state.dart';
-import 'package:zoozi_wallet/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:zoozi_wallet/features/auth/presentation/bloc/auth_event.dart';
-import 'package:zoozi_wallet/features/auth/presentation/bloc/auth_state.dart';
-import 'package:zoozi_wallet/core/router/app_router.dart';
 import '../widgets/theme_switch_dialog.dart';
 import '../widgets/language_switch_dialog.dart';
 import 'package:zoozi_wallet/core/utils/extensions/context_extension.dart';
@@ -24,266 +19,144 @@ class SettingsPage extends StatelessWidget {
     final theme = Theme.of(context);
     final themeBloc = getIt<ThemeBloc>();
     final languageBloc = getIt<LanguageBloc>();
-    final authBloc = getIt<AuthBloc>();
 
-    return BlocListener<AuthBloc, AuthState>(
-      bloc: authBloc,
-      listener: (context, state) {
-        if (state is AuthUnauthenticated) {
-          context.go(AppRouter.login);
-        }
-      },
-      child: Scaffold(
-        appBar: AppBar(title: Text(l.settings)),
-        body: Column(
-          children: [
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsets.all(16),
-                children: [
-                  BlocBuilder<ThemeBloc, ThemeState>(
-                    bloc: themeBloc,
-                    builder: (context, state) {
-                      if (state is ThemeLoaded) {
-                        return _buildSettingItem(
-                          context: context,
-                          icon: Icons.palette_outlined,
-                          title: l.theme,
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                state.themeType == ThemeType.light
-                                    ? Icons.light_mode_rounded
-                                    : Icons.dark_mode_rounded,
+    return Scaffold(
+      appBar: AppBar(title: Text(l.settings)),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.all(16),
+              children: [
+                BlocBuilder<ThemeBloc, ThemeState>(
+                  bloc: themeBloc,
+                  builder: (context, state) {
+                    if (state is ThemeLoaded) {
+                      return _buildSettingItem(
+                        context: context,
+                        icon: Icons.palette_outlined,
+                        title: l.theme,
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              state.themeType == ThemeType.light
+                                  ? Icons.light_mode_rounded
+                                  : Icons.dark_mode_rounded,
+                              color: theme.colorScheme.primary,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              state.themeType == ThemeType.light
+                                  ? l.light
+                                  : l.dark,
+                              style: TextStyle(
                                 color: theme.colorScheme.primary,
                               ),
-                              const SizedBox(width: 8),
-                              Text(
-                                state.themeType == ThemeType.light
-                                    ? l.light
-                                    : l.dark,
-                                style: TextStyle(
-                                  color: theme.colorScheme.primary,
-                                ),
-                              ),
-                            ],
-                          ),
-                          onTap: () {
-                            showModalBottomSheet(
-                              context: context,
-                              builder: (_) => ThemeSwitchDialog(
-                                themeBloc: themeBloc,
-                              ),
-                              backgroundColor: Colors.transparent,
-                              isScrollControlled: true,
-                            );
-                          },
-                        );
-                      }
-                      return const SizedBox.shrink();
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  BlocBuilder<LanguageBloc, LanguageState>(
-                    bloc: languageBloc,
-                    builder: (context, state) {
-                      if (state is LanguageLoaded) {
-                        return _buildSettingItem(
-                          context: context,
-                          icon: Icons.language_outlined,
-                          title: l.language,
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                state.locale.languageCode.toUpperCase(),
-                                style: TextStyle(
-                                  color: theme.colorScheme.primary,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                          onTap: () {
-                            showModalBottomSheet(
-                              context: context,
-                              builder: (_) => LanguageSwitchDialog(
-                                languageBloc: languageBloc,
-                              ),
-                              backgroundColor: Colors.transparent,
-                              isScrollControlled: true,
-                            );
-                          },
-                        );
-                      }
-                      return const SizedBox.shrink();
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  _buildSettingItem(
-                    context: context,
-                    icon: Icons.info_outline,
-                    title: l.about,
-                    onTap: () {
-                      // TODO: Navigate to about page
-                    },
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: SizedBox(
-                width: double.infinity,
-                child: BlocBuilder<AuthBloc, AuthState>(
-                  bloc: authBloc,
-                  builder: (context, state) {
-                    return ElevatedButton.icon(
-                      onPressed: state is AuthLoading
-                          ? null
-                          : () => _showLogoutDialog(context, authBloc, l),
-                      icon: state is AuthLoading
-                          ? SizedBox(
-                              width: 16,
-                              height: 16,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: theme.colorScheme.error,
-                              ),
-                            )
-                          : Icon(
-                              Icons.logout,
-                              color: theme.colorScheme.error,
                             ),
-                      label: Text(
-                        state is AuthLoading ? l.loggingOut : l.logout,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: theme.colorScheme.error,
+                          ],
                         ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            theme.colorScheme.errorContainer.withAlpha(25),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        elevation: 0,
-                        side: BorderSide(
-                          color: theme.colorScheme.error,
-                          width: 1,
-                        ),
-                      ),
-                    );
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (_) => ThemeSwitchDialog(
+                              themeBloc: themeBloc,
+                            ),
+                            backgroundColor: Colors.transparent,
+                            isScrollControlled: true,
+                          );
+                        },
+                      );
+                    }
+                    return const SizedBox.shrink();
                   },
                 ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _showLogoutDialog(BuildContext context, AuthBloc authBloc, dynamic l) {
-    final theme = Theme.of(context);
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          title: Text(
-            l.confirmLogout,
-            style: theme.textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                l.logoutConfirmationMessage,
-                style: theme.textTheme.bodyLarge,
-              ),
-              const SizedBox(height: 12),
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.orange.withAlpha((0.1 * 255).round()),
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: Colors.orange.withAlpha((0.3 * 255).round()),
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.info_outline,
-                      color: Colors.orange,
-                      size: 20,
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        l.logoutRedirectMessage,
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: Colors.orange[800],
-                          fontWeight: FontWeight.w500,
+                const SizedBox(height: 16),
+                BlocBuilder<LanguageBloc, LanguageState>(
+                  bloc: languageBloc,
+                  builder: (context, state) {
+                    if (state is LanguageLoaded) {
+                      return _buildSettingItem(
+                        context: context,
+                        icon: Icons.language_outlined,
+                        title: l.language,
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              state.locale.languageCode.toUpperCase(),
+                              style: TextStyle(
+                                color: theme.colorScheme.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ),
-                  ],
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (_) => LanguageSwitchDialog(
+                              languageBloc: languageBloc,
+                            ),
+                            backgroundColor: Colors.transparent,
+                            isScrollControlled: true,
+                          );
+                        },
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
                 ),
-              ),
-            ],
-          ),
-          actions: [
-            Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: theme.colorScheme.primary,
-                      side: BorderSide(color: theme.colorScheme.primary),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                    ),
-                    child: Text(l.cancel),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      authBloc.add(LogoutEvent());
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: theme.colorScheme.error,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                    ),
-                    child: Text(l.logout),
-                  ),
+                const SizedBox(height: 16),
+                _buildSettingItem(
+                  context: context,
+                  icon: Icons.info_outline,
+                  title: l.about,
+                  onTap: () {
+                    // TODO: Navigate to about page
+                  },
                 ),
               ],
             ),
-          ],
-        );
-      },
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  // TODO: Handle logout
+                },
+                icon: Icon(
+                  Icons.logout,
+                  color: theme.colorScheme.error,
+                ),
+                label: Text(
+                  l.logout,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: theme.colorScheme.error,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      theme.colorScheme.errorContainer.withAlpha(25),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 0,
+                  side: BorderSide(
+                    color: theme.colorScheme.error,
+                    width: 1,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

@@ -491,41 +491,5 @@
   "thisMonth": "Bulan Ini",
   "customRange": "Rentang Kustom",
   "applyFilter": "Terapkan Filter",
-  "clearFilter": "Hapus Filter",
-  "error": "Error",
-  "retry": "Coba Lagi",
-  "welcomeToZooziWallet": "Selamat datang di Zoozi Wallet",
-  "user": "Pengguna",
-  "welcomeBackUser": "Selamat datang kembali,\n{userName}!",
-  "walletOverview": "Berikut ringkasan dompet Anda",
-  "totalBalance": "Total Saldo",
-  "noWallets": "Tidak ada dompet",
-  "lastUpdated": "Terakhir diperbarui: {date}",
-  "quickActions": "Aksi Cepat",
-  "transferFeatureComingSoon": "Fitur transfer segera hadir!",
-  "noWalletsToDisplay": "Tidak ada dompet untuk ditampilkan",
-  "walletDistribution": "Distribusi Dompet",
-  "noWalletsYet": "Belum ada dompet",
-  "createFirstWallet": "Buat dompet pertama Anda untuk memulai",
-  "walletId": "ID: {id}",
-  "depositToMainWallet": "Setor ke Dompet Utama",
-  "transferToSavings": "Transfer ke Tabungan",
-  "withdrawal": "Penarikan",
-  "connectToApiMessage": "Hubungkan ke API untuk melihat transaksi nyata",
-  "confirmLogout": "Konfirmasi Keluar",
-  "logoutConfirmationMessage": "Apakah Anda yakin ingin keluar?",
-  "loggingOut": "Sedang keluar...",
-  "@loggingOut": {
-    "description": "Logging out progress message"
-  },
-  "registrationSuccessfulPleaseLogin": "Pendaftaran berhasil! Silakan login untuk melanjutkan.",
-  "@registrationSuccessfulPleaseLogin": {
-    "description": "Message shown when registration is successful but user needs to login manually"
-  },
-  "logoutRedirectMessage": "Anda akan diarahkan ke halaman login.",
-  "@logoutRedirectMessage": {
-    "description": "Message shown in logout dialog about redirecting to login page"
-  },
-  "currency": "Mata Uang",
-  "pleaseSelectCurrency": "Silakan pilih mata uang"
+  "clearFilter": "Hapus Filter"
 }

@@ -6,12 +6,10 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/router/app_router.dart';
-import '../../../../core/utils/extensions/context_extension.dart';
 import '../../../wallet/presentation/bloc/wallet_bloc.dart';
 import '../../../wallet/presentation/bloc/wallet_event.dart';
 import '../../../wallet/presentation/bloc/wallet_state.dart';
 import '../../../wallet/data/models/wallet_model.dart';
-import '../../../wallet/data/models/transaction_model.dart';
 import '../../../auth/domain/repositories/auth_repository.dart';
 import '../../../../di/di.dart';
 
@@ -23,145 +21,64 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<TransactionModel> _allTransactions = [];
-  bool _loadingTransactions = false;
-
   @override
   void initState() {
     super.initState();
-    // Safe way to add event using context.read with error handling
+    // Safe way to add event using context.read
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
-        try {
-          // Only load wallets if user is authenticated
-          final authRepository = getIt<IAuthRepository>();
-          if (authRepository.isAuthenticated &&
-              authRepository.getCurrentUser() != null) {
-            context.read<WalletBloc>().add(const GetWalletsEvent());
-          } else {
-            debugPrint(
-                'User not authenticated, skipping wallet load on home init');
-          }
-        } catch (e) {
-          debugPrint('Error loading wallets on home page init: $e');
-        }
+        context.read<WalletBloc>().add(const GetWalletsEvent());
       }
     });
-  }
-
-  void _loadRecentTransactions(List<WalletModel> wallets) {
-    if (_loadingTransactions || wallets.isEmpty) return;
-
-    setState(() {
-      _loadingTransactions = true;
-      _allTransactions.clear();
-    });
-
-    try {
-      // Load transactions from the first wallet (or most recent wallet)
-      // In a real app, you might want to load from all wallets or just the primary one
-      final firstWallet = wallets.first;
-      context.read<WalletBloc>().add(
-            GetTransactionsEvent(
-              walletId: firstWallet.id.toString(),
-              page: 1,
-              limit: 5, // Only need recent 5 transactions for home page
-            ),
-          );
-    } catch (e) {
-      debugPrint('Error loading recent transactions: $e');
-      setState(() {
-        _loadingTransactions = false;
-      });
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocListener<WalletBloc, WalletState>(
-          listener: (context, state) {
-            if (state is WalletsLoaded && !_loadingTransactions) {
-              _loadRecentTransactions(state.wallets);
-            } else if (state is TransactionsLoaded) {
-              setState(() {
-                _allTransactions = state.transactions;
-                _loadingTransactions = false;
-              });
+        child: BlocBuilder<WalletBloc, WalletState>(
+          builder: (context, state) {
+            if (state is WalletLoading) {
+              return const Center(child: CircularProgressIndicator());
             }
+            if (state is WalletError) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.error_outline,
+                      size: 64,
+                      color: Colors.red[300],
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Error: ${state.message}',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: () {
+                        context.read<WalletBloc>().add(const GetWalletsEvent());
+                      },
+                      child: const Text('Retry'),
+                    ),
+                  ],
+                ),
+              );
+            }
+            if (state is WalletsLoaded) {
+              return _buildHomeContent(context, state.wallets);
+            }
+            return const Center(child: Text('Welcome to Zoozi Wallet'));
           },
-          child: BlocBuilder<WalletBloc, WalletState>(
-            builder: (context, state) {
-              if (state is WalletLoading) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              if (state is WalletError) {
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.error_outline,
-                        size: 64,
-                        color: Colors.red[300],
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        '${context.l10n.error}: ${state.message}',
-                        style: Theme.of(context).textTheme.bodyLarge,
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 16),
-                      ElevatedButton(
-                        onPressed: () {
-                          context
-                              .read<WalletBloc>()
-                              .add(const GetWalletsEvent());
-                        },
-                        child: Text(context.l10n.retry),
-                      ),
-                    ],
-                  ),
-                );
-              }
-              if (state is WalletsLoaded) {
-                return _buildHomeContent(context, state.wallets);
-              }
-              return Center(child: Text(context.l10n.welcomeToZooziWallet));
-            },
-          ),
         ),
       ),
     );
   }
 
   Widget _buildHomeContent(BuildContext context, List<WalletModel> wallets) {
-    // Load recent transactions for the first wallet when wallets are available
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (wallets.isNotEmpty && mounted) {
-        try {
-          // Double-check authentication before loading transactions
-          final authRepository = getIt<IAuthRepository>();
-          if (authRepository.isAuthenticated &&
-              authRepository.getCurrentUser() != null) {
-            final firstWallet = wallets.first;
-            context.read<WalletBloc>().add(
-                  GetTransactionsEvent(
-                    walletId: firstWallet.id.toString(),
-                    page: 1,
-                    limit: 5,
-                  ),
-                );
-          } else {
-            debugPrint('User not authenticated, skipping transaction load');
-          }
-        } catch (e) {
-          debugPrint('Error loading transactions: $e');
-        }
-      }
-    });
-
     return RefreshIndicator(
       onRefresh: () async {
         context
@@ -194,9 +111,8 @@ class _HomePageState extends State<HomePage> {
   Widget _buildHeader(BuildContext context) {
     final authRepository = getIt<IAuthRepository>();
     final currentUser = authRepository.getCurrentUser();
-    final userName = currentUser?.name ??
-        currentUser?.email.split('@').first ??
-        context.l10n.user;
+    final userName =
+        currentUser?.name ?? currentUser?.email.split('@').first ?? 'User';
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -205,14 +121,14 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              context.l10n.welcomeBackUser(userName),
+              'Welcome back,\n$userName!',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.darkPurple1,
                   ),
             ),
             Text(
-              context.l10n.walletOverview,
+              'Here\'s your wallet overview',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: AppColors.grey,
                   ),
@@ -259,7 +175,7 @@ class _HomePageState extends State<HomePage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.purple.withAlpha(76),
+            color: AppColors.purple.withOpacity(0.3),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -269,15 +185,15 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            context.l10n.totalBalance,
+            'Total Balance',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.white.withAlpha(204),
+                  color: AppColors.white.withOpacity(0.8),
                 ),
           ),
           const SizedBox(height: 8),
           if (currencyTotals.isEmpty)
             Text(
-              context.l10n.noWallets,
+              'No wallets',
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     color: AppColors.white,
                     fontWeight: FontWeight.bold,
@@ -299,15 +215,14 @@ class _HomePageState extends State<HomePage> {
             children: [
               Icon(
                 Icons.trending_up,
-                color: AppColors.white.withAlpha(204),
+                color: AppColors.white.withOpacity(0.8),
                 size: 16,
               ),
               const SizedBox(width: 4),
               Text(
-                context.l10n.lastUpdated(
-                    DateFormat('dd MMM yyyy, HH:mm').format(DateTime.now())),
+                'Last updated: ${DateFormat('dd MMM yyyy, HH:mm').format(DateTime.now())}',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AppColors.white.withAlpha(179),
+                      color: AppColors.white.withOpacity(0.7),
                     ),
               ),
             ],
@@ -324,14 +239,14 @@ class _HomePageState extends State<HomePage> {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.grey.withAlpha(51),
+          color: AppColors.grey.withOpacity(0.2),
         ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            context.l10n.quickActions,
+            'Quick Actions',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColors.darkPurple1,
@@ -344,7 +259,7 @@ class _HomePageState extends State<HomePage> {
                 child: _buildActionButton(
                   context,
                   icon: Icons.add_circle_outline,
-                  label: context.l10n.deposit,
+                  label: 'Deposit',
                   color: AppColors.purple,
                   onTap: () {
                     context.push('/deposit');
@@ -356,7 +271,7 @@ class _HomePageState extends State<HomePage> {
                 child: _buildActionButton(
                   context,
                   icon: Icons.remove_circle_outline,
-                  label: context.l10n.withdraw,
+                  label: 'Withdraw',
                   color: AppColors.pink,
                   onTap: () {
                     context.push('/withdrawal');
@@ -368,14 +283,13 @@ class _HomePageState extends State<HomePage> {
                 child: _buildActionButton(
                   context,
                   icon: Icons.swap_horiz,
-                  label: context.l10n.transfer,
+                  label: 'Transfer',
                   color: AppColors.darkPurple2,
                   onTap: () {
                     // Navigate to transfer page when available
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                          content:
-                              Text(context.l10n.transferFeatureComingSoon)),
+                      const SnackBar(
+                          content: Text('Transfer feature coming soon!')),
                     );
                   },
                 ),
@@ -400,7 +314,7 @@ class _HomePageState extends State<HomePage> {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
         decoration: BoxDecoration(
-          color: color.withAlpha(25),
+          color: color.withOpacity(0.1),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -433,7 +347,7 @@ class _HomePageState extends State<HomePage> {
           color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: AppColors.grey.withAlpha(51),
+            color: AppColors.grey.withOpacity(0.2),
           ),
         ),
         child: Column(
@@ -441,11 +355,11 @@ class _HomePageState extends State<HomePage> {
             Icon(
               Icons.pie_chart_outline,
               size: 48,
-              color: AppColors.grey.withAlpha(128),
+              color: AppColors.grey.withOpacity(0.5),
             ),
             const SizedBox(height: 16),
             Text(
-              context.l10n.noWalletsToDisplay,
+              'No wallets to display',
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: AppColors.grey,
                   ),
@@ -461,14 +375,14 @@ class _HomePageState extends State<HomePage> {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.grey.withAlpha(51),
+          color: AppColors.grey.withOpacity(0.2),
         ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            context.l10n.walletDistribution,
+            'Wallet Distribution',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColors.darkPurple1,
@@ -576,7 +490,7 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              context.l10n.myWallets,
+              'My Wallets',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.darkPurple1,
@@ -586,7 +500,7 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 context.go(AppRouter.wallet);
               },
-              child: Text(context.l10n.viewAll),
+              child: const Text('View All'),
             ),
           ],
         ),
@@ -607,7 +521,7 @@ class _HomePageState extends State<HomePage> {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.grey.withAlpha(51),
+          color: AppColors.grey.withOpacity(0.2),
         ),
       ),
       child: Column(
@@ -615,20 +529,20 @@ class _HomePageState extends State<HomePage> {
           Icon(
             Icons.account_balance_wallet_outlined,
             size: 48,
-            color: AppColors.grey.withAlpha(128),
+            color: AppColors.grey.withOpacity(0.5),
           ),
           const SizedBox(height: 16),
           Text(
-            context.l10n.noWalletsYet,
+            'No wallets yet',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: AppColors.grey,
                 ),
           ),
           const SizedBox(height: 8),
           Text(
-            context.l10n.createFirstWallet,
+            'Create your first wallet to get started',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.grey.withAlpha(128),
+                  color: AppColors.grey.withOpacity(0.7),
                 ),
             textAlign: TextAlign.center,
           ),
@@ -637,7 +551,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               // Navigate to create wallet
             },
-            child: Text(context.l10n.createWallet),
+            child: const Text('Create Wallet'),
           ),
         ],
       ),
@@ -655,7 +569,7 @@ class _HomePageState extends State<HomePage> {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: AppColors.grey.withAlpha(51),
+          color: AppColors.grey.withOpacity(0.2),
         ),
       ),
       child: Row(
@@ -663,7 +577,7 @@ class _HomePageState extends State<HomePage> {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: AppColors.purple.withAlpha(25),
+              color: AppColors.purple.withOpacity(0.1),
               borderRadius: BorderRadius.circular(8),
             ),
             child: const Icon(
@@ -684,9 +598,9 @@ class _HomePageState extends State<HomePage> {
                       ),
                 ),
                 Text(
-                  context.l10n.walletId(wallet.id.toString()),
+                  'ID: ${wallet.id}',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppColors.grey.withAlpha(128),
+                        color: AppColors.grey,
                       ),
                 ),
               ],
@@ -705,7 +619,7 @@ class _HomePageState extends State<HomePage> {
               Text(
                 DateFormat('dd MMM yyyy').format(wallet.updatedAt),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AppColors.grey.withAlpha(128),
+                      color: AppColors.grey,
                     ),
               ),
             ],
@@ -743,7 +657,7 @@ class _HomePageState extends State<HomePage> {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.grey.withAlpha(51),
+          color: AppColors.grey.withOpacity(0.2),
         ),
       ),
       child: Column(
@@ -753,7 +667,7 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                context.l10n.recentTransactions,
+                'Recent Transactions',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w600,
                       color: AppColors.darkPurple1,
@@ -763,143 +677,42 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () {
                   context.go(AppRouter.transactions);
                 },
-                child: Text(context.l10n.viewAll),
+                child: const Text('View All'),
               ),
             ],
           ),
           const SizedBox(height: 16),
-          // Use BlocBuilder to show real transactions when available
-          BlocBuilder<WalletBloc, WalletState>(
-            builder: (context, state) {
-              if (state is TransactionsLoaded &&
-                  state.transactions.isNotEmpty) {
-                // Show real transactions
-                return Column(
-                  children: [
-                    ...state.transactions.take(3).map((transaction) =>
-                        _buildRealTransactionItem(context, transaction)),
-                    if (state.transactions.length > 3)
-                      const SizedBox(height: 8),
-                    if (state.transactions.length > 3)
-                      Center(
-                        child: Text(
-                          context.l10n.viewAll,
-                          style:
-                              Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: AppColors.purple,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                        ),
-                      ),
-                  ],
-                );
-              } else {
-                // Show mock transactions as placeholder
-                return Column(
-                  children: [
-                    _buildTransactionItem(
-                      context,
-                      title: context.l10n.depositToMainWallet,
-                      amount: 500000,
-                      date: DateTime.now().subtract(const Duration(hours: 2)),
-                      isIncome: true,
-                    ),
-                    _buildTransactionItem(
-                      context,
-                      title: context.l10n.transferToSavings,
-                      amount: 200000,
-                      date: DateTime.now().subtract(const Duration(days: 1)),
-                      isIncome: false,
-                    ),
-                    _buildTransactionItem(
-                      context,
-                      title: context.l10n.withdrawal,
-                      amount: 100000,
-                      date: DateTime.now().subtract(const Duration(days: 2)),
-                      isIncome: false,
-                    ),
-                    const SizedBox(height: 8),
-                    Center(
-                      child: Text(
-                        context.l10n.connectToApiMessage,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: AppColors.grey.withAlpha(128),
-                              fontStyle: FontStyle.italic,
-                            ),
-                      ),
-                    ),
-                  ],
-                );
-              }
-            },
+          // Mock recent transactions - in real app, this would come from API
+          _buildTransactionItem(
+            context,
+            title: 'Deposit to Main Wallet',
+            amount: 500000,
+            date: DateTime.now().subtract(const Duration(hours: 2)),
+            isIncome: true,
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildRealTransactionItem(
-      BuildContext context, TransactionModel transaction) {
-    final isIncome = transaction.type.name == 'income' ||
-        transaction.typeString.toUpperCase() == 'DEPOSIT';
-
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: AppColors.grey.withAlpha(51),
-        ),
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: (isIncome ? Colors.green : Colors.red).withAlpha(25),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Icon(
-              isIncome ? Icons.arrow_downward : Icons.arrow_upward,
-              color: isIncome ? Colors.green : Colors.red,
-              size: 16,
-            ),
+          _buildTransactionItem(
+            context,
+            title: 'Transfer to Savings',
+            amount: 200000,
+            date: DateTime.now().subtract(const Duration(days: 1)),
+            isIncome: false,
           ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  transaction.description.isNotEmpty
-                      ? transaction.description
-                      : transaction.title,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                ),
-                Text(
-                  DateFormat('dd MMM yyyy, HH:mm')
-                      .format(transaction.timestamp),
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppColors.grey.withAlpha(128),
-                      ),
-                ),
-              ],
-            ),
+          _buildTransactionItem(
+            context,
+            title: 'Withdrawal',
+            amount: 100000,
+            date: DateTime.now().subtract(const Duration(days: 2)),
+            isIncome: false,
           ),
-          Text(
-            '${isIncome ? '+' : '-'}${NumberFormat.currency(
-              locale: 'id_ID',
-              symbol: 'Rp ',
-              decimalDigits: 0,
-            ).format(transaction.amount)}',
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: isIncome ? Colors.green : Colors.red,
-                ),
+          const SizedBox(height: 8),
+          Center(
+            child: Text(
+              'Connect to API to see real transactions',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: AppColors.grey,
+                    fontStyle: FontStyle.italic,
+                  ),
+            ),
           ),
         ],
       ),
@@ -920,7 +733,7 @@ class _HomePageState extends State<HomePage> {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: AppColors.grey.withAlpha(51),
+          color: AppColors.grey.withOpacity(0.1),
         ),
       ),
       child: Row(
@@ -928,7 +741,7 @@ class _HomePageState extends State<HomePage> {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: (isIncome ? Colors.green : Colors.red).withAlpha(25),
+              color: (isIncome ? Colors.green : Colors.red).withOpacity(0.1),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(
@@ -951,7 +764,7 @@ class _HomePageState extends State<HomePage> {
                 Text(
                   DateFormat('dd MMM yyyy, HH:mm').format(date),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppColors.grey.withAlpha(128),
+                        color: AppColors.grey,
                       ),
                 ),
               ],
