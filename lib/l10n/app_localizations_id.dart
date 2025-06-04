@@ -181,4 +181,64 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get indonesian => 'Bahasa Indonesia';
+
+  @override
+  String get myWallets => 'Dompet Saya';
+
+  @override
+  String get noWalletsFound => 'Tidak ada dompet';
+
+  @override
+  String get addWalletToStart => 'Tambahkan satu untuk memulai!';
+
+  @override
+  String get addWallet => 'Tambah Dompet';
+
+  @override
+  String get walletDetails => 'Detail Dompet';
+
+  @override
+  String get deposit => 'Setor';
+
+  @override
+  String get withdraw => 'Tarik';
+
+  @override
+  String get transfer => 'Transfer';
+
+  @override
+  String get recentTransactions => 'Transaksi Terbaru';
+
+  @override
+  String get addNewWallet => 'Tambah Dompet Baru';
+
+  @override
+  String get walletInformation => 'Informasi Dompet';
+
+  @override
+  String get walletName => 'Nama Dompet';
+
+  @override
+  String get pleaseEnterWalletName => 'Silakan masukkan nama dompet';
+
+  @override
+  String get initialBalance => 'Saldo Awal';
+
+  @override
+  String get pleaseEnterInitialBalance => 'Silakan masukkan saldo awal';
+
+  @override
+  String get pleaseEnterValidNumber => 'Silakan masukkan angka yang valid';
+
+  @override
+  String get createWallet => 'Buat Dompet';
+
+  @override
+  String get walletCreatedSuccessfully => 'Dompet berhasil dibuat!';
+
+  @override
+  String get somethingWentWrong => 'Terjadi kesalahan';
+
+  @override
+  String get transactions => 'Transaksi';
 }

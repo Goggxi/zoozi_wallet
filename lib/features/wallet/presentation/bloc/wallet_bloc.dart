@@ -6,7 +6,7 @@ import '../../domain/repositories/wallet_repository.dart';
 import 'wallet_event.dart';
 import 'wallet_state.dart';
 
-@injectable
+@singleton
 class WalletBloc extends Bloc<WalletEvent, WalletState> {
   final IWalletRepository _walletRepository;
 

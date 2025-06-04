@@ -229,5 +229,85 @@
   "indonesian": "Bahasa Indonesia",
   "@indonesian": {
     "description": "Indonesian language option"
+  },
+  "myWallets": "Dompet Saya",
+  "@myWallets": {
+    "description": "Title for the wallets list screen"
+  },
+  "noWalletsFound": "Tidak ada dompet",
+  "@noWalletsFound": {
+    "description": "Message shown when no wallets are available"
+  },
+  "addWalletToStart": "Tambahkan satu untuk memulai!",
+  "@addWalletToStart": {
+    "description": "Message encouraging user to add a wallet"
+  },
+  "addWallet": "Tambah Dompet",
+  "@addWallet": {
+    "description": "Button text to add a new wallet"
+  },
+  "walletDetails": "Detail Dompet",
+  "@walletDetails": {
+    "description": "Title for the wallet details screen"
+  },
+  "deposit": "Setor",
+  "@deposit": {
+    "description": "Button text for deposit action"
+  },
+  "withdraw": "Tarik",
+  "@withdraw": {
+    "description": "Button text for withdraw action"
+  },
+  "transfer": "Transfer",
+  "@transfer": {
+    "description": "Button text for transfer action"
+  },
+  "recentTransactions": "Transaksi Terbaru",
+  "@recentTransactions": {
+    "description": "Title for recent transactions list"
+  },
+  "addNewWallet": "Tambah Dompet Baru",
+  "@addNewWallet": {
+    "description": "Title for add wallet screen"
+  },
+  "walletInformation": "Informasi Dompet",
+  "@walletInformation": {
+    "description": "Section title for wallet information"
+  },
+  "walletName": "Nama Dompet",
+  "@walletName": {
+    "description": "Label for wallet name input"
+  },
+  "pleaseEnterWalletName": "Silakan masukkan nama dompet",
+  "@pleaseEnterWalletName": {
+    "description": "Validation message for wallet name"
+  },
+  "initialBalance": "Saldo Awal",
+  "@initialBalance": {
+    "description": "Label for initial balance input"
+  },
+  "pleaseEnterInitialBalance": "Silakan masukkan saldo awal",
+  "@pleaseEnterInitialBalance": {
+    "description": "Validation message for initial balance"
+  },
+  "pleaseEnterValidNumber": "Silakan masukkan angka yang valid",
+  "@pleaseEnterValidNumber": {
+    "description": "Validation message for number input"
+  },
+  "createWallet": "Buat Dompet",
+  "@createWallet": {
+    "description": "Button text to create a new wallet"
+  },
+  "walletCreatedSuccessfully": "Dompet berhasil dibuat!",
+  "@walletCreatedSuccessfully": {
+    "description": "Success message after creating a wallet"
+  },
+  "somethingWentWrong": "Terjadi kesalahan",
+  "@somethingWentWrong": {
+    "description": "Generic error message"
+  },
+  "transactions": "Transaksi",
+  "@transactions": {
+    "description": "Title for transactions screen"
   }
 }

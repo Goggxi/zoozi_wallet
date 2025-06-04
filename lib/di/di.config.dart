@@ -94,7 +94,7 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i103.IAuthRemoteDataSource>(),
           gh<_i54.IAuthLocalDataSource>(),
         ));
-    gh.factory<_i424.WalletBloc>(
+    gh.singleton<_i424.WalletBloc>(
         () => _i424.WalletBloc(gh<_i126.IWalletRepository>()));
     gh.factory<_i138.AuthBloc>(
         () => _i138.AuthBloc(gh<_i173.IAuthRepository>()));

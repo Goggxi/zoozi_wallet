@@ -21,6 +21,7 @@ class AppTheme {
           backgroundColor: AppColors.white,
           foregroundColor: AppColors.black,
           elevation: 0,
+          scrolledUnderElevation: 0,
           centerTitle: true,
           titleTextStyle: TextStyle(
             fontSize: 20,

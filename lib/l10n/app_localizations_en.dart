@@ -179,4 +179,64 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get indonesian => 'Indonesian';
+
+  @override
+  String get myWallets => 'My Wallets';
+
+  @override
+  String get noWalletsFound => 'No wallets found';
+
+  @override
+  String get addWalletToStart => 'Add one to get started!';
+
+  @override
+  String get addWallet => 'Add Wallet';
+
+  @override
+  String get walletDetails => 'Wallet Details';
+
+  @override
+  String get deposit => 'Deposit';
+
+  @override
+  String get withdraw => 'Withdraw';
+
+  @override
+  String get transfer => 'Transfer';
+
+  @override
+  String get recentTransactions => 'Recent Transactions';
+
+  @override
+  String get addNewWallet => 'Add New Wallet';
+
+  @override
+  String get walletInformation => 'Wallet Information';
+
+  @override
+  String get walletName => 'Wallet Name';
+
+  @override
+  String get pleaseEnterWalletName => 'Please enter a wallet name';
+
+  @override
+  String get initialBalance => 'Initial Balance';
+
+  @override
+  String get pleaseEnterInitialBalance => 'Please enter initial balance';
+
+  @override
+  String get pleaseEnterValidNumber => 'Please enter a valid number';
+
+  @override
+  String get createWallet => 'Create Wallet';
+
+  @override
+  String get walletCreatedSuccessfully => 'Wallet created successfully!';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong';
+
+  @override
+  String get transactions => 'Transactions';
 }

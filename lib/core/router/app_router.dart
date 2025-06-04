@@ -9,7 +9,9 @@ import 'package:zoozi_wallet/features/home/presentation/pages/home_page.dart';
 import 'package:zoozi_wallet/features/home/presentation/widgets/scaffold_with_nav_bar.dart';
 import 'package:zoozi_wallet/features/settings/presentation/pages/settings_page.dart';
 import 'package:zoozi_wallet/features/splash/presentation/pages/splash_page.dart';
+import 'package:zoozi_wallet/features/wallet/presentation/pages/add_wallet_page.dart';
 import 'package:zoozi_wallet/features/wallet/presentation/pages/transaction_page.dart';
+import 'package:zoozi_wallet/features/wallet/presentation/pages/wallet_detail_page.dart';
 import 'package:zoozi_wallet/features/wallet/presentation/pages/wallet_page.dart';
 
 @lazySingleton
@@ -19,6 +21,8 @@ class AppRouter {
   static const String register = '/register';
   static const String home = '/home';
   static const String wallet = '/wallet';
+  static const String addWallet = 'add';
+  static const String walletDetail = ':id';
   static const String transactions = '/transactions';
   static const String settings = '/settings';
 
@@ -87,6 +91,21 @@ class AppRouter {
                 path: wallet,
                 name: 'wallet',
                 builder: (context, state) => const WalletPage(),
+                routes: [
+                  GoRoute(
+                    path: addWallet,
+                    name: 'addWallet',
+                    builder: (context, state) => const AddWalletPage(),
+                  ),
+                  GoRoute(
+                    path: walletDetail,
+                    name: 'walletDetail',
+                    builder: (context, state) {
+                      final walletId = state.pathParameters['id']!;
+                      return WalletDetailPage(walletId: walletId);
+                    },
+                  ),
+                ],
               ),
             ],
           ),

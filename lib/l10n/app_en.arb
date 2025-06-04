@@ -229,5 +229,85 @@
   "indonesian": "Indonesian",
   "@indonesian": {
     "description": "Indonesian language option"
+  },
+  "myWallets": "My Wallets",
+  "@myWallets": {
+    "description": "Title for the wallets list screen"
+  },
+  "noWalletsFound": "No wallets found",
+  "@noWalletsFound": {
+    "description": "Message shown when no wallets are available"
+  },
+  "addWalletToStart": "Add one to get started!",
+  "@addWalletToStart": {
+    "description": "Message encouraging user to add a wallet"
+  },
+  "addWallet": "Add Wallet",
+  "@addWallet": {
+    "description": "Button text to add a new wallet"
+  },
+  "walletDetails": "Wallet Details",
+  "@walletDetails": {
+    "description": "Title for the wallet details screen"
+  },
+  "deposit": "Deposit",
+  "@deposit": {
+    "description": "Button text for deposit action"
+  },
+  "withdraw": "Withdraw",
+  "@withdraw": {
+    "description": "Button text for withdraw action"
+  },
+  "transfer": "Transfer",
+  "@transfer": {
+    "description": "Button text for transfer action"
+  },
+  "recentTransactions": "Recent Transactions",
+  "@recentTransactions": {
+    "description": "Title for recent transactions list"
+  },
+  "addNewWallet": "Add New Wallet",
+  "@addNewWallet": {
+    "description": "Title for add wallet screen"
+  },
+  "walletInformation": "Wallet Information",
+  "@walletInformation": {
+    "description": "Section title for wallet information"
+  },
+  "walletName": "Wallet Name",
+  "@walletName": {
+    "description": "Label for wallet name input"
+  },
+  "pleaseEnterWalletName": "Please enter a wallet name",
+  "@pleaseEnterWalletName": {
+    "description": "Validation message for wallet name"
+  },
+  "initialBalance": "Initial Balance",
+  "@initialBalance": {
+    "description": "Label for initial balance input"
+  },
+  "pleaseEnterInitialBalance": "Please enter initial balance",
+  "@pleaseEnterInitialBalance": {
+    "description": "Validation message for initial balance"
+  },
+  "pleaseEnterValidNumber": "Please enter a valid number",
+  "@pleaseEnterValidNumber": {
+    "description": "Validation message for number input"
+  },
+  "createWallet": "Create Wallet",
+  "@createWallet": {
+    "description": "Button text to create a new wallet"
+  },
+  "walletCreatedSuccessfully": "Wallet created successfully!",
+  "@walletCreatedSuccessfully": {
+    "description": "Success message after creating a wallet"
+  },
+  "somethingWentWrong": "Something went wrong",
+  "@somethingWentWrong": {
+    "description": "Generic error message"
+  },
+  "transactions": "Transactions",
+  "@transactions": {
+    "description": "Title for transactions screen"
   }
 }

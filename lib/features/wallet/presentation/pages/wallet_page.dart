@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:zoozi_wallet/core/router/app_router.dart';
+import 'package:zoozi_wallet/core/theme/app_colors.dart';
+import 'package:zoozi_wallet/core/utils/extensions/context_extension.dart';
 import 'package:zoozi_wallet/di/di.dart';
 import '../bloc/wallet_bloc.dart';
 import '../bloc/wallet_event.dart';
@@ -24,14 +28,15 @@ class _WalletPageState extends State<WalletPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Wallets'),
+        title: Text(l.myWallets),
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
-              // TODO: Navigate to add wallet page
+              context.push('${AppRouter.wallet}/${AppRouter.addWallet}');
             },
           ),
         ],
@@ -48,121 +53,178 @@ class _WalletPageState extends State<WalletPage> {
           }
 
           if (state is WalletsLoaded) {
-            if (state.wallets.isEmpty) {
-              return const Center(
-                child: Text('No wallets found. Add one to get started!'),
+            final sortedWallets = List.of(state.wallets)
+              ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+
+            if (sortedWallets.isEmpty) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.account_balance_wallet_outlined,
+                      size: 64,
+                      color: AppColors.grey,
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      l.noWalletsFound,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      l.addWalletToStart,
+                      style: const TextStyle(
+                        color: AppColors.grey,
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        context
+                            .push('${AppRouter.wallet}/${AppRouter.addWallet}');
+                      },
+                      icon: const Icon(Icons.add),
+                      label: Text(l.addWallet),
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 12,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               );
             }
 
-            return ListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: state.wallets.length,
-              itemBuilder: (context, index) {
-                final wallet = state.wallets[index];
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: Card(
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Container(
-                      height: 200,
-                      padding: const EdgeInsets.all(24),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        gradient: const LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            Color(0xFF4A148C), // Deep Purple
-                            Color(0xFF7B1FA2), // Purple
-                          ],
+            return RefreshIndicator(
+              onRefresh: () async {
+                _walletBloc.add(GetWalletsEvent());
+                // Wait for the state to change from loading
+                await for (final state in _walletBloc.stream) {
+                  if (state is! WalletLoading) break;
+                }
+              },
+              child: ListView.builder(
+                padding: const EdgeInsets.all(16),
+                itemCount: sortedWallets.length,
+                itemBuilder: (context, index) {
+                  final wallet = sortedWallets[index];
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: InkWell(
+                      onTap: () {
+                        context.push('${AppRouter.wallet}/${wallet.id}');
+                      },
+                      child: Card(
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
                         ),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Icon(
-                                Icons.credit_card,
-                                color: Colors.white,
-                                size: 32,
-                              ),
-                              Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: const Text(
-                                  'VISA',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const Spacer(),
-                          Text(
-                            '\$${wallet.balance.toStringAsFixed(2)}',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
+                        child: Container(
+                          height: 200,
+                          padding: const EdgeInsets.all(24),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            gradient: const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                AppColors.darkPurple2,
+                                AppColors.purple,
+                              ],
                             ),
                           ),
-                          const SizedBox(height: 16),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    wallet.id ?? '',
-                                    style: const TextStyle(
-                                      color: Colors.white70,
-                                      fontSize: 14,
-                                    ),
+                                  const Icon(
+                                    Icons.credit_card,
+                                    color: AppColors.white,
+                                    size: 32,
                                   ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    wallet.currency,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
+                                  Container(
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.white.withAlpha(51),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Text(
+                                      wallet.currency,
+                                      style: const TextStyle(
+                                        color: AppColors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
-                              IconButton(
-                                icon: const Icon(
-                                  Icons.arrow_forward,
-                                  color: Colors.white,
+                              const Spacer(),
+                              Text(
+                                '\$${wallet.balance.toStringAsFixed(2)}',
+                                style: const TextStyle(
+                                  color: AppColors.white,
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                onPressed: () {
-                                  // TODO: Navigate to wallet details
-                                },
+                              ),
+                              const SizedBox(height: 16),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        wallet.name,
+                                        style: TextStyle(
+                                          color: AppColors.white.withAlpha(70),
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        wallet.currency,
+                                        style: const TextStyle(
+                                          color: AppColors.white,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const Icon(
+                                    Icons.arrow_forward,
+                                    color: AppColors.white,
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             );
           }
 
-          return const Center(child: Text('Something went wrong'));
+          return Center(child: Text(l.somethingWentWrong));
         },
       ),
     );

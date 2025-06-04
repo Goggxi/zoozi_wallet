@@ -415,6 +415,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Indonesian'**
   String get indonesian;
+
+  /// Title for the wallets list screen
+  ///
+  /// In en, this message translates to:
+  /// **'My Wallets'**
+  String get myWallets;
+
+  /// Message shown when no wallets are available
+  ///
+  /// In en, this message translates to:
+  /// **'No wallets found'**
+  String get noWalletsFound;
+
+  /// Message encouraging user to add a wallet
+  ///
+  /// In en, this message translates to:
+  /// **'Add one to get started!'**
+  String get addWalletToStart;
+
+  /// Button text to add a new wallet
+  ///
+  /// In en, this message translates to:
+  /// **'Add Wallet'**
+  String get addWallet;
+
+  /// Title for the wallet details screen
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet Details'**
+  String get walletDetails;
+
+  /// Button text for deposit action
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit'**
+  String get deposit;
+
+  /// Button text for withdraw action
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw'**
+  String get withdraw;
+
+  /// Button text for transfer action
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer'**
+  String get transfer;
+
+  /// Title for recent transactions list
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Transactions'**
+  String get recentTransactions;
+
+  /// Title for add wallet screen
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Wallet'**
+  String get addNewWallet;
+
+  /// Section title for wallet information
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet Information'**
+  String get walletInformation;
+
+  /// Label for wallet name input
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet Name'**
+  String get walletName;
+
+  /// Validation message for wallet name
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a wallet name'**
+  String get pleaseEnterWalletName;
+
+  /// Label for initial balance input
+  ///
+  /// In en, this message translates to:
+  /// **'Initial Balance'**
+  String get initialBalance;
+
+  /// Validation message for initial balance
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter initial balance'**
+  String get pleaseEnterInitialBalance;
+
+  /// Validation message for number input
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid number'**
+  String get pleaseEnterValidNumber;
+
+  /// Button text to create a new wallet
+  ///
+  /// In en, this message translates to:
+  /// **'Create Wallet'**
+  String get createWallet;
+
+  /// Success message after creating a wallet
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet created successfully!'**
+  String get walletCreatedSuccessfully;
+
+  /// Generic error message
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get somethingWentWrong;
+
+  /// Title for transactions screen
+  ///
+  /// In en, this message translates to:
+  /// **'Transactions'**
+  String get transactions;
 }
 
 class _AppLocalizationsDelegate
